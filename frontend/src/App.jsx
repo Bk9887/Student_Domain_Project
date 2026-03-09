@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import HelpCenter from "./pages/HelpCenter";
+import VerifyEmail from "./pages/VerifyEmail";
 
 
 
@@ -22,10 +23,11 @@ function App() {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<Landing />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
       {/* Protected Routes with Layout */}
       <Route
