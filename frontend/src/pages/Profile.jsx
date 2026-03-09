@@ -9,18 +9,14 @@ export default function Profile() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
 
-  // Fetch logged-in user profile
   const fetchProfile = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/profile/${currentUser._id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get("http://localhost:5000/api/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setProfile(res.data);
     } catch (err) {
-      console.error("Error fetching profile:", err.response?.data || err);
+      console.error(err);
     }
   };
 
@@ -28,146 +24,206 @@ export default function Profile() {
     fetchProfile();
   }, []);
 
-  // Handle input changes
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  // Handle profile photo upload
   const handlePhoto = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
+
     reader.onloadend = () => {
-      const updatedProfile = { ...profile, photo: reader.result };
-      setProfile(updatedProfile);
-
-      // Update localStorage immediately
-      const updatedUser = { ...currentUser, photo: reader.result };
-      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-
-      // Dispatch event for Navbar
-      window.dispatchEvent(new Event("profilePhotoUpdated"));
+      setProfile({ ...profile, photo: reader.result });
     };
+
     reader.readAsDataURL(file);
   };
 
-  // Save profile changes
   const handleSave = async () => {
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/profile/${currentUser._id}`,
+      await axios.put(
+        "http://localhost:5000/api/profile",
         profile,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log("Profile update response:", res);
-
-      // Update localStorage for Navbar sync
-      const updatedUser = { ...currentUser, photo: profile.photo };
-      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-
-      // Dispatch event for Navbar
-      window.dispatchEvent(new Event("profilePhotoUpdated"));
-
-      // Navigate to dashboard
       navigate("/dashboard");
     } catch (err) {
-      console.error("Error updating profile:", err.response?.data || err);
+      console.error(err);
     }
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-[#0a0f2f] to-[#2a1b4d] text-white overflow-hidden">
-      {/* Glow Orbs */}
-      <div className="orb orb-1"></div>
-      <div className="orb orb-2"></div>
-      <div className="orb orb-3"></div>
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0f2f] to-[#2a1b4d] text-white p-8">
 
-      {/* Page Content */}
-      <div className="relative max-w-3xl mx-auto space-y-6 pb-6 pt-10 px-4">
-        <h1 className="text-3xl font-bold text-white mb-4">Profile</h1>
+      <div className="max-w-6xl mx-auto space-y-8">
 
-        {/* Profile Photo */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full">
-          <p className="text-white/70 mb-4 font-semibold">Profile Photo</p>
-          <div className="flex items-center gap-6">
+        <h1 className="text-3xl font-bold">Profile</h1>
+
+        {/* TOP SECTION */}
+        <div className="grid md:grid-cols-3 gap-6">
+
+          {/* Profile Photo */}
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center">
             <img
               src={profile.photo || "https://i.imgur.com/HeIi0wU.png"}
-              className="w-28 h-28 rounded-full object-cover border border-white/20"
+              className="w-32 h-32 mx-auto rounded-full object-cover border"
             />
+
             <input
               type="file"
               accept="image/*"
               onChange={handlePhoto}
-              className="text-white"
+              className="mt-4"
             />
           </div>
+
+          {/* Student Information */}
+          <div className="md:col-span-2 bg-white/5 border border-white/10 rounded-xl p-6">
+
+            <h2 className="text-xl font-semibold mb-4">Student Information</h2>
+
+            <div className="grid md:grid-cols-2 gap-4">
+
+              <input
+                name="studentName"
+                value={profile.studentName || ""}
+                onChange={handleChange}
+                placeholder="Student Name"
+                className="p-3 rounded bg-white/10"
+              />
+
+              <input
+                name="studentEmail"
+                value={profile.studentEmail || ""}
+                onChange={handleChange}
+                placeholder="Student Email"
+                className="p-3 rounded bg-white/10"
+              />
+
+              <input
+                name="phone"
+                value={profile.phone || ""}
+                onChange={handleChange}
+                placeholder="Student Phone"
+                className="p-3 rounded bg-white/10"
+              />
+
+              <input
+                name="college"
+                value={profile.college || ""}
+                onChange={handleChange}
+                placeholder="College"
+                className="p-3 rounded bg-white/10"
+              />
+
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Student Contact */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full">
-          <p className="text-white/70 mb-4 font-semibold">Student Contact</p>
-          <input
-            name="phone"
-            value={profile.phone || ""}
-            onChange={handleChange}
-            placeholder="Student Phone Number"
-            className="w-full p-3 rounded-lg bg-white/10 text-white outline-none"
-          />
+        {/* PARENT INFORMATION */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+
+          <h2 className="text-xl font-semibold mb-4">
+            Parent / Guardian Information
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-4">
+
+            <input
+              name="parentName"
+              value={profile.parentName || ""}
+              onChange={handleChange}
+              placeholder="Parent Name"
+              className="p-3 rounded bg-white/10"
+            />
+
+            <input
+              name="parentEmail"
+              value={profile.parentEmail || ""}
+              onChange={handleChange}
+              placeholder="Parent Email"
+              className="p-3 rounded bg-white/10"
+            />
+
+            <input
+              name="parentPhone"
+              value={profile.parentPhone || ""}
+              onChange={handleChange}
+              placeholder="Parent Phone"
+              className="p-3 rounded bg-white/10"
+            />
+
+          </div>
+
         </div>
 
-        {/* Parent / Guardian Contact */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full">
-          <p className="text-white/70 mb-4 font-semibold">
-            Parent / Guardian Contact
-          </p>
-          <input
-            name="parentPhone"
-            value={profile.parentPhone || ""}
-            onChange={handleChange}
-            placeholder="Parent Phone Number"
-            className="w-full p-3 rounded-lg bg-white/10 text-white outline-none"
-          />
-        </div>
+        {/* ADDRESS */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
 
-        {/* Address */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full">
-          <p className="text-white/70 mb-4 font-semibold">Address</p>
+          <h2 className="text-xl font-semibold mb-4">Address</h2>
+
           <textarea
             name="address"
             value={profile.address || ""}
             onChange={handleChange}
             placeholder="Enter Address"
-            className="w-full p-3 rounded-lg bg-white/10 text-white outline-none"
+            className="w-full p-3 rounded bg-white/10"
           />
+
         </div>
 
-        {/* GitHub */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 w-full">
-          <p className="text-white/70 mb-4 font-semibold">GitHub Repository</p>
-          <input
-            name="github"
-            value={profile.github || ""}
-            onChange={handleChange}
-            placeholder="GitHub Repository Link"
-            className="w-full p-3 rounded-lg bg-white/10 text-white outline-none"
-          />
+        {/* PROFESSIONAL LINKS */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+
+          <h2 className="text-xl font-semibold mb-4">Professional Links</h2>
+
+          <div className="grid md:grid-cols-3 gap-4">
+
+            <input
+              name="github"
+              value={profile.github || ""}
+              onChange={handleChange}
+              placeholder="GitHub"
+              className="p-3 rounded bg-white/10"
+            />
+
+            <input
+              name="linkedin"
+              value={profile.linkedin || ""}
+              onChange={handleChange}
+              placeholder="LinkedIn"
+              className="p-3 rounded bg-white/10"
+            />
+
+            <input
+              name="portfolio"
+              value={profile.portfolio || ""}
+              onChange={handleChange}
+              placeholder="Portfolio"
+              className="p-3 rounded bg-white/10"
+            />
+
+          </div>
+
         </div>
 
-        {/* Save Button */}
+        {/* SAVE BUTTON */}
         <button
           onClick={handleSave}
-          className="px-6 py-3 rounded-xl font-semibold text-white
+          className="w-full py-3 rounded-xl font-semibold
           bg-gradient-to-r from-indigo-600 to-purple-600
-          hover:from-indigo-700 hover:to-purple-700 transition w-full"
+          hover:from-indigo-700 hover:to-purple-700"
         >
           Save Changes
         </button>
+
       </div>
+
     </div>
   );
 }

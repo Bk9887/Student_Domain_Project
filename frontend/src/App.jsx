@@ -77,9 +77,7 @@ function App() {
         path="/profile"
         element={
           <ProtectedRoute>
-            <Layout>
               <Profile />
-            </Layout>
           </ProtectedRoute>
         }
       />
@@ -87,9 +85,7 @@ function App() {
         path="/contact"
         element={
           <ProtectedRoute>
-            <Layout>
               <Contact />
-            </Layout>
           </ProtectedRoute>
         }
       />
@@ -97,9 +93,7 @@ function App() {
         path="/about"
         element={
           <ProtectedRoute>
-            <Layout>
               <AboutUs />
-            </Layout>
           </ProtectedRoute>
         }
       />
@@ -107,9 +101,7 @@ function App() {
         path="/help"
         element={
           <ProtectedRoute>
-            <Layout>
               <HelpCenter />
-            </Layout>
           </ProtectedRoute>
         }
       />
