@@ -11,12 +11,12 @@ const Leaderboard = () => {
   const fetchLeaderboard = async () => {
     try {
       const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      const selectedDomain = localStorage.getItem("selectedDomain");
+      const selectedDomain = localStorage.getItem("selectedDomain") || currentUser?.domain;
 
-      if (!currentUser || !selectedDomain) return;
+      if (!currentUser || !selectedDomain || selectedDomain === "Not Selected") return;
 
       const res = await axios.get(
-        `http://localhost:5000/api/leaderboard?domain=${selectedDomain}`,
+        `http://localhost:5000/api/leaderboard?domain=${encodeURIComponent(selectedDomain)}&t=${Date.now()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -77,8 +77,12 @@ exports.updateProgress = async (req, res) => {
     );
 
     // If frontend sends new payload format (points and percentage explicitly)
-    const earnedPoints = isRawPoints && points !== undefined ? points : Math.round(progress * 10);
-    const progressPercentage = isRawPoints ? progress : progress;
+    let earnedPoints = isRawPoints && points !== undefined ? points : Math.round((progress || 0) * 10);
+    let progressPercentage = isRawPoints ? (progress || 0) : (progress || 0);
+
+    // Failsafe sanitization against NaN corruption from older UI bugs
+    if (isNaN(earnedPoints) || earnedPoints === null) earnedPoints = 0;
+    if (isNaN(progressPercentage) || progressPercentage === null) progressPercentage = 0;
 
     if (domainData) {
       domainData.progress = progressPercentage;
@@ -179,5 +183,77 @@ exports.changeDomain = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Save a new Resume
+exports.saveResume = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { name, data } = req.body;
+
+    if (!name || !data) return res.status(400).json({ message: "Resume name and data are required" });
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.savedResumes.push({ name, data });
+    await user.save();
+
+    res.status(201).json({ message: "Resume saved successfully", resumes: user.savedResumes });
+  } catch (error) {
+    console.error("Resume Save Error:", error);
+    res.status(500).json({ message: "Server error saving resume" });
+  }
+};
+
+// Fetch all saved Resumes
+exports.getResumes = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user.savedResumes || []);
+  } catch (error) {
+    console.error("Resume Fetch Error:", error);
+    res.status(500).json({ message: "Server error fetching resumes" });
+  }
+};
+
+// Save a new Portfolio
+exports.savePortfolio = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { name, data } = req.body;
+
+    if (!name || !data) return res.status(400).json({ message: "Portfolio name and data are required" });
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.savedPortfolios.push({ name, data });
+    await user.save();
+
+    res.status(201).json({ message: "Portfolio saved successfully", portfolios: user.savedPortfolios });
+  } catch (error) {
+    console.error("Portfolio Save Error:", error);
+    res.status(500).json({ message: "Server error saving portfolio" });
+  }
+};
+
+// Fetch all saved Portfolios
+exports.getPortfolios = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user.savedPortfolios || []);
+  } catch (error) {
+    console.error("Portfolio Fetch Error:", error);
+    res.status(500).json({ message: "Server error fetching portfolios" });
   }
 };

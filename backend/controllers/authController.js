@@ -199,6 +199,7 @@ exports.loginUser = async (req, res) => {
       name: user.name,
       email: user.email,
       domain: user.domain,
+      photo: user.photo,
       token: generateToken(user._id),
       redirect: user.domain
         ? "/dashboard"

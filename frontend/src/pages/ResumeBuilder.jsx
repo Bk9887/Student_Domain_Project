@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { FaFileAlt, FaDownload, FaTrashAlt, FaPlus, FaTimes } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaFileAlt, FaDownload, FaTrashAlt, FaPlus, FaSave, FaFolderOpen, FaTimes } from "react-icons/fa";
 import html2pdf from "html2pdf.js";
+import axios from "axios";
 
 export default function ResumeBuilder() {
     const [personalInfo, setPersonalInfo] = useState({
@@ -36,6 +37,64 @@ export default function ResumeBuilder() {
     });
 
     const [showPreview, setShowPreview] = useState(false);
+    const [showResumeGallery, setShowResumeGallery] = useState(false);
+    const [savedResumes, setSavedResumes] = useState([]);
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Fetch resumes when gallery opens
+    useEffect(() => {
+        if (showResumeGallery) {
+            fetchResumes();
+        }
+    }, [showResumeGallery]);
+
+    const fetchResumes = async () => {
+        try {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            const token = localStorage.getItem("token");
+            if (!currentUser || !token) return;
+
+            const res = await axios.get(`http://localhost:5000/api/dashboard/${currentUser._id}/resumes`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setSavedResumes(res.data);
+        } catch (err) {
+            console.error("Failed to fetch resumes:", err);
+        }
+    };
+
+    const handleSaveResume = async () => {
+        try {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            const token = localStorage.getItem("token");
+            if (!currentUser || !token) return alert("Please log in to save resumes");
+
+            setIsSaving(true);
+            const resumeData = { personalInfo, education, skills, experience, projects };
+            const resumeName = `${personalInfo.name} - ${new Date().toLocaleDateString()}`;
+
+            await axios.post(`http://localhost:5000/api/dashboard/${currentUser._id}/resumes`,
+                { name: resumeName, data: resumeData },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setIsSaving(false);
+            alert("Resume Saved Successfully!");
+        } catch (err) {
+            console.error(err);
+            setIsSaving(false);
+            alert("Failed to save resume");
+        }
+    };
+
+    const loadResume = (data) => {
+        setPersonalInfo(data.personalInfo || personalInfo);
+        setEducation(data.education || education);
+        setSkills(data.skills || skills);
+        setExperience(data.experience || experience);
+        setProjects(data.projects || projects);
+        setShowResumeGallery(false);
+    };
 
     const handleAddSkill = (e) => {
         e.preventDefault();
@@ -99,6 +158,12 @@ export default function ResumeBuilder() {
                     </h1>
                 </div>
                 <div className="flex gap-3">
+                    <button
+                        onClick={() => setShowResumeGallery(true)}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 transition-colors"
+                    >
+                        <FaFolderOpen /> My Resumes
+                    </button>
                     <button
                         onClick={() => setShowPreview(true)}
                         className="px-5 py-2.5 rounded-xl font-medium bg-white/[0.05] border border-white/10 hover:bg-white/10 transition-colors text-white"
@@ -349,10 +414,12 @@ export default function ResumeBuilder() {
                         </div>
                         <div className="flex items-center gap-4">
                             <button
-                                onClick={() => setShowPreview(false)}
-                                className="px-5 py-2.5 rounded-xl font-medium border border-zinc-700 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
+                                onClick={handleSaveResume}
+                                disabled={isSaving}
+                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-colors shadow-lg ${isSaving ? 'bg-zinc-600 text-zinc-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white shadow-blue-500/20'}`}
                             >
-                                Edit
+                                <FaSave />
+                                {isSaving ? "Saving..." : "Save"}
                             </button>
                             <button
                                 onClick={exportToPDF}
@@ -360,6 +427,12 @@ export default function ResumeBuilder() {
                             >
                                 <FaDownload />
                                 Export PDF
+                            </button>
+                            <button
+                                onClick={() => setShowPreview(false)}
+                                className="px-5 py-2.5 rounded-xl font-medium border border-zinc-700 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
+                            >
+                                Close
                             </button>
                         </div>
                     </div>
@@ -446,6 +519,51 @@ export default function ResumeBuilder() {
                         </div>
                     </div>
 
+                </div>
+            )}
+
+            {/* Resume Gallery Modal */}
+            {showResumeGallery && (
+                <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+                    <div className="bg-[#11131a] rounded-2xl w-full max-w-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+                        {/* Header */}
+                        <div className="flex justify-between items-center p-6 border-b border-white/10">
+                            <div className="flex items-center gap-3">
+                                <FaFolderOpen className="text-2xl text-indigo-400" />
+                                <h2 className="text-2xl font-bold text-white tracking-tight">Saved Resumes</h2>
+                            </div>
+                            <button onClick={() => setShowResumeGallery(false)} className="text-zinc-500 hover:text-white transition-colors">
+                                <FaTimes size={20} />
+                            </button>
+                        </div>
+
+                        {/* List */}
+                        <div className="p-6 overflow-y-auto flex-1">
+                            {savedResumes.length > 0 ? (
+                                <div className="space-y-4">
+                                    {savedResumes.map((res, idx) => (
+                                        <div key={idx} className="bg-white/[0.02] border border-white/5 p-5 rounded-xl flex justify-between items-center hover:bg-white/[0.04] transition-colors group">
+                                            <div>
+                                                <h3 className="text-white font-semibold text-lg">{res.name}</h3>
+                                                <p className="text-sm text-zinc-500">{new Date(res.timestamp).toLocaleString()}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => loadResume(res.data)}
+                                                className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-lg transition-colors shadow-lg shadow-indigo-500/20 opacity-0 group-hover:opacity-100"
+                                            >
+                                                Load
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-10">
+                                    <p className="text-zinc-500">You haven't saved any resumes yet.</p>
+                                    <p className="text-sm text-zinc-600 mt-2">Generate a resume and click "Save to Profile" in the Preview screen.</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

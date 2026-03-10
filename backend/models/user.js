@@ -60,6 +60,24 @@ const userSchema = new mongoose.Schema(
       type: Date
     },
 
+    // Embedded Array for cloud-saved resumes
+    savedResumes: [
+      {
+        name: { type: String, required: true },
+        timestamp: { type: Date, default: Date.now },
+        data: { type: Object, required: true } // Stores the entire JSON state dump 
+      }
+    ],
+
+    // Embedded Array for cloud-saved portfolios
+    savedPortfolios: [
+      {
+        name: { type: String, required: true },
+        timestamp: { type: Date, default: Date.now },
+        data: { type: Object, required: true } // Stores the entire JSON state dump 
+      }
+    ],
+
     // Profile Details
     photo: {
       type: String,
@@ -79,6 +97,34 @@ const userSchema = new mongoose.Schema(
     },
 
     github: {
+      type: String
+    },
+
+    studentName: {
+      type: String
+    },
+
+    studentEmail: {
+      type: String
+    },
+
+    college: {
+      type: String
+    },
+
+    parentName: {
+      type: String
+    },
+
+    parentEmail: {
+      type: String
+    },
+
+    linkedin: {
+      type: String
+    },
+
+    portfolio: {
       type: String
     },
 

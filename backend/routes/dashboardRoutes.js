@@ -5,6 +5,10 @@ const {
   updateProgress,
   changeDomain,
   getRoadmapProgress,
+  saveResume,
+  getResumes,
+  savePortfolio,
+  getPortfolios
 } = require("../controllers/dashboardController");
 
 // GET dashboard data for a user
@@ -18,5 +22,17 @@ router.put("/:userId/domain", changeDomain);
 
 // GET specific Roadmap progress
 router.get("/progress/:userId/:domain", getRoadmapProgress);
+
+// POST save a resume snapshot
+router.post("/:userId/resumes", saveResume);
+
+// GET all saved resumes
+router.get("/:userId/resumes", getResumes);
+
+// POST save a portfolio snapshot
+router.post("/:userId/portfolios", savePortfolio);
+
+// GET all saved portfolios
+router.get("/:userId/portfolios", getPortfolios);
 
 module.exports = router;

@@ -21,7 +21,7 @@ export default function Navbar() {
   const fetchStats = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/dashboard/${currentUser._id}`,
+        `http://localhost:5000/api/dashboard/${currentUser._id}?t=${Date.now()}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPoints(res.data.points);

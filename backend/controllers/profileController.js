@@ -21,13 +21,23 @@ exports.updateProfile = async (req, res) => {
       return res.status(401).json({ message: "Not authorized" });
     }
 
-    const { phone, parentPhone, address, github, photo } = req.body;
+    const {
+      phone, parentPhone, address, github, photo,
+      studentName, studentEmail, college, parentName, parentEmail, linkedin, portfolio
+    } = req.body;
 
     if (phone !== undefined) req.user.phone = phone;
     if (parentPhone !== undefined) req.user.parentPhone = parentPhone;
     if (address !== undefined) req.user.address = address;
     if (github !== undefined) req.user.github = github;
     if (photo !== undefined) req.user.photo = photo;
+    if (studentName !== undefined) req.user.studentName = studentName;
+    if (studentEmail !== undefined) req.user.studentEmail = studentEmail;
+    if (college !== undefined) req.user.college = college;
+    if (parentName !== undefined) req.user.parentName = parentName;
+    if (parentEmail !== undefined) req.user.parentEmail = parentEmail;
+    if (linkedin !== undefined) req.user.linkedin = linkedin;
+    if (portfolio !== undefined) req.user.portfolio = portfolio;
 
     const updatedUser = await req.user.save();
 

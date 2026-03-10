@@ -36,6 +36,7 @@ export default function Login() {
         name: response.data.name,
         email: response.data.email,
         domain: response.data.domain || null,
+        photo: response.data.photo || null,
       };
 
       // ✅ Save user
