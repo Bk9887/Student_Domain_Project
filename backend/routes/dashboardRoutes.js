@@ -4,6 +4,7 @@ const {
   getDashboard,
   updateProgress,
   changeDomain,
+  getRoadmapProgress,
 } = require("../controllers/dashboardController");
 
 // GET dashboard data for a user
@@ -14,5 +15,8 @@ router.post("/:userId", updateProgress);
 
 // PUT change selected domain
 router.put("/:userId/domain", changeDomain);
+
+// GET specific Roadmap progress
+router.get("/progress/:userId/:domain", getRoadmapProgress);
 
 module.exports = router;

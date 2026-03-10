@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import BentoCard from "../components/BentoCard";
+import GlowButton from "../components/GlowButton";
 
 const domainsData = [
   {
@@ -37,6 +40,13 @@ const domainsData = [
     description: "AWS, Azure, DevOps",
     skills: ["AWS", "Docker", "Kubernetes"],
     careers: ["Cloud Engineer", "DevOps Engineer"]
+  },
+  {
+    id: 6,
+    name: "Artificial Intelligence",
+    description: "Deep Learning, NLP, Generative AI",
+    skills: ["TensorFlow", "PyTorch", "OpenAI APIs"],
+    careers: ["AI Engineer", "Research Scientist", "NLP Engineer"]
   }
 ];
 
@@ -52,14 +62,13 @@ export default function DomainSelection() {
     if (!text) return null;
 
     // Primary check: try to find an H2 header (e.g. ## Domain Name)
-    const headerMatch = text.match(/^##\s*\*?([^\n\*]+)/m);
-    if (headerMatch) return headerMatch[1].trim();
+    const headerMatch = text.match(/^##\s*(.+)/m);
+    if (headerMatch) return headerMatch[1].replace(/\*/g, '').trim();
 
     // Secondary fallback: Old point format (- Best Domain: ...)
-    const fallbackMatch = text.match(/[-\*]\s*\*?Best Domain\*?:\s*\*?([^\n]+)/i);
+    const fallbackMatch = text.match(/[-\*]\s*\*?Best Domain\*?:\s*(.+)/i);
     if (!fallbackMatch) return null;
-    let domainStr = fallbackMatch[1].trim();
-    return domainStr.replace(/\*+$/, '').trim();
+    return fallbackMatch[1].replace(/\*/g, '').trim();
   };
 
   const aiSuggestedDomain = extractAiDomain(aiSuggestion);
@@ -183,118 +192,121 @@ export default function DomainSelection() {
   );
 
   return (
-    <div className="text-white px-6">
-      <h1 className="text-3xl font-bold text-center mb-6">
-        Choose Your Domain
-      </h1>
+    <div className="text-white">
+      <motion.h1
+        className="text-4xl md:text-5xl font-bold text-center mb-8 tracking-tight text-balance
+          bg-gradient-to-br from-white via-cyber-lime/80 to-zinc-500 bg-clip-text text-transparent"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        Discover Your Destiny
+      </motion.h1>
 
-      {/* Search Bar */}
-      <div className="flex justify-center mb-4">
+      <div className="flex flex-col items-center gap-4 mb-6">
         <input
           type="text"
-          placeholder="Describe your interest (ex: I like AI and statistics)"
+          placeholder="e.g., I'm fascinated by artificial intelligence and data networks..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 px-5 py-3 rounded-xl
-            bg-white/5 backdrop-blur-xl border border-white/10
-            focus:outline-none focus:ring-2 focus:ring-indigo-500
-            text-white placeholder-gray-400"
+          className="w-full max-w-xl px-5 py-3.5 rounded-bento
+            bg-white/[0.03] backdrop-blur-[12px] border border-white/[0.08]
+            focus:outline-none focus:ring-2 focus:ring-cyber-violet/50 focus:border-cyber-violet/30
+            hover:bg-white/[0.05] text-white placeholder-zinc-500 transition-all"
         />
+        <GlowButton variant="secondary" onClick={askAI}>
+          Consult the Oracle
+        </GlowButton>
       </div>
 
-      {/* Ask AI Button */}
-      <div className="flex justify-center mb-6">
-        <button
-          onClick={askAI}
-          className="px-6 py-2 rounded-lg
-            bg-gradient-to-r from-indigo-600 to-purple-600
-            hover:from-indigo-700 hover:to-purple-700"
-        >
-          Ask AI
-        </button>
-      </div>
-
-      {/* AI Loading */}
       {loadingAI && (
-        <p className="text-center text-indigo-300 mb-4">
-          AI is thinking...
+        <p className="text-center text-cyber-lime font-medium tracking-wide mb-4 animate-pulse">
+          The Oracle is analyzing your potential...
         </p>
       )}
 
-      {/* AI Result */}
-      {aiSuggestion && (
-        <div className="max-w-xl mx-auto mb-6 p-6
-          rounded-xl bg-white/5 border border-white/10 text-left">
-          <p className="text-indigo-300 font-semibold mb-3 text-center text-lg border-b border-indigo-500/30 pb-2">
-            AI Recommendation
-          </p>
-          <div className="text-white text-sm md:text-base leading-relaxed prose prose-invert max-w-none">
-            <ReactMarkdown>{aiSuggestion}</ReactMarkdown>
-          </div>
-          {aiSuggestedDomain && (
-            <div className="mt-6 flex justify-center">
-              <button
-                onClick={handleAIGetStarted}
-                className="px-6 py-3 rounded-xl font-semibold
-                  bg-gradient-to-r from-indigo-600 to-purple-600
-                  hover:from-indigo-700 hover:to-purple-700"
-              >
-                Get Started with {aiSuggestedDomain}
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Domain Cards */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-        {filteredDomains.map((domain) => (
-          <div
-            key={domain.id}
-            onClick={() => setSelectedInfo(domain)}
-            className="group p-6 rounded-2xl cursor-pointer
-              bg-white/5 backdrop-blur-xl border border-white/10
-              hover:scale-105 hover:bg-gradient-to-r
-              hover:from-indigo-500 hover:to-purple-600
-              transition-all"
+      <AnimatePresence>
+        {aiSuggestion && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="max-w-xl mx-auto mb-8"
           >
-            <h2 className="text-xl font-semibold mb-3">{domain.name}</h2>
-            <p className="text-blue-200 text-sm">{domain.description}</p>
-          </div>
+            <BentoCard className="p-6 text-left" magnetic={false}>
+              <p className="text-cyber-lime font-bold mb-3 text-center text-sm uppercase tracking-widest border-b border-white/[0.1] pb-3">
+                Oracle's Insight
+              </p>
+              <div className="text-white text-sm md:text-base leading-relaxed prose prose-invert max-w-none">
+                <ReactMarkdown>{aiSuggestion}</ReactMarkdown>
+              </div>
+              {aiSuggestedDomain && (
+                <div className="mt-6 flex justify-center">
+                  <GlowButton variant="primary" onClick={handleAIGetStarted}>
+                    Get Started with {aiSuggestedDomain}
+                  </GlowButton>
+                </div>
+              )}
+            </BentoCard>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <h2 className="text-2xl font-bold mb-6 text-zinc-200 tracking-tight text-left">
+        Popular Domains
+      </h2>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {filteredDomains.map((domain) => (
+          <BentoCard
+            key={domain.id}
+            className="p-6 cursor-pointer"
+            onClick={() => setSelectedInfo(domain)}
+          >
+            <h2 className="text-xl font-bold mb-3 text-white group-hover:text-cyber-lime transition-colors tracking-tight">
+              {domain.name}
+            </h2>
+            <p className="text-zinc-400 text-sm leading-relaxed">{domain.description}</p>
+          </BentoCard>
         ))}
       </div>
 
-      {/* INFO BOX */}
-      {selectedInfo && (
-        <div className="max-w-2xl mx-auto p-6 rounded-2xl
-          bg-white/5 border border-white/10 backdrop-blur-xl">
-          <h2 className="text-2xl font-bold mb-3">{selectedInfo.name}</h2>
-          <p className="mb-4 text-blue-200">{selectedInfo.description}</p>
-
-          <p className="font-semibold mb-2">Skills</p>
-          <ul className="mb-4 list-disc list-inside text-sm text-gray-300">
-            {selectedInfo.skills.map((skill, i) => (
-              <li key={i}>{skill}</li>
-            ))}
-          </ul>
-
-          <p className="font-semibold mb-2">Career Paths</p>
-          <ul className="mb-6 list-disc list-inside text-sm text-gray-300">
-            {selectedInfo.careers.map((career, i) => (
-              <li key={i}>{career}</li>
-            ))}
-          </ul>
-
-          <button
-            onClick={() => handleGetStarted(selectedInfo.name)}
-            className="px-6 py-3 rounded-xl font-semibold
-              bg-gradient-to-r from-indigo-600 to-purple-600
-              hover:from-indigo-700 hover:to-purple-700"
+      <AnimatePresence>
+        {selectedInfo && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            className="max-w-2xl mx-auto"
           >
-            Get Started
-          </button>
-        </div>
-      )}
+            <BentoCard className="p-8" magnetic={false}>
+              <h2 className="text-3xl font-bold mb-3 text-white tracking-tight bg-gradient-neon bg-clip-text text-transparent">
+                {selectedInfo.name}
+              </h2>
+              <p className="mb-6 text-zinc-400 leading-relaxed">{selectedInfo.description}</p>
+              <p className="font-bold text-cyber-lime mb-3 tracking-wide uppercase text-xs">
+                Core Virtues
+              </p>
+              <ul className="mb-6 list-disc list-inside text-sm text-zinc-300 space-y-1">
+                {selectedInfo.skills.map((skill, i) => (
+                  <li key={i}>{skill}</li>
+                ))}
+              </ul>
+              <p className="font-bold text-cyber-lime mb-3 tracking-wide uppercase text-xs">
+                Destined Paths
+              </p>
+              <ul className="mb-8 list-disc list-inside text-sm text-zinc-300 space-y-1">
+                {selectedInfo.careers.map((career, i) => (
+                  <li key={i}>{career}</li>
+                ))}
+              </ul>
+              <GlowButton variant="primary" onClick={() => handleGetStarted(selectedInfo.name)}>
+                Get Started
+              </GlowButton>
+            </BentoCard>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

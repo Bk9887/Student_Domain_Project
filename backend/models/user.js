@@ -12,6 +12,10 @@ const domainProgressSchema = new mongoose.Schema({
   points: {
     type: Number,
     default: 0
+  },
+  completedVideos: {
+    type: [String],
+    default: []
   }
 });
 

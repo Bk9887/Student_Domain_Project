@@ -1,56 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Your custom styles below */
+@layer base {
 
-html, body, #root {
-  background: #0b1220;
-  margin: 0;
-  padding: 0;
+  html,
+  body,
+  #root {
+    @apply bg-zinc-950 text-white font-sans;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-indigo-500/30 text-white;
+  }
 }
 
-/* Glow Orbs */
+/* Glassmorphism Utilities */
+.glass-panel {
+  @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-2xl;
+}
+
+/* Subtle Glow Orbs */
 .orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(140px);
-  opacity: 0.5;
-  animation: float 14s ease-in-out infinite alternate;
+  filter: blur(120px);
+  opacity: 0.15;
   z-index: 0;
+  pointer-events: none;
 }
 
 .orb-1 {
-  width: 500px;
-  height: 500px;
-  background: #06b6d4;
-  top: -150px;
-  left: -150px;
+  width: 600px;
+  height: 600px;
+  background: #4f46e5;
+  /* indigo-600 */
+  top: -200px;
+  left: -200px;
+  animation: float 15s ease-in-out infinite alternate;
 }
 
 .orb-2 {
-  width: 400px;
-  height: 400px;
-  background: #3b82f6;
-  bottom: -150px;
-  right: -100px;
-  animation-delay: 2s;
+  width: 500px;
+  height: 500px;
+  background: #8b5cf6;
+  /* violet-500 */
+  bottom: -200px;
+  right: -150px;
+  animation: float 18s ease-in-out infinite alternate-reverse;
 }
 
 .orb-3 {
-  width: 350px;
-  height: 350px;
-  background: #14b8a6;
+  width: 400px;
+  height: 400px;
+  background: #0284c7;
+  /* sky-600 */
   top: 40%;
   left: 60%;
-  animation-delay: 4s;
-}
-
-@keyframes float {
-  from {
-    transform: translateY(0px) translateX(0px);
-  }
-  to {
-    transform: translateY(-40px) translateX(30px);
-  }
+  animation: float 20s ease-in-out infinite alternate;
+  animation-delay: 2s;
 }

@@ -15,6 +15,8 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import HelpCenter from "./pages/HelpCenter";
 import VerifyEmail from "./pages/VerifyEmail";
+import ResumeBuilder from "./pages/ResumeBuilder";
+import PortfolioGenerator from "./pages/PortfolioGenerator";
 
 
 
@@ -74,10 +76,32 @@ function App() {
         }
       />
       <Route
+        path="/resume"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ResumeBuilder />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/portfolio"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <PortfolioGenerator />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/profile"
         element={
           <ProtectedRoute>
+            <Layout>
               <Profile />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -85,7 +109,9 @@ function App() {
         path="/contact"
         element={
           <ProtectedRoute>
+            <Layout>
               <Contact />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -93,7 +119,9 @@ function App() {
         path="/about"
         element={
           <ProtectedRoute>
+            <Layout>
               <AboutUs />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -101,7 +129,9 @@ function App() {
         path="/help"
         element={
           <ProtectedRoute>
+            <Layout>
               <HelpCenter />
+            </Layout>
           </ProtectedRoute>
         }
       />

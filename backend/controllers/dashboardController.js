@@ -11,7 +11,8 @@ exports.getDashboard = async (req, res) => {
     const selectedDomain = user.domain || "Not Selected";
 
     let progress = 0;
-    let points = 0;
+    // Base points includes the 50 point signup bonus + streak increments
+    let points = user.points || 0;
 
     const domainData = user.domainProgress.find(
       (d) => d.domain === selectedDomain
@@ -19,7 +20,8 @@ exports.getDashboard = async (req, res) => {
 
     if (domainData) {
       progress = domainData.progress;
-      points = domainData.points;
+      // Add domain specific points to the base score
+      points += domainData.points;
     }
 
     const allUsers = await User.find({ domain: selectedDomain });
@@ -30,9 +32,12 @@ exports.getDashboard = async (req, res) => {
           (d) => d.domain === selectedDomain
         );
 
+        // Leaderboard MUST sort by compiled total score, not just domain score!
+        const totalScore = (u.points || 0) + (dp ? dp.points : 0);
+
         return {
           id: u._id.toString(),
-          points: dp ? dp.points : 0,
+          points: totalScore,
         };
       })
       .sort((a, b) => b.points - a.points);
@@ -58,7 +63,7 @@ exports.getDashboard = async (req, res) => {
 exports.updateProgress = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { domain, progress } = req.body;
+    const { domain, progress, points, isRawPoints, completedVideos } = req.body;
 
     if (!domain)
       return res.status(400).json({ message: "Domain is required" });
@@ -71,24 +76,28 @@ exports.updateProgress = async (req, res) => {
       (d) => d.domain === domain
     );
 
-    const points = Math.round(progress * 10);
+    // If frontend sends new payload format (points and percentage explicitly)
+    const earnedPoints = isRawPoints && points !== undefined ? points : Math.round(progress * 10);
+    const progressPercentage = isRawPoints ? progress : progress;
 
     if (domainData) {
-      domainData.progress = progress;
-      domainData.points = points;
+      domainData.progress = progressPercentage;
+      domainData.points = earnedPoints;
+      if (completedVideos) domainData.completedVideos = completedVideos;
     } else {
       user.domainProgress.push({
         domain,
-        progress,
-        points,
+        progress: progressPercentage,
+        points: earnedPoints,
+        completedVideos: completedVideos || []
       });
     }
 
     user.domain = domain;
 
-    // 🔥 STREAK CALCULATION
+    // 🔥 STREAK CALCULATION AND BONUS
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
 
     const lastActive = user.lastActiveDate
       ? new Date(user.lastActiveDate)
@@ -97,7 +106,7 @@ exports.updateProgress = async (req, res) => {
     if (!lastActive) {
       user.streak = 1;
     } else {
-      lastActive.setHours(0,0,0,0);
+      lastActive.setHours(0, 0, 0, 0);
 
       const diffDays = Math.floor(
         (today - lastActive) / (1000 * 60 * 60 * 24)
@@ -105,7 +114,9 @@ exports.updateProgress = async (req, res) => {
 
       if (diffDays === 1) {
         user.streak += 1;
-      } 
+        // Apply +5 global points for continuing a streak!
+        user.points = (user.points || 0) + 5;
+      }
       else if (diffDays > 1) {
         user.streak = 1;
       }
@@ -120,6 +131,25 @@ exports.updateProgress = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get strictly the completed videos array for Roadmap persistence
+exports.getRoadmapProgress = async (req, res) => {
+  try {
+    const { userId, domain } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const domainData = user.domainProgress.find((d) => d.domain === domain);
+
+    res.json({
+      completedVideos: domainData && domainData.completedVideos ? domainData.completedVideos : []
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error fetching roadmap progress" });
   }
 };
 

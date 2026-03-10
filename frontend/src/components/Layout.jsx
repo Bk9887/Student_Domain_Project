@@ -3,10 +3,7 @@ import Navbar from "../components/Navbar";
 
 export default function Layout({ children }) {
   return (
-    <div className="relative min-h-screen flex text-white overflow-hidden">
-      
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#172554] to-[#1e40af]" />
+    <div className="relative min-h-screen flex text-white overflow-hidden bg-zinc-950 font-sans selection:bg-indigo-500/30">
 
       {/* Glow Orbs */}
       <div className="orb orb-1" />
@@ -15,18 +12,18 @@ export default function Layout({ children }) {
 
       {/* Content Wrapper */}
       <div className="relative z-10 flex w-full">
-        
+
         {/* Sidebar */}
         <Sidebar />
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col h-screen overflow-y-auto">
 
           {/* Navbar */}
           <Navbar />
 
           {/* Page Content */}
-          <div className="p-10">
+          <div className="p-10 max-w-7xl mx-auto w-full">
             {children}
           </div>
 

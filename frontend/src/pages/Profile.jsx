@@ -49,6 +49,16 @@ export default function Profile() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      // Update local storage so Navbar has the latest photo
+      const existingUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (existingUser) {
+        const updatedUser = { ...existingUser, photo: profile.photo };
+        localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+      }
+
+      // Dispatch event to trigger Navbar update
+      window.dispatchEvent(new Event("profilePhotoUpdated"));
+
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
@@ -56,17 +66,16 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0f2f] to-[#2a1b4d] text-white p-8">
+    <div className="min-h-screen relative text-white p-8">
+      <div className="max-w-4xl mx-auto space-y-8 relative z-10 mt-10">
 
-      <div className="max-w-6xl mx-auto space-y-8">
-
-        <h1 className="text-3xl font-bold">Profile</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-br from-white via-indigo-200 to-zinc-500 bg-clip-text text-transparent drop-shadow-sm">Builder Profile</h1>
 
         {/* TOP SECTION */}
         <div className="grid md:grid-cols-3 gap-6">
 
           {/* Profile Photo */}
-          <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center">
+          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-6 text-center">
             <img
               src={profile.photo || "https://i.imgur.com/HeIi0wU.png"}
               className="w-32 h-32 mx-auto rounded-full object-cover border"
@@ -81,9 +90,9 @@ export default function Profile() {
           </div>
 
           {/* Student Information */}
-          <div className="md:col-span-2 bg-white/5 border border-white/10 rounded-xl p-6">
+          <div className="md:col-span-2 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
 
-            <h2 className="text-xl font-semibold mb-4">Student Information</h2>
+            <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">Student Information</h2>
 
             <div className="grid md:grid-cols-2 gap-4">
 
@@ -92,7 +101,7 @@ export default function Profile() {
                 value={profile.studentName || ""}
                 onChange={handleChange}
                 placeholder="Student Name"
-                className="p-3 rounded bg-white/10"
+                className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
               />
 
               <input
@@ -100,7 +109,7 @@ export default function Profile() {
                 value={profile.studentEmail || ""}
                 onChange={handleChange}
                 placeholder="Student Email"
-                className="p-3 rounded bg-white/10"
+                className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
               />
 
               <input
@@ -108,7 +117,7 @@ export default function Profile() {
                 value={profile.phone || ""}
                 onChange={handleChange}
                 placeholder="Student Phone"
-                className="p-3 rounded bg-white/10"
+                className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
               />
 
               <input
@@ -116,7 +125,7 @@ export default function Profile() {
                 value={profile.college || ""}
                 onChange={handleChange}
                 placeholder="College"
-                className="p-3 rounded bg-white/10"
+                className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
               />
 
             </div>
@@ -126,9 +135,9 @@ export default function Profile() {
         </div>
 
         {/* PARENT INFORMATION */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
 
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">
             Parent / Guardian Information
           </h2>
 
@@ -139,7 +148,7 @@ export default function Profile() {
               value={profile.parentName || ""}
               onChange={handleChange}
               placeholder="Parent Name"
-              className="p-3 rounded bg-white/10"
+              className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
             />
 
             <input
@@ -147,7 +156,7 @@ export default function Profile() {
               value={profile.parentEmail || ""}
               onChange={handleChange}
               placeholder="Parent Email"
-              className="p-3 rounded bg-white/10"
+              className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
             />
 
             <input
@@ -155,7 +164,7 @@ export default function Profile() {
               value={profile.parentPhone || ""}
               onChange={handleChange}
               placeholder="Parent Phone"
-              className="p-3 rounded bg-white/10"
+              className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
             />
 
           </div>
@@ -163,24 +172,25 @@ export default function Profile() {
         </div>
 
         {/* ADDRESS */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
 
-          <h2 className="text-xl font-semibold mb-4">Address</h2>
+          <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">Address</h2>
 
           <textarea
             name="address"
             value={profile.address || ""}
             onChange={handleChange}
             placeholder="Enter Address"
-            className="w-full p-3 rounded bg-white/10"
+            rows="3"
+            className="w-full p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner resize-none"
           />
 
         </div>
 
         {/* PROFESSIONAL LINKS */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
 
-          <h2 className="text-xl font-semibold mb-4">Professional Links</h2>
+          <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">Professional Links</h2>
 
           <div className="grid md:grid-cols-3 gap-4">
 
@@ -188,24 +198,24 @@ export default function Profile() {
               name="github"
               value={profile.github || ""}
               onChange={handleChange}
-              placeholder="GitHub"
-              className="p-3 rounded bg-white/10"
+              placeholder="GitHub Profile URL"
+              className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
             />
 
             <input
               name="linkedin"
               value={profile.linkedin || ""}
               onChange={handleChange}
-              placeholder="LinkedIn"
-              className="p-3 rounded bg-white/10"
+              placeholder="LinkedIn Profile URL"
+              className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
             />
 
             <input
               name="portfolio"
               value={profile.portfolio || ""}
               onChange={handleChange}
-              placeholder="Portfolio"
-              className="p-3 rounded bg-white/10"
+              placeholder="Portfolio Website"
+              className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 text-white placeholder-zinc-500 transition-all shadow-inner"
             />
 
           </div>
@@ -215,9 +225,9 @@ export default function Profile() {
         {/* SAVE BUTTON */}
         <button
           onClick={handleSave}
-          className="w-full py-3 rounded-xl font-semibold
-          bg-gradient-to-r from-indigo-600 to-purple-600
-          hover:from-indigo-700 hover:to-purple-700"
+          className="w-full py-4 rounded-xl font-medium shadow-lg shadow-indigo-500/20
+            bg-indigo-600 border border-indigo-500
+            hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all duration-300 text-lg"
         >
           Save Changes
         </button>

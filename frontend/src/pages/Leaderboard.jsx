@@ -59,17 +59,17 @@ const Leaderboard = () => {
         <Confetti numberOfPieces={250} recycle={false} gravity={0.3} />
       )}
 
-      <h1 className="text-3xl font-bold mb-6">Leaderboard</h1>
+      <h1 className="text-4xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-indigo-300 via-purple-300 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">Domain Leaders</h1>
 
-      <div className="bg-white/5 backdrop-blur-xl rounded-xl p-6 border border-white/10">
+      <div className="bg-white/[0.03] backdrop-blur-2xl rounded-2xl p-8 border border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
         <table className="w-full text-left">
           <thead>
-            <tr className="text-white/70 border-b border-white/10">
-              <th className="pb-3">Rank</th>
-              <th className="pb-3">Name</th>
-              <th className="pb-3">Domain</th>
-              <th className="pb-3">Progress</th>
-              <th className="pb-3">Points</th>
+            <tr className="text-zinc-400 border-b border-white/[0.08] text-sm uppercase tracking-wider">
+              <th className="pb-4 font-medium">Rank</th>
+              <th className="pb-4 font-medium">Name</th>
+              <th className="pb-4 font-medium">Domain</th>
+              <th className="pb-4 font-medium">Progress</th>
+              <th className="pb-4 font-medium text-right pr-4">Points</th>
             </tr>
           </thead>
 
@@ -77,19 +77,25 @@ const Leaderboard = () => {
             {leaderboardData.map((user, index) => (
               <tr
                 key={user._id}
-                className="border-b border-white/10 hover:bg-white/5 transition"
+                className="border-b border-white/[0.05] hover:bg-white/[0.03] transition-colors group"
               >
-                <td className="py-3 font-semibold text-lg">
+                <td className="py-4 px-2 font-semibold text-xl">
                   {getBadge(index)}
                 </td>
 
-                <td>{user.name}</td>
+                <td className="py-4 font-medium text-zinc-100 group-hover:text-white transition-colors">
+                  {user.name}
+                </td>
 
-                <td className="text-sm text-white/70">{user.domain}</td>
+                <td className="py-4 text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                  {user.domain}
+                </td>
 
-                <td>{user.progress}%</td>
+                <td className="py-4 font-medium text-indigo-400">
+                  {user.progress}%
+                </td>
 
-                <td className="font-semibold text-indigo-400">
+                <td className="py-4 font-semibold text-zinc-100 text-right pr-4">
                   {user.points}
                 </td>
               </tr>

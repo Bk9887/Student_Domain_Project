@@ -64,19 +64,20 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="flex justify-end items-center p-6 relative z-50">
+    <div className="flex justify-end items-center pb-6 relative z-50">
       <div className="flex items-center gap-6">
 
         {/* XP + Streak */}
-        <div className="flex items-center gap-8 bg-white/10 backdrop-blur-lg 
-          border border-white/20 px-8 py-4 rounded-full shadow-lg">
-          <div className="flex items-center gap-3">
-            <span className="bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">XP</span>
-            <span className="font-semibold text-lg">{points}</span>
-          </div>
+        <div className="flex items-center gap-6 bg-white/[0.03] backdrop-blur-xl 
+          border border-white/[0.08] px-6 py-2.5 rounded-full shadow-xl">
           <div className="flex items-center gap-2">
-            <span className="text-xl">🔥</span>
-            <span className="font-semibold text-lg">{streak}</span>
+            <span className="bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-950 text-xs font-bold px-2.5 py-0.5 rounded-full">XP</span>
+            <span className="font-medium text-zinc-100">{points}</span>
+          </div>
+          <div className="w-px h-5 bg-white/10"></div>
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🔥</span>
+            <span className="font-medium text-zinc-100">{streak}</span>
           </div>
         </div>
 
@@ -84,46 +85,46 @@ export default function Navbar() {
         <div ref={dropdownRef} className="relative">
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-2 bg-white/10 
-              border border-white/20 px-3 py-2 rounded-lg"
+            className="flex items-center gap-2 bg-white/[0.03] backdrop-blur-xl
+              border border-white/[0.08] px-3 py-2 rounded-xl transition-all hover:bg-white/[0.06] shadow-xl"
           >
             {profilePhoto ? (
               <img
                 src={profilePhoto}
                 alt="Profile"
-                className="w-9 h-9 rounded-full object-cover"
+                className="w-8 h-8 rounded-full object-cover"
               />
             ) : (
-              <FaUserCircle size={36} className="text-gray-200" />
+              <FaUserCircle size={32} className="text-zinc-400" />
             )}
-            <span>▾</span>
+            <span className="text-zinc-400 text-xs">▾</span>
           </button>
 
           {open && (
-            <div className="absolute right-0 mt-3 w-44 
-              bg-gray-900 border border-white/10 rounded-xl shadow-xl 
-              overflow-hidden z-50">
+            <div className="absolute right-0 mt-3 w-48 
+              bg-zinc-900/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl 
+              overflow-hidden z-50 font-medium text-sm">
               <button
                 onClick={() => navigate("/profile")}
-                className="w-full text-left px-4 py-3 hover:bg-white/10"
+                className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
               >
                 Profile
               </button>
               <button
                 onClick={() => navigate("/about")}
-                className="w-full text-left px-4 py-3 hover:bg-white/10"
+                className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-white/5 transition-colors border-t border-white/5"
               >
                 About Us
               </button>
               <button
                 onClick={() => navigate("/contact")}
-                className="w-full text-left px-4 py-3 hover:bg-white/10"
+                className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-white/5 transition-colors border-t border-white/5"
               >
                 Contact Us
               </button>
               <button
                 onClick={() => navigate("/help")}
-                className="w-full text-left px-4 py-3 hover:bg-white/10"
+                className="w-full text-left px-4 py-3 text-zinc-300 hover:text-white hover:bg-white/5 transition-colors border-t border-white/5"
               >
                 Help Center
               </button>

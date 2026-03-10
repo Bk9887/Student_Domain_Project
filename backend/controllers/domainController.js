@@ -11,6 +11,17 @@ exports.updateUserDomain = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     user.domain = domain;
+
+    // Check if progress exists for this domain so the user appears on Leaderboard immediately
+    const domainExists = user.domainProgress.find(d => d.domain === domain);
+    if (!domainExists) {
+      user.domainProgress.push({
+        domain: domain,
+        progress: 0,
+        points: 0
+      });
+    }
+
     await user.save();
 
     res.json({ message: "Domain updated successfully", domain });

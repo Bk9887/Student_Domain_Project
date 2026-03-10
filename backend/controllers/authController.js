@@ -73,6 +73,7 @@ exports.registerUser = async (req, res) => {
       password: hashedPassword,
       domain: null,
       domainProgress: [],
+      points: 50,
       verificationToken,
       isVerified: false,
     });

@@ -21,12 +21,8 @@ export default function HelpCenter() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-[#0a0f2f] to-[#2a1b4d] text-white overflow-hidden">
+    <div className="relative min-h-screen text-white overflow-hidden">
 
-      {/* Glow Orbs */}
-      <div className="orb orb-1"></div>
-      <div className="orb orb-2"></div>
-      <div className="orb orb-3"></div>
 
       {/* Page Content */}
       <div className="relative max-w-4xl mx-auto space-y-8 pb-12 pt-10 px-4">
@@ -34,35 +30,35 @@ export default function HelpCenter() {
         <h1 className="text-4xl font-bold mb-6 text-white text-center">Help Center</h1>
 
         {/* FAQs */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 space-y-4">
-          <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions</h2>
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8 space-y-4">
+          <h2 className="text-2xl font-semibold mb-6">Frequently Asked Questions</h2>
           {faqs.map((faq, index) => (
-            <div key={index} className="p-4 rounded-xl bg-white/10">
-              <p className="font-semibold text-white">{faq.question}</p>
-              <p className="text-white/70 mt-1">{faq.answer}</p>
+            <div key={index} className="p-5 rounded-xl bg-white/[0.03] border border-white/[0.05] shadow-inner">
+              <p className="font-semibold text-zinc-100">{faq.question}</p>
+              <p className="text-zinc-400 mt-2 leading-relaxed">{faq.answer}</p>
             </div>
           ))}
         </div>
 
         {/* Contact Support */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
           <h2 className="text-2xl font-semibold mb-4">Contact Support</h2>
-          <p className="text-white/70 mb-2">
+          <p className="text-zinc-400 mb-6">
             If you need further help, you can reach out to our support team via the Contact page.
           </p>
           <button
-            className="px-6 py-3 rounded-xl font-semibold text-white
-            bg-gradient-to-r from-indigo-600 to-purple-600
-            hover:from-indigo-700 hover:to-purple-700 transition"
+            className="px-6 py-3 rounded-xl font-medium shadow-lg shadow-indigo-500/20
+            bg-indigo-600 border border-indigo-500
+            hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all duration-300"
           >
             Go to Contact Page
           </button>
         </div>
 
         {/* Guides */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
           <h2 className="text-2xl font-semibold mb-4">Guides & Tutorials</h2>
-          <ul className="list-disc list-inside text-white/70 space-y-1">
+          <ul className="list-disc list-inside text-zinc-400 space-y-2">
             <li>Getting Started with Your Domain</li>
             <li>Tracking Your Progress Efficiently</li>
             <li>Profile Management Tips</li>

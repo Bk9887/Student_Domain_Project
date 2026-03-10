@@ -20,10 +20,11 @@ exports.getLeaderboard = async (req, res) => {
           name: user.name,
           domain: user.domain,
           progress: dp?.progress || 0,
-          points: dp?.points || 0,
+          // Sort by the aggregated global score!
+          points: (user.points || 0) + (dp?.points || 0),
         };
       })
-      .sort((a, b) => b.points - a.points); // sort by points
+      .sort((a, b) => b.points - a.points); // sort by combined points
 
     res.json(leaderboard);
   } catch (err) {
