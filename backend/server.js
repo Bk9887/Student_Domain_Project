@@ -28,6 +28,7 @@ const roadmapRoutes = require("./routes/roadmapRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const domainRoutes = require("./routes/domainRoutes");
 const profileRoutes = require("./routes/profileRoutes"); // ⭐ ADD THIS
+const aiRoutes = require("./routes/aiRoutes");
 
 // ✅ Register routes
 app.use("/api/auth", authRoutes);
@@ -37,6 +38,7 @@ app.use("/api/roadmap", roadmapRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/domain", domainRoutes);
 app.use("/api/profile", profileRoutes); // ⭐ ADD THIS
+app.use("/api/ai", aiRoutes);
 
 // ✅ Test route
 app.get("/", (req, res) => {
