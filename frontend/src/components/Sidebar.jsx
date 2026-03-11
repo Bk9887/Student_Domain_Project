@@ -7,6 +7,7 @@ import {
   FaFileAlt,
   FaBriefcase
 } from "react-icons/fa"; // FontAwesome icons
+import { FaRobot } from "react-icons/fa6";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -24,8 +25,11 @@ export default function Sidebar() {
     { path: "/domains", label: "Domains", icon: <FaThList /> },
     { path: "/roadmap", label: "Roadmap", icon: <FaBookOpen /> },
     { path: "/leaderboard", label: "Leaderboard", icon: <FaTrophy /> },
-    { path: "/resume", label: "Resume Builder", icon: <FaFileAlt /> },
-    { path: "/portfolio", label: "Portfolio", icon: <FaBriefcase /> },
+    ...[
+      { path: "/resume", label: "Resume Builder", icon: <FaFileAlt /> },
+      { path: "/portfolio", label: "Portfolio", icon: <FaBriefcase /> },
+      { path: "/chat", label: "AI Mentor", icon: <FaRobot /> },
+    ]
   ];
 
   return (
@@ -66,17 +70,20 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* Logout Button */}
-      <button
-        onClick={logout}
-        className="flex items-center justify-center gap-3 py-3 rounded-xl 
-        bg-white/[0.03] border border-white/[0.08]
-        hover:bg-white/[0.06] hover:border-white/[0.12]
-        text-zinc-300 hover:text-white
-        transition-all duration-300 shadow-lg"
-      >
-        Logout
-      </button>
+      {/* Bottom Section */}
+      <div className="flex flex-col gap-2 relative">
+        {/* Logout Button */}
+        <button
+          onClick={logout}
+          className="flex items-center justify-center w-full gap-3 py-3 rounded-xl 
+          bg-red-500/10 border border-red-500/20
+          hover:bg-red-500/20 hover:border-red-500/30
+          text-red-400 hover:text-red-300
+          transition-all duration-300 shadow-lg"
+        >
+          Logout
+        </button>
+      </div>
     </aside>
   );
 }

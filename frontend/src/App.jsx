@@ -17,6 +17,7 @@ import HelpCenter from "./pages/HelpCenter";
 import VerifyEmail from "./pages/VerifyEmail";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import PortfolioGenerator from "./pages/PortfolioGenerator";
+import Chat from "./pages/Chat";
 
 
 
@@ -131,6 +132,16 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <HelpCenter />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Chat />
             </Layout>
           </ProtectedRoute>
         }

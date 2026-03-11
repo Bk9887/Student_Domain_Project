@@ -6,7 +6,9 @@ export default function Signup() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+  const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
@@ -15,12 +17,28 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+
+    if (formData.password !== formData.confirmPassword) {
+      return setErrorMsg("Passwords do not match!");
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      return setErrorMsg("Password must be at least 6 characters long and include 1 uppercase letter, 1 number, and 1 special character.");
+    }
 
     try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      };
+
       const res = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -94,9 +112,28 @@ export default function Signup() {
           placeholder="Password"
           required
           onChange={handleChange}
-          className="w-full mb-6 p-3.5 rounded-xl bg-white/[0.03] text-white
+          className="w-full mb-4 p-3.5 rounded-xl bg-white/[0.03] text-white
           placeholder-zinc-500 border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
         />
+
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          required
+          onChange={handleChange}
+          className="w-full mb-1 p-3.5 rounded-xl bg-white/[0.03] text-white
+          placeholder-zinc-500 border border-white/[0.08] outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
+        />
+
+        {errorMsg && (
+          <p className="text-red-400 text-xs font-medium mb-4 ml-1">
+            {errorMsg}
+          </p>
+        )}
+
+        {/* Adjust margin to account for error field */}
+        <div className={errorMsg ? "mt-2" : "mt-6"}></div>
 
         <button
           type="submit"

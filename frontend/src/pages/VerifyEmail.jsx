@@ -39,30 +39,32 @@ export default function VerifyEmail() {
   }, [token, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
+      <div className="orb orb-3" />
 
-      <div className="backdrop-blur-lg bg-white/10 border border-white/20 shadow-xl rounded-2xl p-10 text-center w-[420px]">
+      <div className="relative z-10 bg-white/[0.03] backdrop-blur-2xl
+        border border-white/[0.08] p-10 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] w-[420px] text-center">
 
-        <div className="text-5xl mb-4">
+        <div className="text-5xl mb-6">
           {success ? "✅" : "⏳"}
         </div>
 
-        <h2 className="text-2xl font-bold text-white mb-4">
+        <h2 className="text-3xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
           Email Verification
         </h2>
 
-        <p className="text-white text-lg">
+        <p className="text-zinc-300 text-lg">
           {message}
         </p>
 
         {success && (
-          <p className="text-white/70 mt-4 text-sm">
+          <p className="text-zinc-500 mt-6 text-sm">
             Redirecting to login...
           </p>
         )}
-
       </div>
-
     </div>
   );
 }

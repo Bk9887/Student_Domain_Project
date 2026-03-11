@@ -29,6 +29,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const domainRoutes = require("./routes/domainRoutes");
 const profileRoutes = require("./routes/profileRoutes"); // ⭐ ADD THIS
 const aiRoutes = require("./routes/aiRoutes");
+const chatbotRoutes = require("./routes/chatbotRoutes");
 
 // ✅ Register routes
 app.use("/api/auth", authRoutes);
@@ -39,6 +40,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/domain", domainRoutes);
 app.use("/api/profile", profileRoutes); // ⭐ ADD THIS
 app.use("/api/ai", aiRoutes);
+app.use("/api/chat", chatbotRoutes);
 
 // ✅ Test route
 app.get("/", (req, res) => {
