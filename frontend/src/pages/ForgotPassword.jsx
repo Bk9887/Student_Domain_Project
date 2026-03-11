@@ -15,7 +15,7 @@ export default function ForgotPassword() {
         { email }
       );
       setMessage(response.data.message);
-      setTimeout(() => navigate("/reset-password"), 2000);
+      setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
       setMessage(error.response?.data?.message || "Email not found.");
     }

@@ -30,7 +30,8 @@ A MERN stack web application that helps students explore different career domain
 - Bcryptjs for password hashing
 - Nodemailer for email dispatch
 
-## Installation & Setup
+## Installation & Setup...
+
 
 1. **Clone the repository**
    ```bash

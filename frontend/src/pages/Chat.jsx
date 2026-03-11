@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FaRobot, FaUser, FaPaperPlane } from "react-icons/fa";
+import BentoCard from "../components/BentoCard";
 
 export default function Chat() {
     const [messages, setMessages] = useState([
@@ -56,7 +57,7 @@ export default function Chat() {
     };
 
     return (
-        <div className="flex flex-col h-[calc(100vh-180px)] bg-zinc-950 rounded-3xl border border-white/5 overflow-hidden shadow-2xl relative">
+        <BentoCard className="flex flex-col h-[calc(100vh-180px)] relative" accentColor="violet">
             {/* Background Orbs */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -141,6 +142,6 @@ export default function Chat() {
                     AI Mentor can make mistakes. Consider verifying important information.
                 </p>
             </div>
-        </div>
+        </BentoCard>
     );
 }

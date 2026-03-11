@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Landing from "./pages/Landing";
 import DomainSelection from "./pages/DomainSelection";
 import Dashboard from "./pages/Dashboard";
@@ -19,9 +21,51 @@ import ResumeBuilder from "./pages/ResumeBuilder";
 import PortfolioGenerator from "./pages/PortfolioGenerator";
 import Chat from "./pages/Chat";
 
-
+// Admin Imports
+import AdminRoute from "./components/AdminRoute";
+import AdminLayout from "./admin/AdminLayout";
+import AdminDashboard from "./admin/AdminDashboard";
+import ManageStudents from "./admin/ManageStudents";
+import ManageDomains from "./admin/ManageDomains";
+import ManageRoadmaps from "./admin/ManageRoadmaps";
+import ManageFeedback from "./admin/ManageFeedback";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 function App() {
+  const [appConfig, setAppConfig] = useState(null);
+
+  const fetchConfig = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/admin/config");
+      setAppConfig(res.data);
+    } catch (err) {
+      console.error("Boot Config Error:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchConfig();
+    window.addEventListener("configUpdated", fetchConfig);
+    return () => window.removeEventListener("configUpdated", fetchConfig);
+  }, []);
+
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  // Enforce Maintenance mode for non-admins
+  if (appConfig?.maintenanceMode && user && !user.isAdmin) {
+    return (
+      <div className="h-screen w-full bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-20 h-20 mb-6 flex items-center justify-center rounded-full bg-indigo-500/20 text-indigo-400 text-4xl">
+          🚧
+        </div>
+        <h1 className="text-3xl font-bold text-white mb-2">Under Maintenance</h1>
+        <p className="text-zinc-400 max-w-md">
+          Student Hub is currently undergoing scheduled maintenance and upgrades. We'll be back online shortly!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <Routes>
       {/* Public Routes */}
@@ -32,12 +76,22 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
+      {/* Admin CMS (Nested Routes using AdminLayout as base wrapper) */}
+      <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="manage-students" element={<ManageStudents />} />
+        <Route path="manage-domains" element={<ManageDomains />} />
+        <Route path="manage-roadmaps" element={<ManageRoadmaps />} />
+        <Route path="manage-feedback" element={<ManageFeedback />} />
+        <Route path="global-config" element={<AdminSettings />} />
+      </Route>
+
       {/* Protected Routes with Layout */}
       <Route
         path="/domains"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <DomainSelection />
             </Layout>
           </ProtectedRoute>
@@ -48,7 +102,7 @@ function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <Dashboard />
             </Layout>
           </ProtectedRoute>
@@ -59,7 +113,7 @@ function App() {
         path="/leaderboard"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <Leaderboard />
             </Layout>
           </ProtectedRoute>
@@ -70,7 +124,7 @@ function App() {
         path="/roadmap"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <Roadmap />
             </Layout>
           </ProtectedRoute>
@@ -80,7 +134,7 @@ function App() {
         path="/resume"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <ResumeBuilder />
             </Layout>
           </ProtectedRoute>
@@ -90,7 +144,7 @@ function App() {
         path="/portfolio"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <PortfolioGenerator />
             </Layout>
           </ProtectedRoute>
@@ -100,7 +154,7 @@ function App() {
         path="/profile"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <Profile />
             </Layout>
           </ProtectedRoute>
@@ -110,7 +164,7 @@ function App() {
         path="/contact"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <Contact />
             </Layout>
           </ProtectedRoute>
@@ -120,7 +174,7 @@ function App() {
         path="/about"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <AboutUs />
             </Layout>
           </ProtectedRoute>
@@ -130,7 +184,7 @@ function App() {
         path="/help"
         element={
           <ProtectedRoute>
-            <Layout>
+            <Layout appConfig={appConfig}>
               <HelpCenter />
             </Layout>
           </ProtectedRoute>

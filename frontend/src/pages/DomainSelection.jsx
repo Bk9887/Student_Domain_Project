@@ -2,61 +2,42 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import axios from "axios";
+import { FaRobot, FaArrowRight } from "react-icons/fa";
 import BentoCard from "../components/BentoCard";
 import GlowButton from "../components/GlowButton";
-
-const domainsData = [
-  {
-    id: 1,
-    name: "Web Development",
-    description: "Frontend, Backend, Full-Stack development",
-    skills: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
-    careers: ["Frontend Developer", "Backend Developer", "Full Stack Developer"]
-  },
-  {
-    id: 2,
-    name: "Data Science",
-    description: "Python, ML, AI, Data Analysis",
-    skills: ["Python", "Pandas", "Machine Learning", "SQL"],
-    careers: ["Data Scientist", "ML Engineer", "AI Engineer"]
-  },
-  {
-    id: 3,
-    name: "Cyber Security",
-    description: "Ethical Hacking, Network Security",
-    skills: ["Networking", "Ethical Hacking", "Linux"],
-    careers: ["Security Analyst", "Penetration Tester"]
-  },
-  {
-    id: 4,
-    name: "Mobile Development",
-    description: "Flutter, React Native, Android, iOS",
-    skills: ["Flutter", "React Native", "Kotlin"],
-    careers: ["Android Developer", "iOS Developer"]
-  },
-  {
-    id: 5,
-    name: "Cloud Computing",
-    description: "AWS, Azure, DevOps",
-    skills: ["AWS", "Docker", "Kubernetes"],
-    careers: ["Cloud Engineer", "DevOps Engineer"]
-  },
-  {
-    id: 6,
-    name: "Artificial Intelligence",
-    description: "Deep Learning, NLP, Generative AI",
-    skills: ["TensorFlow", "PyTorch", "OpenAI APIs"],
-    careers: ["AI Engineer", "Research Scientist", "NLP Engineer"]
-  }
-];
+import InterestTestModal from "../components/InterestTestModal";
 
 export default function DomainSelection() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [dbDomains, setDbDomains] = useState([]); // Raw MongoDB data
+  const [loadingConfig, setLoadingConfig] = useState(true);
+
   const [selectedDomain, setSelectedDomain] = useState(null);
   const [selectedInfo, setSelectedInfo] = useState(null);
   const [aiSuggestion, setAiSuggestion] = useState("");
   const [loadingAI, setLoadingAI] = useState(false);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedDomain");
+    if (saved) setSelectedDomain(saved);
+
+    // Fetch live domains created using the Admin CMS Panel
+    const fetchLiveDomains = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/admin/domains");
+        setDbDomains(res.data);
+      } catch (err) {
+        console.error("Failed to load domains from CMS:", err);
+      } finally {
+        setLoadingConfig(false);
+      }
+    };
+
+    fetchLiveDomains();
+  }, []);
 
   const extractAiDomain = (text) => {
     if (!text) return null;
@@ -145,7 +126,7 @@ export default function DomainSelection() {
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
       localStorage.setItem("selectedDomain", domainName);
 
-      navigate("/dashboard");
+      navigate("/roadmap");
     } catch (err) {
       console.error(err);
       alert("Something went wrong while selecting the domain.");
@@ -187,7 +168,7 @@ export default function DomainSelection() {
     }
   };
 
-  const filteredDomains = domainsData.filter((domain) =>
+  const filteredDomains = dbDomains.filter((domain) =>
     domain.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -203,20 +184,44 @@ export default function DomainSelection() {
         Discover Your Destiny
       </motion.h1>
 
-      <div className="flex flex-col items-center gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="e.g., I'm fascinated by artificial intelligence and data networks..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-xl px-5 py-3.5 rounded-bento
-            bg-white/[0.03] backdrop-blur-[12px] border border-white/[0.08]
-            focus:outline-none focus:ring-2 focus:ring-cyber-violet/50 focus:border-cyber-violet/30
-            hover:bg-white/[0.05] text-white placeholder-zinc-500 transition-all"
-        />
-        <GlowButton variant="secondary" onClick={askAI}>
-          Consult the Oracle
-        </GlowButton>
+      <div className="flex flex-col items-center gap-6 mb-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <button
+            onClick={() => setIsQuizOpen(true)}
+            className="group relative px-8 py-4 bg-indigo-500/10 border border-indigo-500/30 rounded-2xl overflow-hidden transition-all hover:bg-indigo-500/20 hover:border-indigo-500/50"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+                <FaRobot size={22} />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-black text-white uppercase tracking-wider">Take Interest Test</div>
+              </div>
+              <FaArrowRight className="ml-2 text-indigo-400 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </button>
+        </motion.div>
+
+        <div className="w-full flex flex-col items-center gap-4">
+          <input
+            type="text"
+            placeholder="e.g., I'm fascinated by artificial intelligence and data networks..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full max-w-xl px-5 py-3.5 rounded-bento
+              bg-white/[0.03] backdrop-blur-[12px] border border-white/[0.08]
+              focus:outline-none focus:ring-2 focus:ring-cyber-violet/50 focus:border-cyber-violet/30
+              hover:bg-white/[0.05] text-white placeholder-zinc-500 transition-all"
+          />
+          <GlowButton variant="secondary" onClick={askAI}>
+            Consult the Oracle
+          </GlowButton>
+        </div>
       </div>
 
       {loadingAI && (
@@ -233,7 +238,7 @@ export default function DomainSelection() {
             exit={{ opacity: 0, y: -8 }}
             className="max-w-xl mx-auto mb-8"
           >
-            <BentoCard className="p-6 text-left" magnetic={false}>
+            <BentoCard className="p-6 text-left" magnetic={false} accentColor="cyber-lime">
               <p className="text-cyber-lime font-bold mb-3 text-center text-sm uppercase tracking-widest border-b border-white/[0.1] pb-3">
                 Oracle's Insight
               </p>
@@ -257,18 +262,33 @@ export default function DomainSelection() {
       </h2>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {filteredDomains.map((domain) => (
-          <BentoCard
-            key={domain.id}
-            className="p-6 cursor-pointer"
-            onClick={() => setSelectedInfo(domain)}
-          >
-            <h2 className="text-xl font-bold mb-3 text-white group-hover:text-cyber-lime transition-colors tracking-tight">
-              {domain.name}
-            </h2>
-            <p className="text-zinc-400 text-sm leading-relaxed">{domain.description}</p>
-          </BentoCard>
-        ))}
+        {loadingConfig ? (
+          <p className="text-zinc-400 col-span-full text-center py-10">
+            Synthesizing Domain knowledge from the Matrix...
+          </p>
+        ) : filteredDomains.length > 0 ? (
+          filteredDomains.map((domain, index) => {
+            const colors = ["indigo", "emerald", "amber", "rose", "cyan", "violet"];
+            const accentColor = colors[index % colors.length];
+            return (
+              <BentoCard
+                key={domain._id}
+                className="p-6 cursor-pointer"
+                onClick={() => setSelectedInfo(domain)}
+                accentColor={accentColor}
+              >
+                <h2 className={`text-xl font-bold mb-3 text-white group-hover:text-white transition-colors tracking-tight`}>
+                  {domain.name}
+                </h2>
+                <p className="text-zinc-400 text-sm leading-relaxed">{domain.description}</p>
+              </BentoCard>
+            );
+          })
+        ) : (
+          <p className="text-zinc-500 col-span-full text-center py-10">
+            No active Domains match your query.
+          </p>
+        )}
       </div>
 
       <AnimatePresence>
@@ -279,7 +299,7 @@ export default function DomainSelection() {
             exit={{ opacity: 0, scale: 0.96 }}
             className="max-w-2xl mx-auto"
           >
-            <BentoCard className="p-8" magnetic={false}>
+            <BentoCard className="p-8" magnetic={false} accentColor="indigo">
               <h2 className="text-3xl font-bold mb-3 text-white tracking-tight bg-gradient-neon bg-clip-text text-transparent">
                 {selectedInfo.name}
               </h2>
@@ -288,7 +308,7 @@ export default function DomainSelection() {
                 Core Virtues
               </p>
               <ul className="mb-6 list-disc list-inside text-sm text-zinc-300 space-y-1">
-                {selectedInfo.skills.map((skill, i) => (
+                {selectedInfo.skills?.map((skill, i) => (
                   <li key={i}>{skill}</li>
                 ))}
               </ul>
@@ -296,7 +316,7 @@ export default function DomainSelection() {
                 Destined Paths
               </p>
               <ul className="mb-8 list-disc list-inside text-sm text-zinc-300 space-y-1">
-                {selectedInfo.careers.map((career, i) => (
+                {selectedInfo.careers?.map((career, i) => (
                   <li key={i}>{career}</li>
                 ))}
               </ul>
@@ -307,6 +327,15 @@ export default function DomainSelection() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <InterestTestModal
+        isOpen={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+        onSelectDomain={(domain) => {
+          setIsQuizOpen(false);
+          handleGetStarted(domain);
+        }}
+      />
     </div>
   );
 }

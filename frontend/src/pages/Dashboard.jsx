@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
+import BentoCard from "../components/BentoCard";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -106,15 +107,15 @@ export default function Dashboard() {
       <div className="grid md:grid-cols-4 gap-6">
 
         {/* Domain Card */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl hover:bg-white/[0.05] transition-colors rounded-2xl p-7">
+        <BentoCard className="p-7" accentColor="indigo">
           <p className="text-zinc-400 font-bold mb-2 text-xs uppercase tracking-widest">Active Domain</p>
           <h2 className="text-2xl font-black bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent tracking-tight block">
             {selectedDomain}
           </h2>
-        </div>
+        </BentoCard>
 
         {/* Progress Card */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl hover:bg-white/[0.05] transition-colors rounded-2xl p-7">
+        <BentoCard className="p-7" accentColor="indigo">
           <div className="flex justify-between items-end mb-4">
             <p className="text-zinc-400 font-bold text-xs uppercase tracking-widest">Progress</p>
             <span className="text-indigo-400 font-black text-2xl tracking-tighter drop-shadow-[0_0_10px_rgba(99,102,241,0.5)]">
@@ -128,15 +129,15 @@ export default function Dashboard() {
               style={{ width: `${progress}%` }}
             />
           </div>
-        </div>
+        </BentoCard>
 
         {/* Rank Card */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl hover:bg-white/[0.05] transition-colors rounded-2xl p-7">
+        <BentoCard className="p-7" accentColor="indigo">
           <p className="text-zinc-400 font-bold mb-2 text-xs uppercase tracking-widest">Global Rank</p>
           <h2 className="text-3xl font-black bg-gradient-to-r from-amber-200 to-yellow-500 bg-clip-text text-transparent tracking-tighter drop-shadow-lg">
             {rank}
           </h2>
-        </div>
+        </BentoCard>
 
       </div>
 

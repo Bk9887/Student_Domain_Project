@@ -60,6 +60,11 @@ const userSchema = new mongoose.Schema(
       type: Date
     },
 
+    isAdmin: {
+      type: Boolean,
+      default: false
+    },
+
     // Embedded Array for cloud-saved resumes
     savedResumes: [
       {

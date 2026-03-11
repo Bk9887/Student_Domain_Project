@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import axios from "axios";
+import BentoCard from "../components/BentoCard";
 
 const Leaderboard = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -61,7 +62,7 @@ const Leaderboard = () => {
 
       <h1 className="text-4xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-indigo-300 via-purple-300 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">Domain Leaders</h1>
 
-      <div className="bg-white/[0.03] backdrop-blur-2xl rounded-2xl p-8 border border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+      <BentoCard className="p-8" accentColor="rose">
         <table className="w-full text-left">
           <thead>
             <tr className="text-zinc-400 border-b border-white/[0.08] text-sm uppercase tracking-wider">
@@ -102,7 +103,7 @@ const Leaderboard = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </BentoCard>
     </div>
   );
 };

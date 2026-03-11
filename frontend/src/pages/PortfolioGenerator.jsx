@@ -6,19 +6,17 @@ import axios from "axios";
 export default function PortfolioGenerator() {
     // Basic Information
     const [personalInfo, setPersonalInfo] = useState({
-        name: "Alex Chen",
-        role: "Web Developer",
-        email: "alex@example.com",
-        github: "github.com/alexchen",
-        linkedin: "linkedin.com/in/alexchen"
+        name: "",
+        role: "",
+        email: "",
+        github: "",
+        linkedin: ""
     });
 
-    const [bio, setBio] = useState(
-        "Hi, I'm Alex. A passionate web developer building modern applications focused on performance and sleek UI/UX design."
-    );
+    const [bio, setBio] = useState("");
 
     // Arrays
-    const [skills, setSkills] = useState(["HTML", "CSS", "JavaScript", "React", "Node.js", "TypeScript"]);
+    const [skills, setSkills] = useState([]);
     const [newSkill, setNewSkill] = useState("");
 
     const [experience, setExperience] = useState([]);
@@ -184,6 +182,7 @@ export default function PortfolioGenerator() {
                             <label className="block text-sm font-medium text-zinc-400 mb-1">Full Name</label>
                             <input
                                 type="text"
+                                placeholder="Add Full Name"
                                 value={personalInfo.name}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, name: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -193,6 +192,7 @@ export default function PortfolioGenerator() {
                             <label className="block text-sm font-medium text-zinc-400 mb-1">Professional Role</label>
                             <input
                                 type="text"
+                                placeholder="Add Professional Role (e.g. Web Developer)"
                                 value={personalInfo.role}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, role: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -202,6 +202,7 @@ export default function PortfolioGenerator() {
                             <label className="block text-sm font-medium text-zinc-400 mb-1">Email</label>
                             <input
                                 type="email"
+                                placeholder="Add Email"
                                 value={personalInfo.email}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, email: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -211,6 +212,7 @@ export default function PortfolioGenerator() {
                             <label className="block text-sm font-medium text-zinc-400 mb-1">GitHub (optional)</label>
                             <input
                                 type="text"
+                                placeholder="Add GitHub Link (e.g. github.com/username)"
                                 value={personalInfo.github}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, github: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -220,6 +222,7 @@ export default function PortfolioGenerator() {
                             <label className="block text-sm font-medium text-zinc-400 mb-1">LinkedIn (optional)</label>
                             <input
                                 type="text"
+                                placeholder="Add LinkedIn Link (e.g. linkedin.com/in/username)"
                                 value={personalInfo.linkedin}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, linkedin: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -232,6 +235,7 @@ export default function PortfolioGenerator() {
                 <section>
                     <h2 className="text-xl font-bold text-white mb-4 border-b border-white/10 pb-2">2. Bio & Summary</h2>
                     <textarea
+                        placeholder="Add a short bio about yourself..."
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                         rows={3}
@@ -257,7 +261,7 @@ export default function PortfolioGenerator() {
                     <form onSubmit={handleAddSkill} className="flex gap-3 max-w-sm">
                         <input
                             type="text"
-                            placeholder="Add a new skill (e.g., Python)..."
+                            placeholder="Add a new skill (e.g. Python)..."
                             value={newSkill}
                             onChange={(e) => setNewSkill(e.target.value)}
                             className="flex-1 bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -291,26 +295,26 @@ export default function PortfolioGenerator() {
                         <h3 className="text-sm font-medium text-zinc-300 mb-3">Add New Role</h3>
                         <div className="grid md:grid-cols-2 gap-3 mb-3">
                             <input
-                                placeholder="Role (e.g. Frontend Engineer)"
+                                placeholder="Add Role (e.g. Frontend Engineer)"
                                 value={newExperience.role}
                                 onChange={(e) => setNewExperience({ ...newExperience, role: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                             />
                             <input
-                                placeholder="Company"
+                                placeholder="Add Company (e.g. TechCorp)"
                                 value={newExperience.company}
                                 onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                             />
                         </div>
                         <input
-                            placeholder="Duration (e.g. Jan 2022 - Present)"
+                            placeholder="Add Duration (e.g. Jan 2022 - Present)"
                             value={newExperience.duration}
                             onChange={(e) => setNewExperience({ ...newExperience, duration: e.target.value })}
                             className="w-full mb-3 bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                         />
                         <textarea
-                            placeholder="Description of responsibilities and achievements..."
+                            placeholder="Add description of responsibilities and achievements..."
                             value={newExperience.description}
                             onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
                             rows={3}
@@ -346,26 +350,26 @@ export default function PortfolioGenerator() {
                         <h3 className="text-sm font-medium text-zinc-300 mb-3">Add New Project</h3>
                         <div className="grid md:grid-cols-2 gap-3 mb-3">
                             <input
-                                placeholder="Project Title"
+                                placeholder="Add Project Title"
                                 value={newProject.title}
                                 onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                             />
                             <input
-                                placeholder="Technologies (e.g. React, Node, Tailwind)"
+                                placeholder="Add Technologies (e.g. React, Node, Tailwind)"
                                 value={newProject.technologies}
                                 onChange={(e) => setNewProject({ ...newProject, technologies: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                             />
                         </div>
                         <input
-                            placeholder="Live Link / GitHub Repo (optional)"
+                            placeholder="Add Live Link / GitHub Repo (optional)"
                             value={newProject.link}
                             onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
                             className="w-full mb-3 bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                         />
                         <textarea
-                            placeholder="Project description and features..."
+                            placeholder="Add project description and features..."
                             value={newProject.description}
                             onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
                             rows={3}

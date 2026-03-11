@@ -96,10 +96,84 @@ CRITICAL RULES:
 - Output RAW JSON ONLY. Do not wrap in \`\`\`json. Just start with { and end with }.
 `;
 
-    const result = await model.generateContent(prompt);
-    let rawText = result.response.text().trim();
-    // Rigorously clean markdown block if gemini occasionally disobeys
-    rawText = rawText.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();
+    let rawText = "";
+
+    try {
+      const result = await model.generateContent(prompt);
+      rawText = result.response.text().trim();
+      rawText = rawText.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();
+    } catch (apiError) {
+      console.warn("⚠️ Gemini API Error (Likely Rate Limit/429). Generating Fallback Mock Curriculum:", apiError.message);
+
+      // Fallback Static Curriculum if Gemini reaches quota limit
+      rawText = JSON.stringify({
+        tiers: [
+          {
+            name: "beginner",
+            modules: [
+              {
+                id: "module_1", title: "Fundamentals of " + domain, description: "Basic concepts and definitions.",
+                steps: [
+                  { id: "step_1", title: "Introduction to " + domain, description: "Overview of the field.", type: "video", xp: 50 },
+                  { id: "step_2", title: "Core Basics", description: "Fundamental building blocks.", type: "video", xp: 50 },
+                  { id: "step_3", title: "Module Assessment", description: "Test your knowledge.", type: "test", xp: 100, questions: [{ question: "What is " + domain + "?", options: ["A field", "A rock", "A car", "A tree"], answerIndex: 0 }, { question: "Is this fundamental?", options: ["Yes", "No", "Maybe", "I don't know"], answerIndex: 0 }, { question: "Pick the right answer.", options: ["Wrong", "Right", "Wrong", "Wrong"], answerIndex: 1 }] }
+                ]
+              },
+              {
+                id: "module_2", title: "Environment Setup", description: "Getting your tools ready.",
+                steps: [
+                  { id: "step_4", title: "Installing Tools", description: "Software required.", type: "video", xp: 50 },
+                  { id: "step_5", title: "First Configuration", description: "Hello world setup.", type: "video", xp: 50 },
+                  { id: "step_6", title: "Module Assessment", description: "Test your knowledge.", type: "test", xp: 100, questions: [{ question: "What do you install?", options: ["Tools", "Games", "Malware", "Nothing"], answerIndex: 0 }, { question: "Is setup important?", options: ["Yes", "No", "Sometimes", "Never"], answerIndex: 0 }, { question: "Did you configure?", options: ["Yes", "No", "Maybe", "Later"], answerIndex: 0 }] }
+                ]
+              }
+            ]
+          },
+          {
+            name: "intermediate",
+            modules: [
+              {
+                id: "module_3", title: "Intermediate Concepts", description: "Going a level deeper.",
+                steps: [
+                  { id: "step_7", title: "Architecture", description: "How things connect.", type: "video", xp: 50 },
+                  { id: "step_8", title: "Best Practices", description: "Standard conventions.", type: "video", xp: 50 },
+                  { id: "step_9", title: "Module Assessment", description: "Test your knowledge.", type: "test", xp: 100, questions: [{ question: "What is architecture?", options: ["Structure", "Art", "Music", "Food"], answerIndex: 0 }, { question: "Are best practices good?", options: ["Yes", "No", "Maybe", "Bad"], answerIndex: 0 }, { question: "Pick A.", options: ["A", "B", "C", "D"], answerIndex: 0 }] }
+                ]
+              },
+              {
+                id: "module_4", title: "Real-world Applications", description: "Building actual things.",
+                steps: [
+                  { id: "step_10", title: "Project 1", description: "First intermediate project.", type: "video", xp: 50 },
+                  { id: "step_11", title: "Project 2", description: "Second intermediate project.", type: "video", xp: 50 },
+                  { id: "step_12", title: "Module Assessment", description: "Test your knowledge.", type: "test", xp: 100, questions: [{ question: "Did you build it?", options: ["Yes", "No", "Broken", "Wait"], answerIndex: 0 }, { question: "Was it hard?", options: ["Yes", "No", "Very", "Easy"], answerIndex: 0 }, { question: "Done?", options: ["Yes", "No", "Almost", "Barely"], answerIndex: 0 }] }
+                ]
+              }
+            ]
+          },
+          {
+            name: "advanced",
+            modules: [
+              {
+                id: "module_5", title: "Advanced Topics", description: "Expert level material.",
+                steps: [
+                  { id: "step_13", title: "Optimization", description: "Making it fast.", type: "video", xp: 50 },
+                  { id: "step_14", title: "Security", description: "Making it safe.", type: "video", xp: 50 },
+                  { id: "step_15", title: "Module Assessment", description: "Test your knowledge.", type: "test", xp: 100, questions: [{ question: "Is it fast?", options: ["Yes", "No", "Slow", "Stopped"], answerIndex: 0 }, { question: "Is it safe?", options: ["Yes", "No", "Hacked", "Leaked"], answerIndex: 0 }, { question: "Advanced enough?", options: ["Yes", "No", "Too advanced", "Basic"], answerIndex: 0 }] }
+                ]
+              },
+              {
+                id: "module_6", title: "Mastery", description: "The final frontier.",
+                steps: [
+                  { id: "step_16", title: "Expert Architecture", description: "System design.", type: "video", xp: 50 },
+                  { id: "step_17", title: "Deployment", description: "Going live.", type: "video", xp: 50 },
+                  { id: "step_18", title: "Final Assessment", description: "Test your knowledge.", type: "test", xp: 100, questions: [{ question: "Are you a master?", options: ["Yes", "No", "Jedi", "Sith"], answerIndex: 0 }, { question: "Is it deployed?", options: ["Yes", "No", "Crash", "Burn"], answerIndex: 0 }, { question: "Course complete?", options: ["Yes", "Yes", "Yes", "Yes"], answerIndex: 0 }] }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+    }
 
     const parsedData = JSON.parse(rawText);
 

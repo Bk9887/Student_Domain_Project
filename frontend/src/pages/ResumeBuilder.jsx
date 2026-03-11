@@ -5,18 +5,18 @@ import axios from "axios";
 
 export default function ResumeBuilder() {
     const [personalInfo, setPersonalInfo] = useState({
-        name: "Alex Chen",
-        email: "alex@example.com",
-        phone: "+1 234 567 890",
+        name: "",
+        email: "",
+        phone: "",
     });
 
     const [education, setEducation] = useState({
-        institution: "University of Technology",
-        degree: "B.S. Computer Science",
-        year: "2024",
+        institution: "",
+        degree: "",
+        year: "",
     });
 
-    const [skills, setSkills] = useState(["React", "TypeScript", "Node.js", "MongoDB", "Git", "Tailwind CSS"]);
+    const [skills, setSkills] = useState([]);
     const [newSkill, setNewSkill] = useState("");
 
     const [experience, setExperience] = useState([]);
@@ -184,6 +184,7 @@ export default function ResumeBuilder() {
                             <label className="block text-sm font-medium text-zinc-400 mb-2">Name</label>
                             <input
                                 type="text"
+                                placeholder="Add Name"
                                 value={personalInfo.name}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, name: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -193,6 +194,7 @@ export default function ResumeBuilder() {
                             <label className="block text-sm font-medium text-zinc-400 mb-2">Email</label>
                             <input
                                 type="email"
+                                placeholder="Add Email"
                                 value={personalInfo.email}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, email: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -202,6 +204,7 @@ export default function ResumeBuilder() {
                             <label className="block text-sm font-medium text-zinc-400 mb-2">Phone</label>
                             <input
                                 type="text"
+                                placeholder="Add Phone"
                                 value={personalInfo.phone}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, phone: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -217,6 +220,7 @@ export default function ResumeBuilder() {
                         <div>
                             <input
                                 type="text"
+                                placeholder="Add Institution"
                                 value={education.institution}
                                 onChange={(e) => setEducation({ ...education, institution: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -225,6 +229,7 @@ export default function ResumeBuilder() {
                         <div>
                             <input
                                 type="text"
+                                placeholder="Add Degree/Major"
                                 value={education.degree}
                                 onChange={(e) => setEducation({ ...education, degree: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -233,6 +238,7 @@ export default function ResumeBuilder() {
                         <div>
                             <input
                                 type="text"
+                                placeholder="Add Year (e.g. 2024)"
                                 value={education.year}
                                 onChange={(e) => setEducation({ ...education, year: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -303,28 +309,28 @@ export default function ResumeBuilder() {
                         <div className="grid md:grid-cols-2 gap-4">
                             <input
                                 type="text"
-                                placeholder="Role (e.g. Software Engineer)"
+                                placeholder="Add Role (e.g. Software Engineer)"
                                 value={newExperience.role}
                                 onChange={(e) => setNewExperience({ ...newExperience, role: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                             />
                             <input
                                 type="text"
-                                placeholder="Company (e.g. TechCorp)"
+                                placeholder="Add Company (e.g. TechCorp)"
                                 value={newExperience.company}
                                 onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                             />
                             <input
                                 type="text"
-                                placeholder="Location (e.g. San Francisco, CA)"
+                                placeholder="Add Location (e.g. San Francisco, CA)"
                                 value={newExperience.location}
                                 onChange={(e) => setNewExperience({ ...newExperience, location: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                             />
                             <input
                                 type="text"
-                                placeholder="Duration (e.g. Jun 2023 - Present)"
+                                placeholder="Add Duration (e.g. Jun 2023 - Present)"
                                 value={newExperience.duration}
                                 onChange={(e) => setNewExperience({ ...newExperience, duration: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
@@ -368,21 +374,21 @@ export default function ResumeBuilder() {
                         <div className="grid md:grid-cols-2 gap-4">
                             <input
                                 type="text"
-                                placeholder="Project Title"
+                                placeholder="Add Project Title"
                                 value={newProject.title}
                                 onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                             />
                             <input
                                 type="text"
-                                placeholder="Technologies Used (e.g. React, Node.js)"
+                                placeholder="Add Technologies (e.g. React, Node.js)"
                                 value={newProject.technologies}
                                 onChange={(e) => setNewProject({ ...newProject, technologies: e.target.value })}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                             />
                             <input
                                 type="text"
-                                placeholder="Duration (e.g. Fall 2023)"
+                                placeholder="Add Duration (e.g. Fall 2023)"
                                 value={newProject.duration}
                                 onChange={(e) => setNewProject({ ...newProject, duration: e.target.value })}
                                 className="md:col-span-2 w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"

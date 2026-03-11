@@ -1,7 +1,7 @@
 import Sidebar from "./Sidebar";
 import Navbar from "../components/Navbar";
 
-export default function Layout({ children }) {
+export default function Layout({ children, appConfig }) {
   return (
     <div className="relative min-h-screen flex text-white overflow-hidden bg-zinc-950 font-sans selection:bg-indigo-500/30">
 
@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <div className="relative z-10 flex w-full">
 
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar appConfig={appConfig} />
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col h-screen overflow-y-auto">

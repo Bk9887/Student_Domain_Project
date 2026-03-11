@@ -31,6 +31,8 @@ const profileRoutes = require("./routes/profileRoutes"); // ⭐ ADD THIS
 const aiRoutes = require("./routes/aiRoutes");
 const chatbotRoutes = require("./routes/chatbotRoutes");
 
+const adminRoutes = require("./routes/adminRoutes"); // ⭐ ADD THIS
+
 // ✅ Register routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -41,6 +43,7 @@ app.use("/api/domain", domainRoutes);
 app.use("/api/profile", profileRoutes); // ⭐ ADD THIS
 app.use("/api/ai", aiRoutes);
 app.use("/api/chat", chatbotRoutes);
+app.use("/api/admin", adminRoutes); // ⭐ ADD THIS
 
 // ✅ Test route
 app.get("/", (req, res) => {

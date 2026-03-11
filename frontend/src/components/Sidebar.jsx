@@ -7,30 +7,38 @@ import {
   FaFileAlt,
   FaBriefcase
 } from "react-icons/fa"; // FontAwesome icons
+import { FaShieldAlt } from "react-icons/fa"; // Added security icon
 import { FaRobot } from "react-icons/fa6";
 
-export default function Sidebar() {
+export default function Sidebar({ appConfig }) {
   const navigate = useNavigate();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
 
   const logout = () => {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("token");
     navigate("/");
   };
 
   const navStyle =
     "flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300";
 
-  const navItems = [
+  let navItems = [
     { path: "/dashboard", label: "Home", icon: <FaHome /> },
     { path: "/domains", label: "Domains", icon: <FaThList /> },
     { path: "/roadmap", label: "Roadmap", icon: <FaBookOpen /> },
     { path: "/leaderboard", label: "Leaderboard", icon: <FaTrophy /> },
-    ...[
-      { path: "/resume", label: "Resume Builder", icon: <FaFileAlt /> },
-      { path: "/portfolio", label: "Portfolio", icon: <FaBriefcase /> },
-      { path: "/chat", label: "AI Mentor", icon: <FaRobot /> },
-    ]
+    { path: "/resume", label: "Resume Builder", icon: <FaFileAlt /> },
+    { path: "/portfolio", label: "Portfolio", icon: <FaBriefcase /> }
   ];
+
+  if (appConfig?.showAiMentor !== false) {
+    navItems.push({ path: "/chat", label: "AI Mentor", icon: <FaRobot /> });
+  }
+
+  if (currentUser.isAdmin === true) {
+    navItems.push({ path: "/admin", label: "Admin Panel", icon: <FaShieldAlt /> });
+  }
 
   return (
     <aside className="h-screen w-64 

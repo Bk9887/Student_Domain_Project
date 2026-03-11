@@ -42,8 +42,7 @@ transporter.verify((error, success) => {
 // ================= REGISTER USER =================
 exports.registerUser = async (req, res) => {
   try {
-
-    let { name, email, password } = req.body;
+    let { name, email, password, isAdmin, adminSecret } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -61,6 +60,17 @@ exports.registerUser = async (req, res) => {
       });
     }
 
+    // Role Validation
+    let finalIsAdmin = false;
+    if (isAdmin) {
+      if (adminSecret !== "ELEVATE_ME_2024") {
+        return res.status(403).json({
+          message: "Invalid administrator passcode",
+        });
+      }
+      finalIsAdmin = true;
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const verificationToken = crypto
@@ -76,6 +86,7 @@ exports.registerUser = async (req, res) => {
       points: 50,
       verificationToken,
       isVerified: false,
+      isAdmin: finalIsAdmin,
     });
 
     const verifyLink =
@@ -200,10 +211,9 @@ exports.loginUser = async (req, res) => {
       email: user.email,
       domain: user.domain,
       photo: user.photo,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
-      redirect: user.domain
-        ? "/dashboard"
-        : "/domain-selection",
+      redirect: "/dashboard",
     });
 
   } catch (error) {
