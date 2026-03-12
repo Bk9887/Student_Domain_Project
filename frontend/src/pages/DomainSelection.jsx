@@ -111,16 +111,13 @@ export default function DomainSelection() {
         return;
       }
 
-      const res = await fetch(`http://localhost:5000/api/domain/${user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ domain: domainName })
-      });
+      // Initialize/Start Journey in backend
+      const res = await axios.post("http://localhost:5000/api/journey/start",
+        { userId: user._id, domain: domainName },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-      if (!res.ok) throw new Error("Failed to update domain");
+      if (res.status !== 201 && res.status !== 200) throw new Error("Failed to start journey");
 
       const updatedUser = { ...user, domain: domainName };
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
@@ -145,16 +142,13 @@ export default function DomainSelection() {
         return;
       }
 
-      const res = await fetch(`http://localhost:5000/api/domain/${user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ domain: aiSuggestedDomain })
-      });
+      // Initialize/Start Journey in backend
+      const res = await axios.post("http://localhost:5000/api/journey/start",
+        { userId: user._id, domain: aiSuggestedDomain },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-      if (!res.ok) throw new Error("Failed to update domain");
+      if (res.status !== 201 && res.status !== 200) throw new Error("Failed to start journey");
 
       const updatedUser = { ...user, domain: aiSuggestedDomain };
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
@@ -300,7 +294,7 @@ export default function DomainSelection() {
             className="max-w-2xl mx-auto"
           >
             <BentoCard className="p-8" magnetic={false} accentColor="indigo">
-              <h2 className="text-3xl font-bold mb-3 text-white tracking-tight bg-gradient-neon bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold mb-3 text-white tracking-tight">
                 {selectedInfo.name}
               </h2>
               <p className="mb-6 text-zinc-400 leading-relaxed">{selectedInfo.description}</p>

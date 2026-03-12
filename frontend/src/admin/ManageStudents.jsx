@@ -74,7 +74,7 @@ export default function ManageStudents() {
         <div className="max-w-7xl mx-auto space-y-8">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic underline decoration-indigo-500 decoration-4 underline-offset-8">Student Directory</h2>
+                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic underline decoration-indigo-500 decoration-4 underline-offset-8 transition-colors">Student Directory</h2>
                     <p className="text-zinc-500 text-sm mt-4 font-bold tracking-widest uppercase">Monitor and manage the next generation</p>
                 </div>
 
@@ -98,12 +98,12 @@ export default function ManageStudents() {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-white/[0.02] border-b border-white/[0.05] text-zinc-500 text-[10px] font-black uppercase tracking-widest">
-                                <th className="px-8 py-5">Intel / Identity</th>
-                                <th className="px-8 py-5">Active Sector</th>
-                                <th className="px-8 py-5 hidden md:table-cell text-center">Efficiency (XP)</th>
-                                <th className="px-8 py-5 hidden lg:table-cell text-center">Clearance</th>
-                                <th className="px-8 py-5 text-right pr-10">Actions</th>
+                            <tr className="bg-white/[0.02] border-b border-white/[0.05] text-zinc-500 text-[10px] font-black uppercase tracking-widest transition-colors">
+                                <th className="px-8 py-5">Users</th>
+                                <th className="px-8 py-5">Active Domain</th>
+                                <th className="px-8 py-5 hidden md:table-cell text-center">Efficiency(XP)</th>
+                                <th className="px-8 py-5 hidden lg:table-cell text-center">Role</th>
+                                <th className="px-8 py-5 text-right pr-10">Action</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/[0.02]">
@@ -116,7 +116,7 @@ export default function ManageStudents() {
                                                     {student.name.charAt(0).toUpperCase()}
                                                 </div>
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-black text-white tracking-tight">{student.name}</div>
+                                                    <div className="text-sm font-black text-white tracking-tight transition-colors">{student.name}</div>
                                                     <div className="text-xs text-zinc-500 font-medium tracking-wide mt-0.5">{student.email}</div>
                                                 </div>
                                             </div>
@@ -132,14 +132,14 @@ export default function ManageStudents() {
                                         </td>
                                         <td className="px-8 py-5 whitespace-nowrap text-xs font-black uppercase tracking-widest hidden lg:table-cell text-center">
                                             {student.isAdmin ? (
-                                                <span className="text-rose-500 flex items-center justify-center gap-1.5"><div className="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse"></div> Root</span>
-                                            ) : <span className="text-zinc-400">Operative</span>}
+                                                <span className="text-rose-500 flex items-center justify-center gap-1.5"><div className="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse"></div> Admin</span>
+                                            ) : <span className="text-zinc-400">Student</span>}
                                         </td>
                                         <td className="px-8 py-5 whitespace-nowrap text-right pr-10">
                                             {!student.isAdmin && (
                                                 <button
                                                     onClick={() => handleDeleteClick(student)}
-                                                    className="text-zinc-600 hover:text-rose-400 hover:bg-rose-500/10 p-2.5 rounded-xl border border-transparent hover:border-rose-500/20 transition-all active:scale-90"
+                                                    className="text-zinc-600 hover:text-rose-500 hover:bg-rose-500/10 p-2.5 rounded-xl border border-transparent hover:border-rose-500/20 transition-all active:scale-90"
                                                     title="Decommission Account"
                                                 >
                                                     <MdDelete className="text-xl" />
@@ -151,7 +151,7 @@ export default function ManageStudents() {
                             ) : (
                                 <tr>
                                     <td colSpan="5" className="px-8 py-20 text-center text-zinc-600 font-black uppercase tracking-[0.2em] italic">
-                                        No operatives located in the database.
+                                        No Students located in the database.
                                     </td>
                                 </tr>
                             )}

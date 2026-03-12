@@ -118,7 +118,7 @@ export default function Dashboard() {
         <BentoCard className="p-7" accentColor="indigo">
           <div className="flex justify-between items-end mb-4">
             <p className="text-zinc-400 font-bold text-xs uppercase tracking-widest">Progress</p>
-            <span className="text-indigo-400 font-black text-2xl tracking-tighter drop-shadow-[0_0_10px_rgba(99,102,241,0.5)]">
+            <span className="text-indigo-400 font-black text-2xl tracking-tighter drop-shadow-sm">
               {progress}%
             </span>
           </div>

@@ -20,6 +20,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import PortfolioGenerator from "./pages/PortfolioGenerator";
 import Chat from "./pages/Chat";
+import MyJourney from "./pages/MyJourney";
 
 // Admin Imports
 import AdminRoute from "./components/AdminRoute";
@@ -29,7 +30,7 @@ import ManageStudents from "./admin/ManageStudents";
 import ManageDomains from "./admin/ManageDomains";
 import ManageRoadmaps from "./admin/ManageRoadmaps";
 import ManageFeedback from "./admin/ManageFeedback";
-import AdminSettings from "./pages/admin/AdminSettings";
+import AdminSettings from "./admin/AdminSettings";
 
 function App() {
   const [appConfig, setAppConfig] = useState(null);
@@ -196,6 +197,16 @@ function App() {
           <ProtectedRoute>
             <Layout>
               <Chat />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/journey"
+        element={
+          <ProtectedRoute>
+            <Layout appConfig={appConfig}>
+              <MyJourney />
             </Layout>
           </ProtectedRoute>
         }

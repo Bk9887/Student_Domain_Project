@@ -63,13 +63,13 @@ export default function Chat() {
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
 
             {/* Header */}
-            <div className="px-8 py-6 border-b border-white/[0.08] bg-zinc-900/50 backdrop-blur-md z-10 flex items-center gap-4 shadow-sm">
+            <div className="px-8 py-6 border-b border-white/[0.08] bg-zinc-900/50 backdrop-blur-md z-10 flex items-center gap-4 shadow-sm transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
                     <FaRobot className="text-2xl text-white" />
                 </div>
                 <div>
                     <h2 className="text-xl font-bold text-white tracking-wide">AI Mentor</h2>
-                    <p className="text-zinc-400 text-sm">Powered by Gemini AI</p>
+                    <p className="text-zinc-400 text-sm font-medium">Powered by Gemini AI</p>
                 </div>
             </div>
 
@@ -82,15 +82,15 @@ export default function Chat() {
                     <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} items-start gap-4 max-w-5xl mx-auto`}>
                         {/* Bot Avatar */}
                         {msg.role === "bot" && (
-                            <div className="w-10 h-10 rounded-xl bg-indigo-900/40 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-1 shadow-inner">
+                            <div className="w-10 h-10 rounded-xl bg-indigo-900/40 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-1 shadow-inner transition-colors">
                                 <FaRobot className="text-indigo-400" size={18} />
                             </div>
                         )}
 
                         {/* Message Bubble */}
                         <div
-                            className={`p-5 rounded-2xl text-[15px] leading-relaxed whitespace-pre-wrap font-medium ${msg.role === "user"
-                                ? "bg-indigo-600 text-white rounded-tr-sm shadow-[0_0_20px_rgba(79,70,229,0.2)]"
+                            className={`p-5 rounded-2xl text-[15px] leading-relaxed whitespace-pre-wrap font-medium transition-all ${msg.role === "user"
+                                ? "bg-indigo-600 text-white rounded-tr-sm shadow-[0_10px_20px_rgba(79,70,229,0.2)]"
                                 : "bg-zinc-900/80 border border-white/[0.05] text-zinc-300 rounded-tl-sm shadow-md"
                                 }`}
                         >
@@ -99,7 +99,7 @@ export default function Chat() {
 
                         {/* User Avatar */}
                         {msg.role === "user" && (
-                            <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0 mt-1">
+                            <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0 mt-1 transition-colors">
                                 <FaUser className="text-zinc-400" size={16} />
                             </div>
                         )}
@@ -108,10 +108,10 @@ export default function Chat() {
 
                 {isLoading && (
                     <div className="flex justify-start items-start gap-4 max-w-5xl mx-auto">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-900/40 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-1 shadow-inner">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-900/40 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-1 shadow-inner transition-colors">
                             <FaRobot className="text-indigo-400" size={18} />
                         </div>
-                        <div className="p-5 rounded-2xl rounded-tl-sm bg-zinc-900/80 border border-white/[0.05] flex items-center gap-2 h-[60px] shadow-md">
+                        <div className="p-5 rounded-2xl rounded-tl-sm bg-zinc-900/80 border border-white/[0.05] flex items-center gap-2 h-[60px] shadow-md transition-colors">
                             <span className="w-2.5 h-2.5 bg-zinc-500 rounded-full animate-bounce"></span>
                             <span className="w-2.5 h-2.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
                             <span className="w-2.5 h-2.5 bg-zinc-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
@@ -121,7 +121,7 @@ export default function Chat() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 md:p-6 border-t border-white/[0.08] bg-zinc-900/80 backdrop-blur-md z-10">
+            <div className="p-4 md:p-6 border-t border-white/[0.08] bg-zinc-900/80 backdrop-blur-md z-10 transition-all duration-300">
                 <form onSubmit={handleSend} className="max-w-5xl mx-auto relative group flex gap-3">
                     <input
                         type="text"

@@ -22,7 +22,7 @@ export default function AdminSidebar() {
     ];
 
     return (
-        <aside className="fixed left-0 top-0 h-screen w-64 bg-zinc-900/50 backdrop-blur-xl text-zinc-400 border-r border-white/[0.05] flex flex-col z-50">
+        <aside className="fixed left-0 top-0 h-screen w-64 bg-zinc-900/50 backdrop-blur-xl text-zinc-400 border-r border-white/[0.05] flex flex-col z-50 transition-all duration-300">
             {/* Brand Header */}
             <div className="h-16 flex items-center px-6 border-b border-white/[0.05] bg-zinc-950/20">
                 <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] mr-3">
@@ -58,7 +58,7 @@ export default function AdminSidebar() {
             <div className="p-4 border-t border-white/[0.05] bg-zinc-950/20">
                 <Link
                     to="/dashboard"
-                    className="flex items-center justify-center w-full py-3 px-4 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] text-zinc-300 transition-all text-xs font-black uppercase tracking-widest"
+                    className="flex items-center justify-center w-full py-3 px-4 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] text-zinc-300 transition-all text-xs font-black uppercase tracking-widest shadow-sm"
                 >
                     Exit to App
                 </Link>

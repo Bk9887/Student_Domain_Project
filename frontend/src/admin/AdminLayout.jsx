@@ -30,7 +30,7 @@ export default function AdminLayout() {
     if (!adminUser) return null; // Prevent flash of unauthorized content
 
     return (
-        <div className="flex bg-zinc-950 min-h-screen font-sans text-zinc-100">
+        <div className="flex bg-zinc-950 min-h-screen font-sans text-zinc-200 transition-colors duration-300">
             {/* Sidebar Navigation */}
             <AdminSidebar activeUser={adminUser} />
 

@@ -259,7 +259,7 @@ const Roadmap = () => {
 
       {/* Header */}
       <div className="text-center space-y-4 pt-8">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight uppercase bg-gradient-to-r from-zinc-100 via-indigo-200 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight uppercase bg-gradient-to-r from-zinc-100 via-indigo-200 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm transition-all duration-300">
           {domain} Track
         </h1>
         <p className="text-zinc-400 tracking-wide text-lg">AI-Architected Journey</p>
@@ -276,8 +276,8 @@ const Roadmap = () => {
             {/* Base Line */}
             <div className="absolute top-1/2 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 via-emerald-500 to-amber-500 transform -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)]"></div>
 
-            <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1/4 w-28 h-28 bg-zinc-900 border-8 border-zinc-800 rounded-full flex items-center justify-center shadow-2xl z-10"><span className="font-bold text-sm tracking-widest text-zinc-300">FOUNDATION</span></div>
-            <div className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/4 w-28 h-28 bg-zinc-900 border-8 border-zinc-800 rounded-full flex items-center justify-center shadow-2xl z-10 text-center leading-tight"><span className="font-bold text-sm tracking-widest text-zinc-300">INDUSTRY<br />EXPERT</span></div>
+            <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1/4 w-28 h-28 bg-zinc-900 border-8 border-zinc-800 rounded-full flex items-center justify-center shadow-2xl z-10 transition-colors duration-300"><span className="font-bold text-sm tracking-widest text-zinc-300">FOUNDATION</span></div>
+            <div className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/4 w-28 h-28 bg-zinc-900 border-8 border-zinc-800 rounded-full flex items-center justify-center shadow-2xl z-10 text-center leading-tight transition-colors duration-300"><span className="font-bold text-sm tracking-widest text-zinc-300">INDUSTRY<br />EXPERT</span></div>
 
             {/* Nodes Container */}
             <div className="relative w-[70%] mx-auto flex justify-between h-56">
@@ -294,7 +294,7 @@ const Roadmap = () => {
               >
                 <div className="absolute top-[35%] w-px h-16 bg-white/20"></div>
                 <div className="w-4 h-4 rounded-full bg-indigo-500 ring-4 ring-indigo-500/30 absolute top-[48%] -translate-y-1/2"></div>
-                <div className="w-20 h-20 bg-zinc-950 border-[6px] border-indigo-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(99,102,241,0.4)] z-10 mb-2">
+                <div className="w-20 h-20 bg-zinc-950 border-[6px] border-indigo-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(99,102,241,0.4)] z-10 mb-2 transition-colors duration-300">
                   <FaCode className="text-3xl text-indigo-400" />
                 </div>
                 <span className="font-bold text-indigo-400 text-sm tracking-wider uppercase mt-2">Beginner</span>
@@ -316,7 +316,7 @@ const Roadmap = () => {
                 <span className="font-bold text-emerald-400 text-sm tracking-wider uppercase mb-2 flex items-center gap-1">
                   {!isBeginnerComplete && <FaLock className="text-xs" />} Intermediate
                 </span>
-                <div className={`w-20 h-20 bg-zinc-950 border-[6px] border-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.4)] z-10 mt-2 ${!isBeginnerComplete && 'border-zinc-700 shadow-none'}`}>
+                <div className={`w-20 h-20 bg-zinc-950 border-[6px] border-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.4)] z-10 mt-2 transition-colors duration-300 ${!isBeginnerComplete && 'border-zinc-700 shadow-none'}`}>
                   {!isBeginnerComplete ? <FaLock className="text-3xl text-zinc-600" /> : <FaNetworkWired className="text-3xl text-emerald-400" />}
                 </div>
               </div>
@@ -334,7 +334,7 @@ const Roadmap = () => {
               >
                 <div className="absolute top-[35%] w-px h-16 bg-white/20"></div>
                 <div className="w-4 h-4 rounded-full bg-amber-500 ring-4 ring-amber-500/30 absolute top-[48%] -translate-y-1/2"></div>
-                <div className={`w-20 h-20 bg-zinc-950 border-[6px] border-amber-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.4)] z-10 mb-2 ${(!isIntermediateComplete || !isBeginnerComplete) && 'border-zinc-700 shadow-none'}`}>
+                <div className={`w-20 h-20 bg-zinc-950 border-[6px] border-amber-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.4)] z-10 mb-2 transition-colors duration-300 ${(!isIntermediateComplete || !isBeginnerComplete) && 'border-zinc-700 shadow-none'}`}>
                   {!isIntermediateComplete || !isBeginnerComplete ? <FaLock className="text-3xl text-zinc-600" /> : <FaRocket className="text-3xl text-amber-400" />}
                 </div>
                 <span className="font-bold text-amber-400 text-sm tracking-wider uppercase mt-2 flex items-center gap-1">
@@ -345,21 +345,21 @@ const Roadmap = () => {
           </div>
 
           {/* Mobile Tab Fallback */}
-          <div className="md:hidden flex space-x-2 bg-white/5 p-1 rounded-xl">
-            <button onClick={() => setActiveTab('beginner')} className={`flex-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-colors ${activeTab === 'beginner' ? 'bg-indigo-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>Beg</button>
-            <button onClick={() => isBeginnerComplete && setActiveTab('intermediate')} className={`flex-1 flex items-center justify-center gap-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-colors ${!isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'intermediate' ? 'bg-emerald-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>
+          <div className="md:hidden flex space-x-2 bg-white/5 p-1 rounded-xl transition-colors duration-300">
+            <button onClick={() => setActiveTab('beginner')} className={`flex-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'beginner' ? 'bg-indigo-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>Beg</button>
+            <button onClick={() => isBeginnerComplete && setActiveTab('intermediate')} className={`flex-1 flex items-center justify-center gap-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${!isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'intermediate' ? 'bg-emerald-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>
               {!isBeginnerComplete && <FaLock className="text-xs" />} Int
             </button>
-            <button onClick={() => isBeginnerComplete && isIntermediateComplete && setActiveTab('advanced')} className={`flex-1 flex items-center justify-center gap-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-colors ${!isIntermediateComplete || !isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'advanced' ? 'bg-amber-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>
+            <button onClick={() => isBeginnerComplete && isIntermediateComplete && setActiveTab('advanced')} className={`flex-1 flex items-center justify-center gap-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${!isIntermediateComplete || !isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'advanced' ? 'bg-amber-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>
               {(!isIntermediateComplete || !isBeginnerComplete) && <FaLock className="text-xs" />} Adv
             </button>
           </div>
 
           {/* Dynamic Module Accordion Stack */}
-          <div className="bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-            <div className={`absolute top-0 left-0 w-full h-1 opacity-50 transition-colors duration-500 ${activeTab === 'beginner' ? 'bg-indigo-500 shadow-[0_0_30px_#6366f1]' : activeTab === 'intermediate' ? 'bg-emerald-500 shadow-[0_0_30px_#10b981]' : 'bg-amber-500 shadow-[0_0_30px_#f59e0b]'}`}></div>
+          <div className="bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden transition-all duration-300">
+            <div className={`absolute top-0 left-0 w-full h-1 opacity-50 transition-all duration-500 ${activeTab === 'beginner' ? 'bg-indigo-500 shadow-[0_0_30px_#6366f1]' : activeTab === 'intermediate' ? 'bg-emerald-500 shadow-[0_0_30px_#10b981]' : 'bg-amber-500 shadow-[0_0_30px_#f59e0b]'}`}></div>
 
-            <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+            <h2 className="text-2xl font-bold mb-8 flex items-center gap-3 text-white">
               <span className={`w-3 h-8 rounded-full transition-colors duration-500 ${activeTab === 'beginner' ? 'bg-indigo-500' : activeTab === 'intermediate' ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
               <span className="capitalize">{activeTab} Roadmap</span>
             </h2>

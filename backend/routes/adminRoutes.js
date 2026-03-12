@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     getStats, getUsers, getConfig, updateConfig,
     deleteUser, getDomains, createDomain, updateDomain, deleteDomain,
-    updateRoadmap, getFeedback, resolveFeedback
+    updateRoadmap, getFeedback, resolveFeedback, getFeedbackCount
 } = require("../controllers/adminController");
 const protect = require("../middleware/authMiddleware");
 const { adminAuth } = require("../middleware/adminAuth");
@@ -26,6 +26,7 @@ router.delete("/domains/:id", protect, adminAuth, deleteDomain);
 router.put("/roadmaps/:domainId", protect, adminAuth, updateRoadmap);
 
 router.get("/feedback", protect, adminAuth, getFeedback);
+router.get("/feedback-count", protect, adminAuth, getFeedbackCount);
 router.put("/feedback/:id/resolve", protect, adminAuth, resolveFeedback);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -11,6 +11,7 @@ export default function Navbar() {
     JSON.parse(localStorage.getItem("currentUser"))?.photo || null
   );
 
+
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
@@ -19,10 +20,15 @@ export default function Navbar() {
 
   // Fetch XP and streak
   const fetchStats = async () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    const authToken = localStorage.getItem("token");
+
+    if (!user?._id || !authToken) return;
+
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/dashboard/${currentUser._id}?t=${Date.now()}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        `http://localhost:5000/api/dashboard/${user._id}?t=${Date.now()}`,
+        { headers: { Authorization: `Bearer ${authToken}` } }
       );
       setPoints(res.data.points);
       setStreak(res.data.streak);
@@ -128,6 +134,7 @@ export default function Navbar() {
               >
                 Help Center
               </button>
+
             </div>
           )}
         </div>

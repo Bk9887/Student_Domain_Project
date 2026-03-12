@@ -69,16 +69,16 @@ export default function Profile() {
     <div className="min-h-screen relative text-white p-8">
       <div className="max-w-4xl mx-auto space-y-8 relative z-10 mt-10">
 
-        <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-br from-white via-indigo-200 to-zinc-500 bg-clip-text text-transparent drop-shadow-sm">Builder Profile</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-br from-white via-indigo-200 to-zinc-500 bg-clip-text text-transparent drop-shadow-sm transition-all duration-300">Builder Profile</h1>
 
         {/* TOP SECTION */}
         <div className="grid md:grid-cols-3 gap-6">
 
           {/* Profile Photo */}
-          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-6 text-center">
+          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-6 text-center transition-all">
             <img
               src={profile.photo || "https://i.imgur.com/HeIi0wU.png"}
-              className="w-32 h-32 mx-auto rounded-full object-cover border"
+              className="w-32 h-32 mx-auto rounded-full object-cover border border-zinc-800"
             />
 
             <input
@@ -90,7 +90,7 @@ export default function Profile() {
           </div>
 
           {/* Student Information */}
-          <div className="md:col-span-2 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
+          <div className="md:col-span-2 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8 transition-all">
 
             <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">Student Information</h2>
 
@@ -135,7 +135,7 @@ export default function Profile() {
         </div>
 
         {/* PARENT INFORMATION */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8 transition-all">
 
           <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">
             Parent / Guardian Information
@@ -172,7 +172,7 @@ export default function Profile() {
         </div>
 
         {/* ADDRESS */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8 transition-all">
 
           <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">Address</h2>
 
@@ -188,7 +188,7 @@ export default function Profile() {
         </div>
 
         {/* PROFESSIONAL LINKS */}
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8">
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl rounded-2xl p-8 transition-all">
 
           <h2 className="text-xl font-bold mb-6 text-indigo-100 tracking-tight">Professional Links</h2>
 

@@ -37,7 +37,7 @@ export default function AdminDashboard() {
     const kpiCards = [
         { title: "Total Students", value: stats?.totalUsers || 0, icon: <MdPeople />, color: "bg-blue-500" },
         { title: "Active Learners", value: stats?.activeLearners || 0, icon: <MdTrendingUp />, color: "bg-emerald-500" },
-        { title: "Total XP Mined", value: stats?.totalPoints || 0, icon: <MdLeaderboard />, color: "bg-amber-500" },
+        { title: "Total XP Distributed", value: stats?.totalPoints || 0, icon: <MdLeaderboard />, color: "bg-amber-500" },
         { title: "Domains Active", value: Object.keys(stats?.domainDistribution || {}).length, icon: <MdSchool />, color: "bg-purple-500" },
     ];
 
@@ -45,7 +45,7 @@ export default function AdminDashboard() {
         <div className="space-y-8">
             <div className="flex justify-between items-end">
                 <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic underline decoration-indigo-500 decoration-4 underline-offset-8">System Overview</h2>
+                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic underline decoration-indigo-500 decoration-4 underline-offset-8 transition-colors">System Overview</h2>
                     <p className="text-zinc-500 text-sm mt-4 font-bold tracking-widest uppercase">Real-time metrics from the matrix</p>
                 </div>
                 <button className="px-6 py-3 bg-white/[0.03] text-zinc-300 font-bold rounded-xl hover:bg-white/[0.05] transition-all border border-white/[0.08] shadow-lg text-xs uppercase tracking-widest active:scale-95">
@@ -64,7 +64,7 @@ export default function AdminDashboard() {
                             </div>
                             <div className="ml-5">
                                 <p className="text-xs font-black text-zinc-500 uppercase tracking-widest mb-1">{card.title}</p>
-                                <h3 className="text-3xl font-black text-white tracking-tighter">{card.value}</h3>
+                                <h3 className="text-3xl font-black text-white tracking-tighter transition-colors">{card.value}</h3>
                             </div>
                         </BentoCard>
                     );

@@ -153,7 +153,7 @@ export default function ResumeBuilder() {
             <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-3">
                     <FaFileAlt className="text-3xl text-indigo-400" />
-                    <h1 className="text-3xl font-extrabold tracking-tight text-white">
+                    <h1 className="text-3xl font-extrabold tracking-tight text-white transition-all duration-300">
                         Resume Builder
                     </h1>
                 </div>
@@ -166,7 +166,7 @@ export default function ResumeBuilder() {
                     </button>
                     <button
                         onClick={() => setShowPreview(true)}
-                        className="px-5 py-2.5 rounded-xl font-medium bg-white/[0.05] border border-white/10 hover:bg-white/10 transition-colors text-white"
+                        className="px-5 py-2.5 rounded-xl font-medium bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all font-bold"
                     >
                         Preview
                     </button>
@@ -177,7 +177,7 @@ export default function ResumeBuilder() {
             <div className="space-y-6">
 
                 {/* Personal Information */}
-                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7">
+                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7 transition-all">
                     <h2 className="text-lg font-bold text-white mb-6">Personal Information</h2>
                     <div className="grid md:grid-cols-3 gap-6">
                         <div>
@@ -187,7 +187,7 @@ export default function ResumeBuilder() {
                                 placeholder="Add Name"
                                 value={personalInfo.name}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, name: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600 shadow-inner"
                             />
                         </div>
                         <div>
@@ -197,7 +197,7 @@ export default function ResumeBuilder() {
                                 placeholder="Add Email"
                                 value={personalInfo.email}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, email: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600 shadow-inner"
                             />
                         </div>
                         <div>
@@ -207,14 +207,14 @@ export default function ResumeBuilder() {
                                 placeholder="Add Phone"
                                 value={personalInfo.phone}
                                 onChange={(e) => setPersonalInfo({ ...personalInfo, phone: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600 shadow-inner"
                             />
                         </div>
                     </div>
                 </div>
 
                 {/* Education */}
-                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7">
+                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7 transition-all">
                     <h2 className="text-lg font-bold text-white mb-6">Education</h2>
                     <div className="grid md:grid-cols-3 gap-6">
                         <div>
@@ -223,7 +223,7 @@ export default function ResumeBuilder() {
                                 placeholder="Add Institution"
                                 value={education.institution}
                                 onChange={(e) => setEducation({ ...education, institution: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600 shadow-inner"
                             />
                         </div>
                         <div>
@@ -232,7 +232,7 @@ export default function ResumeBuilder() {
                                 placeholder="Add Degree/Major"
                                 value={education.degree}
                                 onChange={(e) => setEducation({ ...education, degree: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600 shadow-inner"
                             />
                         </div>
                         <div>
@@ -241,26 +241,26 @@ export default function ResumeBuilder() {
                                 placeholder="Add Year (e.g. 2024)"
                                 value={education.year}
                                 onChange={(e) => setEducation({ ...education, year: e.target.value })}
-                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-zinc-600 shadow-inner"
                             />
                         </div>
                     </div>
                 </div>
 
                 {/* Skills */}
-                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7">
+                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7 transition-all">
                     <h2 className="text-lg font-bold text-white mb-6">Skills</h2>
 
                     <div className="flex flex-wrap gap-3 mb-6">
                         {skills.map((skill) => (
                             <div
                                 key={skill}
-                                className="flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg text-indigo-300 transition-colors hover:bg-indigo-500/20"
+                                className="flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg text-indigo-300 transition-colors hover:bg-indigo-500/20 shadow-sm"
                             >
                                 <span>{skill}</span>
                                 <button
                                     onClick={() => removeSkill(skill)}
-                                    className="text-indigo-400 hover:text-red-400 transition-colors p-1"
+                                    className="text-indigo-400 hover:text-red-500 transition-colors p-1"
                                 >
                                     <FaTrashAlt size={12} />
                                 </button>
@@ -286,18 +286,18 @@ export default function ResumeBuilder() {
                 </div>
 
                 {/* Experience */}
-                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7">
+                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7 transition-all">
                     <h2 className="text-lg font-bold text-white mb-6">Professional Experience</h2>
 
                     {/* Render existing experiences */}
                     <div className="space-y-4 mb-6">
                         {experience.map((exp) => (
-                            <div key={exp.id} className="bg-black/40 border border-white/10 rounded-xl p-4 flex justify-between items-start">
+                            <div key={exp.id} className="bg-black/40 border border-white/10 rounded-xl p-4 flex justify-between items-start group hover:border-indigo-500/30 transition-all shadow-sm">
                                 <div>
                                     <h3 className="font-bold text-white">{exp.role} <span className="text-indigo-400 font-normal">at {exp.company}</span></h3>
-                                    <p className="text-sm text-zinc-400">{exp.location} | {exp.duration}</p>
+                                    <p className="text-sm text-zinc-400 font-medium">{exp.location} | {exp.duration}</p>
                                 </div>
-                                <button onClick={() => removeExperience(exp.id)} className="text-zinc-500 hover:text-red-400 transition-colors">
+                                <button onClick={() => removeExperience(exp.id)} className="text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100">
                                     <FaTrashAlt />
                                 </button>
                             </div>
@@ -343,26 +343,26 @@ export default function ResumeBuilder() {
                             onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
                             className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                         ></textarea>
-                        <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 transition-colors">
+                        <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold bg-indigo-600/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-600/20 transition-colors">
                             <FaPlus /> Add Experience
                         </button>
                     </form>
                 </div>
 
                 {/* Projects */}
-                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7">
+                <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-7 transition-all">
                     <h2 className="text-lg font-bold text-white mb-6">Projects & Extracurriculars</h2>
 
                     {/* Render existing projects */}
                     <div className="space-y-4 mb-6">
                         {projects.map((proj) => (
-                            <div key={proj.id} className="bg-black/40 border border-white/10 rounded-xl p-4 flex justify-between items-start">
+                            <div key={proj.id} className="bg-black/40 border border-white/10 rounded-xl p-4 flex justify-between items-start group hover:border-indigo-500/30 transition-all shadow-sm">
                                 <div>
                                     <h3 className="font-bold text-white">{proj.title}</h3>
-                                    <p className="text-sm text-indigo-400 mb-1">{proj.technologies}</p>
-                                    <p className="text-sm text-zinc-400">{proj.duration}</p>
+                                    <p className="text-sm text-indigo-400 mb-1 font-medium">{proj.technologies}</p>
+                                    <p className="text-sm text-zinc-400 font-medium">{proj.duration}</p>
                                 </div>
-                                <button onClick={() => removeProject(proj.id)} className="text-zinc-500 hover:text-red-400 transition-colors">
+                                <button onClick={() => removeProject(proj.id)} className="text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100">
                                     <FaTrashAlt />
                                 </button>
                             </div>
@@ -401,7 +401,7 @@ export default function ResumeBuilder() {
                             onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
                             className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all"
                         ></textarea>
-                        <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 transition-colors">
+                        <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold bg-indigo-600/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-600/20 transition-colors">
                             <FaPlus /> Add Project
                         </button>
                     </form>
@@ -411,25 +411,25 @@ export default function ResumeBuilder() {
 
             {/* Preview Modal */}
             {showPreview && (
-                <div className="fixed inset-0 z-50 bg-[#0f111a] flex flex-col items-center overflow-y-auto">
+                <div className="fixed inset-0 z-50 bg-[#0f111a] flex flex-col items-center overflow-y-auto transition-all duration-300">
                     {/* Preview Topbar */}
-                    <div className="w-full max-w-5xl py-6 px-8 flex justify-between items-center bg-[#0f111a] sticky top-0 z-10 border-b border-white/5">
+                    <div className="w-full max-w-5xl py-6 px-8 flex justify-between items-center bg-[#0f111a] sticky top-0 z-10 border-b border-white/5 shadow-2xl transition-all duration-300">
                         <div className="flex items-center gap-3">
-                            <FaFileAlt className="text-2xl text-blue-500" />
+                            <FaFileAlt className="text-2xl text-indigo-600" />
                             <h2 className="text-2xl font-bold text-white tracking-tight">Resume Builder</h2>
                         </div>
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={handleSaveResume}
                                 disabled={isSaving}
-                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-colors shadow-lg ${isSaving ? 'bg-zinc-600 text-zinc-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white shadow-blue-500/20'}`}
+                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-colors shadow-lg ${isSaving ? 'bg-zinc-600 text-zinc-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20'}`}
                             >
                                 <FaSave />
                                 {isSaving ? "Saving..." : "Save"}
                             </button>
                             <button
                                 onClick={exportToPDF}
-                                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold bg-blue-500 hover:bg-blue-600 transition-colors text-white shadow-lg shadow-blue-500/20"
+                                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-lg shadow-indigo-600/20"
                             >
                                 <FaDownload />
                                 Export PDF
@@ -530,8 +530,8 @@ export default function ResumeBuilder() {
 
             {/* Resume Gallery Modal */}
             {showResumeGallery && (
-                <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-                    <div className="bg-[#11131a] rounded-2xl w-full max-w-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+                <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
+                    <div className="bg-[#11131a] rounded-2xl w-full max-w-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] transition-all">
                         {/* Header */}
                         <div className="flex justify-between items-center p-6 border-b border-white/10">
                             <div className="flex items-center gap-3">
@@ -548,14 +548,14 @@ export default function ResumeBuilder() {
                             {savedResumes.length > 0 ? (
                                 <div className="space-y-4">
                                     {savedResumes.map((res, idx) => (
-                                        <div key={idx} className="bg-white/[0.02] border border-white/5 p-5 rounded-xl flex justify-between items-center hover:bg-white/[0.04] transition-colors group">
+                                        <div key={idx} className="bg-white/[0.02] border border-white/5 p-5 rounded-xl flex justify-between items-center hover:bg-white/[0.04] shadow-sm transition-colors group">
                                             <div>
-                                                <h3 className="text-white font-semibold text-lg">{res.name}</h3>
-                                                <p className="text-sm text-zinc-500">{new Date(res.timestamp).toLocaleString()}</p>
+                                                <h3 className="text-white font-bold text-lg">{res.name}</h3>
+                                                <p className="text-sm text-zinc-500 font-medium">{new Date(res.timestamp).toLocaleString()}</p>
                                             </div>
                                             <button
                                                 onClick={() => loadResume(res.data)}
-                                                className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-lg transition-colors shadow-lg shadow-indigo-500/20 opacity-0 group-hover:opacity-100"
+                                                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition-colors shadow-lg shadow-indigo-600/20 opacity-0 group-hover:opacity-100"
                                             >
                                                 Load
                                             </button>
@@ -564,7 +564,7 @@ export default function ResumeBuilder() {
                                 </div>
                             ) : (
                                 <div className="text-center py-10">
-                                    <p className="text-zinc-500">You haven't saved any resumes yet.</p>
+                                    <p className="text-zinc-500 font-medium">You haven't saved any resumes yet.</p>
                                     <p className="text-sm text-zinc-600 mt-2">Generate a resume and click "Save to Profile" in the Preview screen.</p>
                                 </div>
                             )}

@@ -80,7 +80,7 @@ const Leaderboard = () => {
                 key={user._id}
                 className="border-b border-white/[0.05] hover:bg-white/[0.03] transition-colors group"
               >
-                <td className="py-4 px-2 font-semibold text-xl">
+                <td className="py-4 px-2 font-semibold text-xl text-white">
                   {getBadge(index)}
                 </td>
 

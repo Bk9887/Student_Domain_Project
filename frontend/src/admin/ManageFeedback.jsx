@@ -16,7 +16,7 @@ export default function ManageFeedback() {
         try {
             const token = localStorage.getItem("token");
             const res = await axios.get("http://localhost:5000/api/admin/feedback", {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token} ` }
             });
             setFeedback(res.data);
             setLoading(false);
@@ -64,7 +64,7 @@ export default function ManageFeedback() {
                     <div className="absolute inset-0 bg-indigo-500/[0.02] mix-blend-overlay"></div>
                     <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-8">
                         <div>
-                            <h1 className="text-4xl font-black text-white italic tracking-tighter uppercase underline decoration-indigo-500 decoration-4 underline-offset-8">Support Intel</h1>
+                            <h1 className="text-4xl font-black text-white italic tracking-tighter uppercase underline decoration-indigo-500 decoration-4 underline-offset-8 transition-colors">Support Intel</h1>
                             <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em] mt-6">Review student transmissions and resolve anomalies.</p>
                         </div>
                         <div className="flex items-center space-x-10">
@@ -83,7 +83,7 @@ export default function ManageFeedback() {
             </BentoCard>
 
             {/* Filter Tabs */}
-            <div className="flex space-x-8 border-b border-white/[0.05] relative px-2">
+            <div className="flex space-x-8 border-b border-white/[0.05] relative px-2 mb-8">
                 <button
                     onClick={() => setFilter("all")}
                     className={`pb-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${filter === 'all' ? 'text-white' : 'text-zinc-600 hover:text-zinc-400'}`}
@@ -111,12 +111,14 @@ export default function ManageFeedback() {
                 filteredTickets.map((ticket) => (
                     <div
                         key={ticket._id}
-                        className={`bg-white/[0.02] border rounded-2xl p-8 transition-all group ${ticket.isResolved ? 'border-white/[0.03] opacity-60' : 'border-amber-500/20 shadow-[0_4px_25px_rgba(245,158,11,0.05)] bg-amber-500/[0.01]'}`}
+                        className={`bg-white/[0.02] border rounded-2xl p-8 mb-6 transition-all group ${ticket.isResolved
+                            ? 'border-white/[0.03] opacity-60'
+                            : 'border-amber-500/20 shadow-[0_4px_25px_rgba(245,158,11,0.05)] bg-amber-500/[0.01]'}`}
                     >
                         <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
                             <div className="space-y-3">
                                 <div className="flex items-center gap-4">
-                                    <h3 className="text-xl font-black text-white tracking-tight italic uppercase">{ticket.name}</h3>
+                                    <h3 className="text-xl font-black text-white tracking-tight italic uppercase transition-colors">{ticket.name}</h3>
                                     <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border ${ticket.category === 'bug' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
                                         ticket.category === 'feature' ? 'bg-violet-500/10 text-violet-400 border-violet-500/20' :
                                             'bg-zinc-800/20 text-zinc-500 border-white/[0.05]'
@@ -131,7 +133,7 @@ export default function ManageFeedback() {
                             </div>
 
                             <div className="flex items-center gap-6">
-                                <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">
+                                <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest transition-colors">
                                     DATA RECORDED: {new Date(ticket.createdAt).toLocaleDateString()}
                                 </span>
                                 {ticket.isResolved ? (

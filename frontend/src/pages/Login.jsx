@@ -142,7 +142,7 @@ export default function Login() {
           </button>
         </div>
 
-        <p className="text-center text-sm text-slate-400 mt-4">
+        <p className="text-center text-sm text-zinc-400 mt-4">
           Don't have an account?{" "}
           <span
             onClick={() => navigate("/signup")}

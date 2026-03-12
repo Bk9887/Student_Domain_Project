@@ -8,9 +8,12 @@ exports.getStats = async (req, res) => {
     try {
         const totalUsers = await User.countDocuments();
 
-        // Calculate total points across the entire system
-        const allUsers = await User.find({}).select("points domain");
-        const totalPoints = allUsers.reduce((sum, user) => sum + (user.points || 0), 0);
+        // Calculate total points across the entire system (Base + Domain Progress)
+        const allUsers = await User.find({}).select("points domainProgress domain");
+        const totalPoints = allUsers.reduce((sum, user) => {
+            const domainPoints = user.domainProgress.reduce((dSum, d) => dSum + (d.points || 0), 0);
+            return sum + (user.points || 0) + domainPoints;
+        }, 0);
 
         // Calculate domain distribution
         const domainCounts = {};
@@ -187,6 +190,8 @@ exports.updateDomain = async (req, res) => {
     }
 };
 
+const Roadmap = require("../models/Roadmap");
+
 // @desc    Delete a specific domain
 // @route   DELETE /api/admin/domains/:id
 // @access  Private/Admin
@@ -195,7 +200,10 @@ exports.deleteDomain = async (req, res) => {
         const domain = await Domain.findByIdAndDelete(req.params.id);
         if (!domain) return res.status(404).json({ message: "Domain not found" });
 
-        res.json({ message: "Domain removed successfully" });
+        // Also delete the tiered roadmap if it exists
+        await Roadmap.findOneAndDelete({ domain: domain.name });
+
+        res.json({ message: "Domain and associated roadmap removed successfully" });
     } catch (error) {
         res.status(500).json({ message: "Failed to delete domain" });
     }
@@ -203,26 +211,30 @@ exports.deleteDomain = async (req, res) => {
 
 const Feedback = require("../models/Feedback");
 
-// ==========================================
-// ROADMAP MANAGEMENT (Embedded inside Domain)
-// ==========================================
-
 // @desc    Update a roadmap array for a specific domain
 // @route   PUT /api/admin/roadmaps/:domainId
 // @access  Private/Admin
 exports.updateRoadmap = async (req, res) => {
     try {
-        const { roadmap } = req.body;
+        const { tiers } = req.body; // Expecting tiers now, not flat roadmap
 
-        const domain = await Domain.findByIdAndUpdate(
-            req.params.domainId,
-            { roadmap },
-            { new: true, runValidators: true }
-        );
-
+        const domain = await Domain.findById(req.params.id || req.params.domainId);
         if (!domain) return res.status(404).json({ message: "Domain not found" });
 
-        res.json(domain);
+        // Update or Create the tiered roadmap document
+        let roadmapDoc = await Roadmap.findOne({ domain: domain.name });
+
+        if (roadmapDoc) {
+            roadmapDoc.tiers = tiers;
+            await roadmapDoc.save();
+        } else {
+            roadmapDoc = await Roadmap.create({
+                domain: domain.name,
+                tiers
+            });
+        }
+
+        res.json(roadmapDoc);
     } catch (error) {
         console.error("Roadmap update error:", error);
         res.status(500).json({ message: "Failed to update roadmap" });
@@ -259,5 +271,16 @@ exports.resolveFeedback = async (req, res) => {
         res.json(feedback);
     } catch (error) {
         res.status(500).json({ message: "Failed to resolve ticket" });
+    }
+};
+// @desc    Get count of unresolved feedback tickets
+// @route   GET /api/admin/feedback-count
+// @access  Private/Admin
+exports.getFeedbackCount = async (req, res) => {
+    try {
+        const count = await Feedback.countDocuments({ isResolved: false });
+        res.json({ count });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch feedback count" });
     }
 };

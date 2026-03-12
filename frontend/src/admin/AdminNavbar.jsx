@@ -1,6 +1,29 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import { MdNotifications, MdAccountCircle } from "react-icons/md";
 
 export default function AdminNavbar({ adminName, onLogout }) {
+    const [unreadCount, setUnreadCount] = useState(0);
+
+    useEffect(() => {
+        const fetchUnreadCount = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get("http://localhost:5000/api/admin/feedback-count", {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setUnreadCount(res.data.count);
+            } catch (err) {
+                console.error("Failed to fetch notification count", err);
+            }
+        };
+
+        fetchUnreadCount();
+        const interval = setInterval(fetchUnreadCount, 30000); // Check every 30 seconds
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <header className="h-16 bg-zinc-950/50 backdrop-blur-xl border-b border-white/[0.05] flex items-center justify-between px-8 fixed top-0 w-[calc(100%-16rem)] right-0 z-40 transition-all duration-300">
 
@@ -14,11 +37,15 @@ export default function AdminNavbar({ adminName, onLogout }) {
             {/* Right User Controls */}
             <div className="flex items-center space-x-6">
 
-                {/* Mock Notifications */}
-                <button className="relative text-zinc-400 hover:text-indigo-400 transition-all transform hover:scale-110 active:scale-95">
+                {/* Notifications */}
+                <Link to="/admin/manage-feedback" className="relative text-zinc-400 hover:text-indigo-400 transition-all transform hover:scale-110 active:scale-95 group">
                     <MdNotifications className="text-2xl" />
-                    <span className="absolute top-0 right-0 h-2 w-2 bg-indigo-500 rounded-full shadow-[0_0_10px_#6366f1]"></span>
-                </button>
+                    {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 h-5 w-5 bg-indigo-600 text-white text-[10px] font-black flex items-center justify-center rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)] border-2 border-zinc-950 group-hover:scale-110 transition-transform">
+                            {unreadCount > 9 ? '9+' : unreadCount}
+                        </span>
+                    )}
+                </Link>
 
                 {/* User Profile Dropdown */}
                 <div className="flex items-center border-l pl-6 border-white/[0.05]">
@@ -43,6 +70,7 @@ export default function AdminNavbar({ adminName, onLogout }) {
                         Logout
                     </button>
                 </div>
+
 
             </div>
         </header>

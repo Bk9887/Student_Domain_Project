@@ -5,7 +5,8 @@ import {
   FaBookOpen,
   FaTrophy,
   FaFileAlt,
-  FaBriefcase
+  FaBriefcase,
+  FaMapSigns
 } from "react-icons/fa"; // FontAwesome icons
 import { FaShieldAlt } from "react-icons/fa"; // Added security icon
 import { FaRobot } from "react-icons/fa6";
@@ -29,7 +30,8 @@ export default function Sidebar({ appConfig }) {
     { path: "/roadmap", label: "Roadmap", icon: <FaBookOpen /> },
     { path: "/leaderboard", label: "Leaderboard", icon: <FaTrophy /> },
     { path: "/resume", label: "Resume Builder", icon: <FaFileAlt /> },
-    { path: "/portfolio", label: "Portfolio", icon: <FaBriefcase /> }
+    { path: "/portfolio", label: "Portfolio", icon: <FaBriefcase /> },
+    { path: "/journey", label: "My Journey", icon: <FaMapSigns /> }
   ];
 
   if (appConfig?.showAiMentor !== false) {
@@ -45,7 +47,7 @@ export default function Sidebar({ appConfig }) {
       bg-zinc-950/50 backdrop-blur-2xl 
       border-r border-white/5 
       flex flex-col justify-between p-6
-      shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-40 relative">
+      shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-40 relative transition-all duration-300">
 
       {/* Logo */}
       <div>

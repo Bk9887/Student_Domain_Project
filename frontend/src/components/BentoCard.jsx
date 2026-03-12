@@ -15,7 +15,7 @@ export default function BentoCard({ className = "", children, onClick, magnetic 
     <div
       role={onClick ? "button" : undefined}
       onClick={onClick}
-      className={`relative rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl hover:bg-white/[0.05] transition-all group overflow-hidden ${className} hover:scale-[1.01] hover:shadow-2xl active:scale-[0.99]`}
+      className={`relative rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl hover:bg-white/[0.05] transition-all group overflow-hidden ${className} hover:scale-[1.01] hover:shadow-2xl active:scale-[0.99] transition-all duration-300`}
     >
       {/* Coloured Surrounding (Top Bar Glow) */}
       <div className={`absolute top-0 left-0 w-full h-[2px] opacity-40 group-hover:opacity-100 transition-all duration-500 ${style}`}></div>

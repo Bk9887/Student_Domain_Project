@@ -166,7 +166,7 @@ export default function Signup() {
           Create Account
         </button>
 
-        <p className="text-center text-sm text-slate-400 mt-4">
+        <p className="text-center text-sm text-zinc-400 mt-4">
           Already have an account?{" "}
           <span
             onClick={() => navigate("/login")}

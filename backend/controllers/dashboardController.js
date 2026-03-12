@@ -14,14 +14,17 @@ exports.getDashboard = async (req, res) => {
     // Base points includes the 50 point signup bonus + streak increments
     let points = user.points || 0;
 
+    // Sum points from all domains for a global total
+    user.domainProgress.forEach(d => {
+      points += (d.points || 0);
+    });
+
     const domainData = user.domainProgress.find(
       (d) => d.domain === selectedDomain
     );
 
     if (domainData) {
       progress = domainData.progress;
-      // Add domain specific points to the base score
-      points += domainData.points;
     }
 
     const allUsers = await User.find({ domain: selectedDomain });

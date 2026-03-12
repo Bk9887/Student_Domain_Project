@@ -16,6 +16,14 @@ const domainProgressSchema = new mongoose.Schema({
   completedVideos: {
     type: [String],
     default: []
+  },
+  totalSteps: {
+    type: Number,
+    default: 0
+  },
+  startedAt: {
+    type: Date,
+    default: Date.now
   }
 });
 

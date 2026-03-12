@@ -105,7 +105,7 @@ export default function ManageDomains() {
         <div className="max-w-7xl mx-auto space-y-8">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic underline decoration-indigo-500 decoration-4 underline-offset-8">Domain Portfolio</h2>
+                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic underline decoration-indigo-500 decoration-4 underline-offset-8 transition-colors">Domain Portfolio</h2>
                     <p className="text-zinc-500 text-sm mt-4 font-bold tracking-widest uppercase">Engineer the future of learning paths</p>
                 </div>
 
@@ -142,7 +142,7 @@ export default function ManageDomains() {
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(domain._id)}
-                                                className="p-2 text-zinc-500 hover:text-rose-400 bg-white/[0.03] border border-white/[0.05] hover:border-rose-500/50 rounded-lg transition-all"
+                                                className="p-2 text-zinc-500 hover:text-rose-500 bg-white/[0.03] border border-white/[0.05] hover:border-rose-500/50 rounded-lg transition-all"
                                                 title="Delete"
                                             >
                                                 <MdDelete />
@@ -192,10 +192,10 @@ export default function ManageDomains() {
                     })}
 
                     {domains.length === 0 && (
-                        <div className="col-span-full py-16 text-center border-2 border-dashed border-slate-200 rounded-xl">
-                            <MdSchool className="mx-auto text-4xl text-slate-300 mb-3" />
-                            <h3 className="text-lg font-medium text-slate-700">No Domains Yet</h3>
-                            <p className="text-slate-500 text-sm mt-1">Create your first learning domain to get started.</p>
+                        <div className="col-span-full py-16 text-center border-2 border-dashed border-white/10 rounded-xl">
+                            <MdSchool className="mx-auto text-4xl text-zinc-800 mb-3" />
+                            <h3 className="text-lg font-medium text-white">No Domains Yet</h3>
+                            <p className="text-zinc-500 text-sm mt-1">Create your first learning domain to get started.</p>
                         </div>
                     )}
                 </div>
@@ -205,11 +205,11 @@ export default function ManageDomains() {
             {showModal && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
                     <div className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity" onClick={handleCloseModal}></div>
-                    <BentoCard className="relative w-full max-w-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10" accentColor="indigo">
+                    <BentoCard className="relative w-full max-w-2xl overflow-hidden shadow-2xl border border-white/10" accentColor="indigo">
                         <form onSubmit={handleSubmit} className="relative flex flex-col w-full">
                             {/* Header */}
                             <div className="flex items-center justify-between px-8 py-6 border-b border-white/[0.05] bg-white/[0.01]">
-                                <h3 className="text-xl font-black text-white italic tracking-tight">
+                                <h3 className="text-xl font-black text-white italic tracking-tight uppercase transition-colors">
                                     <span className="text-indigo-500 mr-2">{editMode ? 'MODIFY' : 'INITIALIZE'}</span> DOMAIN
                                 </h3>
                                 <button type="button" onClick={handleCloseModal} className="text-zinc-500 hover:text-white transition-all transform hover:rotate-90">

@@ -30,8 +30,10 @@ const domainRoutes = require("./routes/domainRoutes");
 const profileRoutes = require("./routes/profileRoutes"); // ⭐ ADD THIS
 const aiRoutes = require("./routes/aiRoutes");
 const chatbotRoutes = require("./routes/chatbotRoutes");
+const journeyRoutes = require("./routes/journeyRoutes");
 
-const adminRoutes = require("./routes/adminRoutes"); // ⭐ ADD THIS
+const adminRoutes = require("./routes/adminRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 
 // ✅ Register routes
 app.use("/api/auth", authRoutes);
@@ -43,7 +45,9 @@ app.use("/api/domain", domainRoutes);
 app.use("/api/profile", profileRoutes); // ⭐ ADD THIS
 app.use("/api/ai", aiRoutes);
 app.use("/api/chat", chatbotRoutes);
-app.use("/api/admin", adminRoutes); // ⭐ ADD THIS
+app.use("/api/journey", journeyRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // ✅ Test route
 app.get("/", (req, res) => {
