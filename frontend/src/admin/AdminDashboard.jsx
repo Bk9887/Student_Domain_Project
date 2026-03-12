@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { MdTrendingUp, MdPeople, MdSchool, MdLeaderboard } from "react-icons/md";
 import BentoCard from "../components/BentoCard";
@@ -14,7 +15,7 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:5000/api/admin/stats", {
+            const res = await axios.get(`${API_BASE_URL}/admin/stats`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setStats(res.data);

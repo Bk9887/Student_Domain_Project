@@ -90,7 +90,7 @@ exports.registerUser = async (req, res) => {
     });
 
     const verifyLink =
-      `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+      `${process.env.FRONTEND_URL}/verify-email/${user._id}/${verificationToken}`;
 
     await transporter.sendMail({
       from: `"Skill Platform" <${process.env.EMAIL_USER}>`,
@@ -138,14 +138,24 @@ exports.registerUser = async (req, res) => {
 // ================= VERIFY EMAIL =================
 exports.verifyEmail = async (req, res) => {
   try {
+    const { id, token } = req.params;
 
-    const { token } = req.params;
-
-    const user = await User.findOne({
-      verificationToken: token,
-    });
+    const user = await User.findById(id);
 
     if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // Handle re-click/pre-fetch: If already verified, return success instead of error
+    if (user.isVerified) {
+      return res.json({
+        message: "Email is already verified. You can login.",
+      });
+    }
+
+    if (user.verificationToken !== token) {
       return res.status(400).json({
         message: "Invalid verification token",
       });
@@ -161,9 +171,7 @@ exports.verifyEmail = async (req, res) => {
     });
 
   } catch (error) {
-
     console.error("VERIFY EMAIL ERROR:", error);
-
     res.status(500).json({
       message: error.message,
     });

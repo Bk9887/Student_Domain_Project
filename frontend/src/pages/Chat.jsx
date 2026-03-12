@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { FaRobot, FaUser, FaPaperPlane } from "react-icons/fa";
 import BentoCard from "../components/BentoCard";
@@ -36,7 +37,7 @@ export default function Chat() {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post(
-                "http://localhost:5000/api/chat",
+                `${API_BASE_URL}/chat`,
                 { message: userText },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

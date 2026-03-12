@@ -16,7 +16,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // Email verification
-router.get("/verify-email/:token", verifyEmail);
+router.get("/verify-email/:id/:token", verifyEmail);
 
 // Forgot password (send reset email)
 router.post("/forgot-password", forgotPassword);

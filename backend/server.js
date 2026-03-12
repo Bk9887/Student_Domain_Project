@@ -15,8 +15,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    credentials: true
+    origin: "*"
   })
 );
 
@@ -52,6 +51,9 @@ app.use("/api/feedback", feedbackRoutes);
 // ✅ Test route
 app.get("/", (req, res) => {
   res.send("Backend running");
+});
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API working on Render" });
 });
 
 // ✅ Start server

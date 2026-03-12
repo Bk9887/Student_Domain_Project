@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 import { FaStar } from "react-icons/fa";
 import BentoCard from "../components/BentoCard";
 
@@ -21,7 +22,7 @@ export default function Dashboard() {
   const fetchDashboard = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/dashboard/${currentUser._id}?t=${Date.now()}`,
+        `${API_BASE_URL}/dashboard/${currentUser._id}?t=${Date.now()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

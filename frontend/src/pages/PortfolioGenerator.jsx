@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { API_BASE_URL } from "../utils/api";
 import { FaTrashAlt, FaPlus, FaEnvelope, FaGithub, FaLinkedin, FaBriefcase, FaCode, FaDownload, FaSave, FaFolderOpen, FaTimes } from "react-icons/fa";
 import html2pdf from "html2pdf.js";
 import axios from "axios";
@@ -53,7 +54,7 @@ export default function PortfolioGenerator() {
             const token = localStorage.getItem("token");
             if (!currentUser || !token) return;
 
-            const res = await axios.get(`http://localhost:5000/api/dashboard/${currentUser._id}/portfolios`, {
+            const res = await axios.get(`${API_BASE_URL}/dashboard/${currentUser._id}/portfolios`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSavedPortfolios(res.data);
@@ -70,10 +71,10 @@ export default function PortfolioGenerator() {
 
             setIsSaving(true);
             const portfolioData = { personalInfo, bio, skills, experience, projects };
-            const portfolioName = `${personalInfo.name} - ${new Date().toLocaleDateString()}`;
+            const versionToSave = `${personalInfo.name} - ${new Date().toLocaleDateString()}`;
 
-            await axios.post(`http://localhost:5000/api/dashboard/${currentUser._id}/portfolios`,
-                { name: portfolioName, data: portfolioData },
+            await axios.post(`${API_BASE_URL}/dashboard/${currentUser._id}/portfolios`,
+                { version: versionToSave, content: portfolioData },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 

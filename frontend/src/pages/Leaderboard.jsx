@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 import BentoCard from "../components/BentoCard";
 
 const Leaderboard = () => {
@@ -17,7 +18,7 @@ const Leaderboard = () => {
       if (!currentUser || !selectedDomain || selectedDomain === "Not Selected") return;
 
       const res = await axios.get(
-        `http://localhost:5000/api/leaderboard?domain=${encodeURIComponent(selectedDomain)}&t=${Date.now()}`,
+        `${API_BASE_URL}/leaderboard?domain=${encodeURIComponent(selectedDomain)}&t=${Date.now()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

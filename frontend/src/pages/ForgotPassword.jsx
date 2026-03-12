@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 
 export default function ForgotPassword() {
@@ -10,11 +11,11 @@ export default function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+      const res = await axios.post(
+        `${API_BASE_URL}/auth/forgot-password`,
         { email }
       );
-      setMessage(response.data.message);
+      setMessage(res.data.message);
       setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
       setMessage(error.response?.data?.message || "Email not found.");

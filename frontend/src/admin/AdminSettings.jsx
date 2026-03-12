@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { MdSettings, MdSave, MdWarning, MdCheckCircle } from "react-icons/md";
 
@@ -15,7 +16,7 @@ export default function AdminSettings() {
     useEffect(() => {
         const fetchConfig = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/admin/config");
+                const res = await axios.get(`${API_BASE_URL}/admin/config`);
                 if (res.data) setConfig(res.data);
             } catch (error) {
                 console.error("Failed to load config:", error);
@@ -31,7 +32,7 @@ export default function AdminSettings() {
         setMessage("");
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.put("http://localhost:5000/api/admin/config", config, {
+            const res = await axios.put(`${API_BASE_URL}/admin/config`, config, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setConfig(res.data);

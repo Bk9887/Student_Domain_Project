@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { MdMap, MdEdit, MdSave, MdAdd, MdDelete, MdChevronRight, MdChevronLeft, MdLock, MdPlayCircle, MdQuiz } from "react-icons/md";
 import BentoCard from "../components/BentoCard";
@@ -21,7 +22,7 @@ export default function ManageRoadmaps() {
 
     const fetchDomains = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/admin/domains");
+            const res = await axios.get(`${API_BASE_URL}/admin/domains`);
             setDomains(res.data);
             if (res.data.length > 0) {
                 selectDomain(res.data[0]);
@@ -36,7 +37,7 @@ export default function ManageRoadmaps() {
     const selectDomain = async (domain) => {
         setActiveDomain(domain);
         try {
-            const res = await axios.get(`http://localhost:5000/api/roadmap/${domain.name}/videos`);
+            const res = await axios.get(`${API_BASE_URL}/roadmap/${domain.name}/videos`);
             if (res.data && res.data.tiers) {
                 setTiers(res.data.tiers);
             } else {
@@ -103,7 +104,7 @@ export default function ManageRoadmaps() {
         try {
             const token = localStorage.getItem("token");
             await axios.put(
-                `http://localhost:5000/api/admin/roadmaps/${activeDomain._id}`,
+                `${API_BASE_URL}/admin/roadmaps/${activeDomain._id}`,
                 { tiers },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

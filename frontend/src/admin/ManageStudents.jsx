@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { MdSearch, MdDelete, MdWarning } from "react-icons/md";
 import BentoCard from "../components/BentoCard";
@@ -19,7 +20,7 @@ export default function ManageStudents() {
     const fetchStudents = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:5000/api/admin/users", {
+            const res = await axios.get(`${API_BASE_URL}/admin/users`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setStudents(res.data);
@@ -39,7 +40,7 @@ export default function ManageStudents() {
         if (!userToDelete) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://localhost:5000/api/admin/users/${userToDelete._id}`, {
+            await axios.delete(`${API_BASE_URL}/admin/users/${userToDelete._id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             // Remove from UI

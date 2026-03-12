@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 
 export default function Contact() {
@@ -19,8 +20,8 @@ export default function Contact() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/feedback",
-        { ...form, category: "question" },
+      await axios.post(`${API_BASE_URL}/feedback`,
+        { type: "contact", ...form },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

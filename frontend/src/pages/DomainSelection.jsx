@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 import { FaRobot, FaArrowRight } from "react-icons/fa";
 import BentoCard from "../components/BentoCard";
 import GlowButton from "../components/GlowButton";
@@ -11,7 +12,7 @@ import InterestTestModal from "../components/InterestTestModal";
 export default function DomainSelection() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [dbDomains, setDbDomains] = useState([]); // Raw MongoDB data
+  const [popularDomains, setPopularDomains] = useState([]); // Raw MongoDB data
   const [loadingConfig, setLoadingConfig] = useState(true);
 
   const [selectedDomain, setSelectedDomain] = useState(null);
@@ -27,8 +28,8 @@ export default function DomainSelection() {
     // Fetch live domains created using the Admin CMS Panel
     const fetchLiveDomains = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/domains");
-        setDbDomains(res.data);
+        const res = await axios.get(`${API_BASE_URL}/admin/domains`);
+        setPopularDomains(res.data);
       } catch (err) {
         console.error("Failed to load domains from CMS:", err);
       } finally {
@@ -46,10 +47,7 @@ export default function DomainSelection() {
     const headerMatch = text.match(/^##\s*(.+)/m);
     if (headerMatch) return headerMatch[1].replace(/\*/g, '').trim();
 
-    // Secondary fallback: Old point format (- Best Domain: ...)
-    const fallbackMatch = text.match(/[-\*]\s*\*?Best Domain\*?:\s*(.+)/i);
-    if (!fallbackMatch) return null;
-    return fallbackMatch[1].replace(/\*/g, '').trim();
+    return null;
   };
 
   const aiSuggestedDomain = extractAiDomain(aiSuggestion);
@@ -69,7 +67,7 @@ export default function DomainSelection() {
       setLoadingAI(true);
       setAiSuggestion("");
 
-      const res = await fetch("http://localhost:5000/api/ai/domain-advisor", {
+      const res = await fetch(`${API_BASE_URL}/ai/domain-advisor`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -100,28 +98,28 @@ export default function DomainSelection() {
   };
 
   // ================= Save selected domain to backend =================
-  const handleGetStarted = async (domainName) => {
+  const handleGetStarted = async (selectedPopular) => {
     try {
-      const user = JSON.parse(localStorage.getItem("currentUser"));
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
       const token = localStorage.getItem("token");
 
-      if (!user || !token) {
+      if (!currentUser || !token) {
         alert("Please login again");
         navigate("/login");
         return;
       }
 
       // Initialize/Start Journey in backend
-      const res = await axios.post("http://localhost:5000/api/journey/start",
-        { userId: user._id, domain: domainName },
+      const res = await axios.post(`${API_BASE_URL}/journey/start`,
+        { userId: currentUser._id, domain: selectedPopular },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (res.status !== 201 && res.status !== 200) throw new Error("Failed to start journey");
 
-      const updatedUser = { ...user, domain: domainName };
+      const updatedUser = { ...currentUser, domain: selectedPopular };
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-      localStorage.setItem("selectedDomain", domainName);
+      localStorage.setItem("selectedDomain", selectedPopular);
 
       navigate("/roadmap");
     } catch (err) {
@@ -143,7 +141,7 @@ export default function DomainSelection() {
       }
 
       // Initialize/Start Journey in backend
-      const res = await axios.post("http://localhost:5000/api/journey/start",
+      const res = await axios.post(`${API_BASE_URL}/journey/start`,
         { userId: user._id, domain: aiSuggestedDomain },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -162,7 +160,7 @@ export default function DomainSelection() {
     }
   };
 
-  const filteredDomains = dbDomains.filter((domain) =>
+  const filteredDomains = popularDomains.filter((domain) =>
     domain.name.toLowerCase().includes(search.toLowerCase())
   );
 

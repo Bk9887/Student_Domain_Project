@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 import { MdSend, MdBugReport, MdQuestionAnswer, MdCheckCircle } from "react-icons/md";
 
 export default function HelpCenter() {
@@ -35,7 +36,7 @@ export default function HelpCenter() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/feedback",
+      await axios.post(`${API_BASE_URL}/feedback`,
         form,
         { headers: { Authorization: `Bearer ${token}` } }
       );

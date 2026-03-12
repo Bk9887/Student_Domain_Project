@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { API_BASE_URL } from "../utils/api";
 import { FaFileAlt, FaDownload, FaTrashAlt, FaPlus, FaSave, FaFolderOpen, FaTimes } from "react-icons/fa";
 import html2pdf from "html2pdf.js";
 import axios from "axios";
@@ -54,7 +55,7 @@ export default function ResumeBuilder() {
             const token = localStorage.getItem("token");
             if (!currentUser || !token) return;
 
-            const res = await axios.get(`http://localhost:5000/api/dashboard/${currentUser._id}/resumes`, {
+            const res = await axios.get(`${API_BASE_URL}/dashboard/${currentUser._id}/resumes`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSavedResumes(res.data);
@@ -71,10 +72,10 @@ export default function ResumeBuilder() {
 
             setIsSaving(true);
             const resumeData = { personalInfo, education, skills, experience, projects };
-            const resumeName = `${personalInfo.name} - ${new Date().toLocaleDateString()}`;
+            const versionToSave = `${personalInfo.name} - ${new Date().toLocaleDateString()}`; // Assuming versionToSave is derived similarly to resumeName
 
-            await axios.post(`http://localhost:5000/api/dashboard/${currentUser._id}/resumes`,
-                { name: resumeName, data: resumeData },
+            await axios.post(`${API_BASE_URL}/dashboard/${currentUser._id}/resumes`,
+                { version: versionToSave, content: resumeData },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 

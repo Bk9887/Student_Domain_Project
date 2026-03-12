@@ -1,5 +1,6 @@
 // src/pages/Profile.jsx
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -11,7 +12,7 @@ export default function Profile() {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/profile", {
+      const res = await axios.get(`${API_BASE_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProfile(res.data);
@@ -44,7 +45,7 @@ export default function Profile() {
   const handleSave = async () => {
     try {
       await axios.put(
-        "http://localhost:5000/api/profile",
+        `${API_BASE_URL}/profile`,
         profile,
         { headers: { Authorization: `Bearer ${token}` } }
       );

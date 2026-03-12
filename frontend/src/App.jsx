@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "./utils/api";
 import Landing from "./pages/Landing";
 import DomainSelection from "./pages/DomainSelection";
 import Dashboard from "./pages/Dashboard";
@@ -37,7 +38,7 @@ function App() {
 
   const fetchConfig = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/config");
+      const res = await axios.get(`${API_BASE_URL}/admin/config`);
       setAppConfig(res.data);
     } catch (err) {
       console.error("Boot Config Error:", err);
@@ -75,7 +76,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/verify-email/:token" element={<VerifyEmail />} />
+      <Route path="/verify-email/:id/:token" element={<VerifyEmail />} />
 
       {/* Admin CMS (Nested Routes using AdminLayout as base wrapper) */}
       <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>

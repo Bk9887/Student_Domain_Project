@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 
 export default function ResetPassword() {
@@ -26,7 +27,7 @@ export default function ResetPassword() {
     try {
 
       const response = await axios.post(
-        `http://localhost:5000/api/auth/reset-password/${token}`,
+        `${API_BASE_URL}/auth/reset-password/${token}`,
         { password: newPassword }
       );
 

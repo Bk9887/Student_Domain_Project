@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { MdCheckCircle, MdInfoOutline, MdSync, MdEmail, MdCategory } from "react-icons/md";
 import BentoCard from "../components/BentoCard";
@@ -15,8 +16,8 @@ export default function ManageFeedback() {
     const fetchFeedback = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:5000/api/admin/feedback", {
-                headers: { Authorization: `Bearer ${token} ` }
+            const res = await axios.get(`${API_BASE_URL}/admin/feedback`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
             setFeedback(res.data);
             setLoading(false);
@@ -29,7 +30,7 @@ export default function ManageFeedback() {
     const markResolved = async (id) => {
         try {
             const token = localStorage.getItem("token");
-            await axios.put(`http://localhost:5000/api/admin/feedback/${id}/resolve`, {}, {
+            await axios.put(`${API_BASE_URL}/admin/feedback/${id}/resolve`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // Instant UI update

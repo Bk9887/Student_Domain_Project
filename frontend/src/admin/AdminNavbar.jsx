@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { MdNotifications, MdAccountCircle } from "react-icons/md";
 
@@ -10,7 +11,7 @@ export default function AdminNavbar({ adminName, onLogout }) {
         const fetchUnreadCount = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get("http://localhost:5000/api/admin/feedback-count", {
+                const res = await axios.get(`${API_BASE_URL}/admin/feedback-count`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setUnreadCount(res.data.count);

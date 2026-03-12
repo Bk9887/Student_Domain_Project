@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaArrowRight, FaRobot, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import BentoCard from "./BentoCard";
 import axios from "axios";
+import { API_BASE_URL } from "../utils/api";
 
 const questions = [
     {
@@ -101,7 +102,7 @@ export default function InterestTestModal({ isOpen, onClose, onSelectDomain }) {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.post("http://localhost:5000/api/ai/interest-test", { answers: finalAnswers });
+            const res = await axios.post(`${API_BASE_URL}/ai/interest-test`, { answers: finalAnswers });
             setResults(res.data.recommendations);
         } catch (err) {
             console.error(err);

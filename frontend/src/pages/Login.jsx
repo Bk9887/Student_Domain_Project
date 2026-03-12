@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 
 export default function Login() {
@@ -23,22 +24,23 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData
+      const { email, password } = formData;
+      const res = await axios.post(
+        `${API_BASE_URL}/auth/login`,
+        { email, password }
       );
 
       // ✅ Save token
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", res.data.token);
 
       // ✅ Create user object
       const user = {
-        _id: response.data._id,
-        name: response.data.name,
-        email: response.data.email,
-        domain: response.data.domain || null,
-        photo: response.data.photo || null,
-        isAdmin: !!response.data.isAdmin,
+        _id: res.data._id,
+        name: res.data.name,
+        email: res.data.email,
+        domain: res.data.domain || null,
+        photo: res.data.photo || null,
+        isAdmin: !!res.data.isAdmin,
       };
 
       // ✅ Save user
@@ -47,7 +49,7 @@ export default function Login() {
       // ✅ Redirect logic: Selection-aware authorization
       if (isAdminRole) {
         // User attempted to login as Admin
-        if (response.data.isAdmin === true) {
+        if (res.data.isAdmin === true) {
           navigate("/admin");
         } else {
           // Student trying to enter Admin portal

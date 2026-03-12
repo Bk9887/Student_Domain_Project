@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from '../utils/api';
 import { FaUserCircle } from "react-icons/fa";
 
 export default function Navbar() {
@@ -27,8 +28,8 @@ export default function Navbar() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/dashboard/${user._id}?t=${Date.now()}`,
-        { headers: { Authorization: `Bearer ${authToken}` } }
+        `${API_BASE_URL}/dashboard/${user._id}?t=${Date.now()}`,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setPoints(res.data.points);
       setStreak(res.data.streak);

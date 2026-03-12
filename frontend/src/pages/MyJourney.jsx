@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -37,10 +38,10 @@ const MyJourney = () => {
     const fetchData = async () => {
         try {
             const [statsRes, journeysRes] = await Promise.all([
-                axios.get(`http://localhost:5000/api/journey/stats/${currentUser._id}`, {
+                axios.get(`${API_BASE_URL}/journey/stats/${currentUser._id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 }),
-                axios.get(`http://localhost:5000/api/journey/my-journeys/${currentUser._id}`, {
+                axios.get(`${API_BASE_URL}/journey/my-journeys/${currentUser._id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
             ]);
@@ -78,7 +79,7 @@ const MyJourney = () => {
 
     const handleContinueLearning = async (domainName) => {
         try {
-            await axios.post(`http://localhost:5000/api/journey/start`,
+            await axios.post(`${API_BASE_URL}/journey/start`,
                 { userId: currentUser._id, domain: domainName },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -97,7 +98,7 @@ const MyJourney = () => {
         if (!window.confirm(`Are you sure you want to delete your progress in ${domainName}? This cannot be undone.`)) return;
 
         try {
-            const res = await axios.delete(`http://localhost:5000/api/journey/${currentUser._id}/${domainName}`, {
+            const res = await axios.delete(`${API_BASE_URL}/journey/${currentUser._id}/${domainName}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 

@@ -42,8 +42,8 @@ Then include:
       const result = await model.generateContent(prompt);
       suggestion = result.response.text();
     } catch (apiError) {
-      console.warn("⚠️ Gemini API Error in Oracle (Rate Limit/429). Falling back to generic mock suggestion:", apiError.message);
-      suggestion = `## Web Development\n- Key Skills: HTML/CSS, JavaScript, React, Node.js\n- Brief Explanation: Building robust, interactive applications that run seamlessly on the internet.\n- Job Roles: Frontend Developer, Backend Developer, Full Stack Engineer`;
+      console.error("⚠️ Gemini API Error in Oracle:", apiError.message);
+      throw apiError; // Throw so parent catch handles it usually, or just return an error
     }
 
     res.json({ suggestion });

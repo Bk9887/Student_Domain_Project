@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { MdAdd, MdEdit, MdDelete, MdClose, MdSave } from "react-icons/md";
+import { API_BASE_URL } from "../utils/api";
+import { MdAdd, MdEdit, MdDelete, MdClose, MdSave, MdSchool } from "react-icons/md";
 import BentoCard from "../components/BentoCard";
 
 export default function ManageDomains() {
@@ -26,7 +27,7 @@ export default function ManageDomains() {
 
     const fetchDomains = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/admin/domains");
+            const res = await axios.get(`${API_BASE_URL}/admin/domains`);
             setDomains(res.data);
             setLoading(false);
         } catch (err) {
@@ -71,11 +72,11 @@ export default function ManageDomains() {
             };
 
             if (editMode) {
-                await axios.put(`http://localhost:5000/api/admin/domains/${formData._id}`, payload, {
+                await axios.put(`${API_BASE_URL}/admin/domains/${formData._id}`, payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } else {
-                await axios.post("http://localhost:5000/api/admin/domains", payload, {
+                await axios.post(`${API_BASE_URL}/admin/domains`, payload, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             }
@@ -92,7 +93,7 @@ export default function ManageDomains() {
 
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://localhost:5000/api/admin/domains/${id}`, {
+            await axios.delete(`${API_BASE_URL}/admin/domains/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchDomains();

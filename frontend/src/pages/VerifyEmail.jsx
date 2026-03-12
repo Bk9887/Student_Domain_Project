@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 
 export default function VerifyEmail() {
 
-  const { token } = useParams();
+  const { id, token } = useParams();
   const navigate = useNavigate();
 
   const [message, setMessage] = useState("Verifying your email...");
@@ -16,7 +17,7 @@ export default function VerifyEmail() {
       try {
 
         const res = await axios.get(
-          `http://localhost:5000/api/auth/verify-email/${token}`
+          `${API_BASE_URL}/auth/verify-email/${id}/${token}`
         );
 
         setMessage(res.data.message);

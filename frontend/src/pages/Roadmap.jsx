@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../utils/api";
 import axios from "axios";
 import { FaCheckCircle, FaRegCircle, FaPlayCircle, FaCode, FaNetworkWired, FaRocket, FaLock, FaTrophy, FaChevronDown, FaChevronUp, FaFileAlt, FaCheck, FaTimes } from "react-icons/fa";
 import YouTube from "react-youtube";
@@ -47,10 +49,10 @@ const Roadmap = () => {
     setFetchingData(true);
 
     Promise.all([
-      axios.get(`http://localhost:5000/api/roadmap/${selected}/videos`), // The endpoint returns nested tiers -> modules -> steps
-      axios.get(`http://localhost:5000/api/dashboard/progress/${userId}/${selected}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      axios.get(`${API_BASE_URL}/roadmap/${selected}/videos`), // The endpoint returns nested tiers -> modules -> steps
+      axios.get(`${API_BASE_URL}/dashboard/progress/${userId}/${selected}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
     ])
       .then(([roadmapRes, progressRes]) => {
         const fetchedTiers = roadmapRes.data.tiers || [];
@@ -145,8 +147,8 @@ const Roadmap = () => {
 
     if (user && user._id && token) {
       try {
-        await axios.post(
-          `http://localhost:5000/api/dashboard/${user._id}`,
+        const res = await axios.post(
+          `${API_BASE_URL}/dashboard/${user._id}`,
           {
             domain,
             completedVideos: uniqueCompleted,
