@@ -89,8 +89,6 @@ The project follows a modular RESTful architecture:
 ## 📄 Documentation
 Detailed technical documentation and guides are available for deeper project analysis:
 - [Full Documentation Report](project_report.html)
-- [Executive Summary](project_summary.html)
-- [Interview & Viva Prep Guide](interview_prep_guide.html)
 
 ---
 
