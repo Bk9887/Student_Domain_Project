@@ -87,6 +87,14 @@ exports.registerUser = async (req, res) => {
       isAdmin: finalIsAdmin,
     });
 
+    // Environment Check for Email
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error("CRITICAL: EMAIL_USER or EMAIL_PASS environment variables are missing!");
+      return res.status(500).json({
+        message: "Email service configuration missing. Please check backend environment variables.",
+      });
+    }
+
     const verifyLink =
       `${process.env.FRONTEND_URL}/verify-email/${user._id}/${verificationToken}`;
 
@@ -123,12 +131,17 @@ exports.registerUser = async (req, res) => {
     });
 
   } catch (error) {
-
     console.error("REGISTER ERROR:", error);
 
+    // Provide specific error info to help debug production
+    const errorMessage = error.code === 'EAUTH' 
+      ? "Email authentication failed. Check your Gmail App Password."
+      : error.message || "Internal Server Error during registration";
+
     res.status(500).json({
-      message: "Server error",
-      error: error.message,
+      message: "Server error during registration",
+      error: errorMessage,
+      code: error.code
     });
   }
 };
