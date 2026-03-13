@@ -31,21 +31,9 @@ export default function AdminLayout() {
     if (!adminUser) return null; // Prevent flash of unauthorized content
 
     return (
-        <div className="flex bg-zinc-950 min-h-screen font-sans text-zinc-200 transition-colors duration-300 overflow-hidden">
-            {/* Mobile Sidebar Overlay */}
-            {isSidebarOpen && (
-                <div 
-                    className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
-                    onClick={() => setIsSidebarOpen(false)}
-                />
-            )}
-
+        <div className="flex app-bg min-h-screen text-slate-100 transition-colors duration-300">
             {/* Sidebar Navigation */}
-            <AdminSidebar 
-                isOpen={isSidebarOpen} 
-                onClose={() => setIsSidebarOpen(false)} 
-                activeUser={adminUser} 
-            />
+            <AdminSidebar activeUser={adminUser} />
 
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
@@ -53,7 +41,6 @@ export default function AdminLayout() {
                 {/* Top Navbar */}
                 <AdminNavbar
                     adminName={adminUser.name}
-                    onMenuClick={() => setIsSidebarOpen(true)}
                     onLogout={() => {
                         localStorage.clear();
                         navigate("/login");
@@ -61,7 +48,7 @@ export default function AdminLayout() {
                 />
 
                 {/* Dynamic Page Content */}
-                <main className="p-4 lg:p-8 mt-16 flex-1 overflow-x-hidden">
+                <main className="p-6 md:p-8 mt-16 flex-1 overflow-x-hidden">
                     <Outlet />
                 </main>
             </div>

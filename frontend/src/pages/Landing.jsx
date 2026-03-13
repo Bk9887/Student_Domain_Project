@@ -10,31 +10,36 @@ export default function Landing() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950 selection:bg-indigo-500/30">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden app-bg">
 
       {/* Glow Orbs */}
       <div className="orb orb-1" />
       <div className="orb orb-2" />
       <div className="orb orb-3" />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="text-6xl md:text-7xl font-extrabold mb-6 tracking-tighter bg-gradient-to-br from-white via-indigo-200 to-zinc-500 bg-clip-text text-transparent drop-shadow-sm">
-          Forge Your Path in Tech
-        </h1>
+      <div className="relative z-10 px-6 max-w-5xl mx-auto w-full">
+        <div className="panel-strong p-8 md:p-12 text-center">
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-sky-100/20 text-xs font-semibold tracking-[0.18em] uppercase text-sky-100/80 mb-7">
+            Skill Operating System
+          </span>
 
-        <p className="text-zinc-400 mb-10 text-xl md:text-2xl leading-relaxed tracking-wide">
-          Master your potential. Discover the domain that defines your future, guided by AI.
-        </p>
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-gradient leading-tight">
+            Build A Career Pipeline, Not Just A To-Do List
+          </h1>
 
-        <button
-          onClick={handleExplore}
-          className="px-8 py-3.5 rounded-xl font-medium text-white
-          bg-indigo-600 border border-indigo-500
-          hover:bg-indigo-500 hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]
-          transition-all duration-300 shadow-lg shadow-indigo-500/20"
-        >
-          Start Building Now
-        </button>
+          <p className="text-sky-100/75 mb-10 text-lg md:text-2xl leading-relaxed max-w-3xl mx-auto">
+            Discover your strongest domain, train with guided roadmaps, and stack proof of growth every week.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onClick={handleExplore} className="btn-primary">
+              Enter Student Hub
+            </button>
+            <button onClick={() => navigate('/about')} className="btn-ghost">
+              See How It Works
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
