@@ -89,7 +89,7 @@ export default function Dashboard() {
     <div className="space-y-6">
 
       {/* Welcome message */}
-      <h1 className="text-4xl font-extrabold mb-2 tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-black mb-2 tracking-tight bg-gradient-to-r from-white via-white to-zinc-200 bg-clip-text text-transparent">
         {isNewUser ? `Welcome, ${user.name}` : `Welcome back, ${user.name}. Ready to level up?`}
       </h1>
 
@@ -109,7 +109,7 @@ export default function Dashboard() {
 
         {/* Domain Card */}
         <BentoCard className="p-7" accentColor="indigo">
-          <p className="text-zinc-400 font-bold mb-2 text-xs uppercase tracking-widest">Active Domain</p>
+          <p className="text-zinc-300 font-bold mb-2 text-xs uppercase tracking-widest">Active Domain</p>
           <h2 className="text-2xl font-black bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent tracking-tight block">
             {selectedDomain}
           </h2>
@@ -118,7 +118,7 @@ export default function Dashboard() {
         {/* Progress Card */}
         <BentoCard className="p-7" accentColor="indigo">
           <div className="flex justify-between items-end mb-4">
-            <p className="text-zinc-400 font-bold text-xs uppercase tracking-widest">Progress</p>
+            <p className="text-zinc-300 font-bold text-xs uppercase tracking-widest">Progress</p>
             <span className="text-indigo-400 font-black text-2xl tracking-tighter drop-shadow-sm">
               {progress}%
             </span>
@@ -134,7 +134,7 @@ export default function Dashboard() {
 
         {/* Rank Card */}
         <BentoCard className="p-7" accentColor="indigo">
-          <p className="text-zinc-400 font-bold mb-2 text-xs uppercase tracking-widest">Global Rank</p>
+          <p className="text-zinc-300 font-bold mb-2 text-xs uppercase tracking-widest">Global Rank</p>
           <h2 className="text-3xl font-black bg-gradient-to-r from-amber-200 to-yellow-500 bg-clip-text text-transparent tracking-tighter drop-shadow-lg">
             {rank}
           </h2>
