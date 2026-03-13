@@ -105,7 +105,7 @@ export default function Dashboard() {
         </button>
       )}
 
-      <div className="grid md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
         {/* Domain Card */}
         <BentoCard className="p-7" accentColor="indigo">

@@ -347,13 +347,27 @@ const Roadmap = () => {
           </div>
 
           {/* Mobile Tab Fallback */}
-          <div className="md:hidden flex space-x-2 bg-white/5 p-1 rounded-xl transition-colors duration-300">
-            <button onClick={() => setActiveTab('beginner')} className={`flex-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'beginner' ? 'bg-indigo-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>Beg</button>
-            <button onClick={() => isBeginnerComplete && setActiveTab('intermediate')} className={`flex-1 flex items-center justify-center gap-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${!isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'intermediate' ? 'bg-emerald-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>
-              {!isBeginnerComplete && <FaLock className="text-xs" />} Int
+          <div className="md:hidden flex space-x-1.5 bg-white/5 p-1 rounded-xl shadow-inner">
+            <button
+              onClick={() => setActiveTab('beginner')}
+              className={`flex-1 py-2.5 text-[10px] font-bold uppercase tracking-wide rounded-lg transition-all truncate px-1
+                ${activeTab === 'beginner' ? 'bg-indigo-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}
+            >
+              Beginner
             </button>
-            <button onClick={() => isBeginnerComplete && isIntermediateComplete && setActiveTab('advanced')} className={`flex-1 flex items-center justify-center gap-1 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${!isIntermediateComplete || !isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'advanced' ? 'bg-amber-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}>
-              {(!isIntermediateComplete || !isBeginnerComplete) && <FaLock className="text-xs" />} Adv
+            <button
+              onClick={() => isBeginnerComplete && setActiveTab('intermediate')}
+              className={`flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold uppercase tracking-wide rounded-lg transition-all truncate px-1
+                ${!isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'intermediate' ? 'bg-emerald-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}
+            >
+              {!isBeginnerComplete && <FaLock className="text-[10px]" />} Intermediate
+            </button>
+            <button
+              onClick={() => isBeginnerComplete && isIntermediateComplete && setActiveTab('advanced')}
+              className={`flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold uppercase tracking-wide rounded-lg transition-all truncate px-1
+                ${!isIntermediateComplete || !isBeginnerComplete ? 'text-zinc-600 cursor-not-allowed' : activeTab === 'advanced' ? 'bg-amber-600 text-white shadow-lg' : 'text-zinc-400 hover:bg-white/5'}`}
+            >
+              {(!isIntermediateComplete || !isBeginnerComplete) && <FaLock className="text-[10px]" />} Advanced
             </button>
           </div>
 
@@ -383,8 +397,8 @@ const Roadmap = () => {
                           {!isUnlocked ? <FaLock className="text-zinc-500 text-xl" /> : isFullyComplete ? <FaCheckCircle className="text-emerald-500 text-xl" /> : <FaRegCircle className="text-indigo-500 text-xl" />}
                         </div>
                         <div>
-                          <h3 className="text-lg font-bold text-zinc-100 tracking-tight">{mod.title}</h3>
-                          <p className="text-xs text-zinc-500 mt-1 line-clamp-1">{mod.description}</p>
+                          <h3 className="text-base sm:text-lg font-bold text-zinc-100 tracking-tight">{mod.title}</h3>
+                          <p className="text-[10px] sm:text-xs text-zinc-500 mt-1 line-clamp-1">{mod.description}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">

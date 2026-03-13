@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_BASE_URL } from '../utils/api';
 import { FaUserCircle } from "react-icons/fa";
 
-export default function Navbar() {
+export default function Navbar({ onMenuClick }) {
   const [open, setOpen] = useState(false);
   const [points, setPoints] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -71,20 +71,30 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="flex justify-end items-center pb-6 relative z-50">
-      <div className="flex items-center gap-6">
+    <div className="flex justify-between lg:justify-end items-center px-6 lg:px-0 pb-6 relative z-40">
+      {/* Hamburger Menu - Only Mobile */}
+      <button
+        onClick={onMenuClick}
+        className="lg:hidden p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-zinc-400 hover:text-white transition-all shadow-xl"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+
+      <div className="flex items-center gap-4 lg:gap-6">
 
         {/* XP + Streak */}
-        <div className="flex items-center gap-6 bg-white/[0.03] backdrop-blur-xl 
-          border border-white/[0.08] px-6 py-2.5 rounded-full shadow-xl">
+        <div className="flex items-center gap-4 lg:gap-6 bg-white/[0.03] backdrop-blur-xl 
+          border border-white/[0.08] px-4 lg:px-6 py-2.5 rounded-full shadow-xl">
           <div className="flex items-center gap-2">
-            <span className="bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-950 text-xs font-bold px-2.5 py-0.5 rounded-full">XP</span>
-            <span className="font-medium text-zinc-100">{points}</span>
+            <span className="bg-gradient-to-r from-yellow-400 to-amber-500 text-zinc-950 text-[10px] lg:text-xs font-bold px-2 py-0.5 rounded-full uppercase">XP</span>
+            <span className="font-bold text-zinc-100 text-sm lg:text-base">{points}</span>
           </div>
-          <div className="w-px h-5 bg-white/10"></div>
+          <div className="w-px h-5 bg-white/10 hidden xs:block"></div>
           <div className="flex items-center gap-2">
-            <span className="text-lg">🔥</span>
-            <span className="font-medium text-zinc-100">{streak}</span>
+            <span className="text-base lg:text-lg">🔥</span>
+            <span className="font-bold text-zinc-100 text-sm lg:text-base">{streak}</span>
           </div>
         </div>
 

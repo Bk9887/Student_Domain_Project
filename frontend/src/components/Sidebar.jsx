@@ -11,7 +11,7 @@ import {
 import { FaShieldAlt } from "react-icons/fa"; // Added security icon
 import { FaRobot } from "react-icons/fa6";
 
-export default function Sidebar({ appConfig }) {
+export default function Sidebar({ appConfig, isOpen, onClose }) {
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
 
@@ -43,21 +43,34 @@ export default function Sidebar({ appConfig }) {
   }
 
   return (
-    <aside className="h-screen w-64 
-      bg-zinc-950/50 backdrop-blur-2xl 
+    <aside className={`fixed lg:static inset-y-0 left-0 w-64 
+      bg-zinc-950/90 lg:bg-zinc-950/50 backdrop-blur-2xl 
       border-r border-white/5 
       flex flex-col justify-between p-6
-      shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-40 relative transition-all duration-300">
+      shadow-[4px_0_24px_rgba(0,0,0,0.5)] z-50 
+      transform ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
+      transition-all duration-300 ease-in-out`}>
 
       {/* Logo */}
       <div>
-        <div className="flex items-center gap-3 mb-10 px-2 mt-2">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.5)]">
-            <span className="text-white font-bold text-lg leading-none mt-[-2px]">S</span>
+        <div className="flex items-center justify-between gap-3 mb-10 px-2 mt-2">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.5)]">
+              <span className="text-white font-bold text-lg leading-none mt-[-2px]">S</span>
+            </div>
+            <h1 className="text-xl font-bold text-white tracking-wide">
+              Student Hub
+            </h1>
           </div>
-          <h1 className="text-xl font-bold text-white tracking-wide">
-            Student Hub
-          </h1>
+          {/* Close button for mobile */}
+          <button
+            onClick={onClose}
+            className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
         {/* Navigation */}
@@ -66,6 +79,7 @@ export default function Sidebar({ appConfig }) {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={() => { if (window.innerWidth < 1024) onClose(); }}
               className={({ isActive }) =>
                 `${navStyle} ${isActive
                   ? "bg-white/[0.06] text-white border border-white/[0.08] shadow-[0_0_15px_rgba(79,70,229,0.1)]"

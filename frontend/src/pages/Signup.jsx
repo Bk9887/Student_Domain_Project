@@ -74,7 +74,7 @@ export default function Signup() {
       <form
         onSubmit={handleSubmit}
         className="relative z-10 bg-white/[0.03] backdrop-blur-2xl
-        border border-white/[0.08] p-8 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] w-96 flex flex-col"
+        border border-white/[0.08] p-6 lg:p-8 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] w-full max-w-[calc(100vw-2rem)] sm:max-w-[400px] flex flex-col"
       >
         {/* Role Toggle Selector */}
         <div className="flex bg-black/20 p-1 rounded-xl mb-6 shadow-inner border border-white/5">

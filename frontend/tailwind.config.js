@@ -27,7 +27,10 @@ export default {
           '0%': { transform: 'translateY(0px) translateX(0px)' },
           '100%': { transform: 'translateY(-40px) translateX(30px)' },
         }
-      }
+      },
+      screens: {
+        'xs': '480px',
+      },
     },
   },
   plugins: [

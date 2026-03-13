@@ -17,15 +17,13 @@ const generateToken = (id) => {
 
 // ================= EMAIL TRANSPORTER =================
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
   tls: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // Bypass local certificate errors
   },
 });
 
@@ -92,7 +90,7 @@ exports.registerUser = async (req, res) => {
     const verifyLink =
       `${process.env.FRONTEND_URL}/verify-email/${user._id}/${verificationToken}`;
 
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"Skill Platform" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Verify your email",
@@ -116,6 +114,8 @@ exports.registerUser = async (req, res) => {
         <p>If you did not create this account, ignore this email.</p>
       `,
     });
+
+    console.log("Email sent successfully to:", email, "| Response:", info.response);
 
     res.status(201).json({
       message:

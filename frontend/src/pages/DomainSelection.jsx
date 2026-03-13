@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -20,6 +20,13 @@ export default function DomainSelection() {
   const [aiSuggestion, setAiSuggestion] = useState("");
   const [loadingAI, setLoadingAI] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const detailsRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedInfo && detailsRef.current) {
+      detailsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [selectedInfo]);
 
   useEffect(() => {
     const saved = localStorage.getItem("selectedDomain");
@@ -253,7 +260,7 @@ export default function DomainSelection() {
         Popular Domains
       </h2>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {loadingConfig ? (
           <p className="text-zinc-400 col-span-full text-center py-10">
             Synthesizing Domain knowledge from the Matrix...
@@ -286,10 +293,11 @@ export default function DomainSelection() {
       <AnimatePresence>
         {selectedInfo && (
           <motion.div
+            ref={detailsRef}
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
-            className="max-w-2xl mx-auto"
+            className="max-w-2xl mx-auto scroll-mt-10"
           >
             <BentoCard className="p-8" magnetic={false} accentColor="indigo">
               <h2 className="text-3xl font-bold mb-3 text-white tracking-tight">
