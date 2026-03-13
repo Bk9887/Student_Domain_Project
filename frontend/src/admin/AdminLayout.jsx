@@ -4,6 +4,8 @@ import AdminSidebar from "./AdminSidebar";
 import AdminNavbar from "./AdminNavbar";
 
 export default function AdminLayout() {
+    const navigate = useNavigate();
+    const [adminUser, setAdminUser] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
@@ -46,7 +48,7 @@ export default function AdminLayout() {
             />
 
             {/* Main Content Area */}
-            <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${isSidebarOpen ? "lg:ml-64" : "lg:ml-64"}`}>
+            <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
 
                 {/* Top Navbar */}
                 <AdminNavbar
