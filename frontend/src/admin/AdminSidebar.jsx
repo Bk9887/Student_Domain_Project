@@ -9,7 +9,7 @@ import {
 } from "react-icons/md";
 import { FaLaptopCode } from "react-icons/fa";
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ isOpen, onClose }) {
     const location = useLocation();
 
     const navItems = [
@@ -22,13 +22,27 @@ export default function AdminSidebar() {
     ];
 
     return (
-        <aside className="fixed left-0 top-0 h-screen w-64 bg-zinc-900/50 backdrop-blur-xl text-zinc-400 border-r border-white/[0.05] flex flex-col z-50 transition-all duration-300">
+        <aside className={`fixed lg:static left-0 top-0 h-screen w-64 bg-zinc-900/50 backdrop-blur-xl text-zinc-400 border-r border-white/[0.05] flex flex-col z-50 transition-all duration-300 
+            ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+            
             {/* Brand Header */}
-            <div className="h-16 flex items-center px-6 border-b border-white/[0.05] bg-zinc-950/20">
-                <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] mr-3">
-                    <FaLaptopCode className="text-white text-lg" />
+            <div className="h-16 flex items-center justify-between px-6 border-b border-white/[0.05] bg-zinc-950/20">
+                <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] mr-3">
+                        <FaLaptopCode className="text-white text-lg" />
+                    </div>
+                    <span className="text-white font-black text-xl tracking-tight">Hub<span className="text-indigo-500">CMS</span></span>
                 </div>
-                <span className="text-white font-black text-xl tracking-tight">Hub<span className="text-indigo-500">CMS</span></span>
+                
+                {/* Close button for mobile */}
+                <button 
+                    onClick={onClose}
+                    className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
 
             {/* Navigation Links */}
@@ -42,6 +56,7 @@ export default function AdminSidebar() {
                         <Link
                             key={item.name}
                             to={item.path}
+                            onClick={() => { if (window.innerWidth < 1024) onClose(); }}
                             className={`flex items-center px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${isActive
                                 ? "bg-indigo-600/10 text-indigo-400 shadow-[inset_0_0_10px_rgba(99,102,241,0.1)] border border-indigo-500/20"
                                 : "hover:bg-white/[0.03] hover:text-white border border-transparent"

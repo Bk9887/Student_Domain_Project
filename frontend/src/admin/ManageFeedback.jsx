@@ -61,9 +61,9 @@ export default function ManageFeedback() {
 
             {/* Header & Stats Widget */}
             <BentoCard className="overflow-hidden p-0" accentColor="indigo">
-                <div className="bg-gradient-to-r from-indigo-950/40 via-zinc-950 to-indigo-950/40 p-10 border-b border-white/[0.05] relative overflow-hidden group">
+                <div className="bg-gradient-to-r from-indigo-950/40 via-zinc-950 to-indigo-950/40 p-6 md:p-10 border-b border-white/[0.05] relative overflow-hidden group">
                     <div className="absolute inset-0 bg-indigo-500/[0.02] mix-blend-overlay"></div>
-                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-8">
+                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-6 md:gap-8">
                         <div>
                             <h1 className="text-4xl font-black text-white italic tracking-tighter uppercase underline decoration-indigo-500 decoration-4 underline-offset-8 transition-colors">Support Intel</h1>
                             <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em] mt-6">Review student transmissions and resolve anomalies.</p>
@@ -112,11 +112,11 @@ export default function ManageFeedback() {
                 filteredTickets.map((ticket) => (
                     <div
                         key={ticket._id}
-                        className={`bg-white/[0.02] border rounded-2xl p-8 mb-6 transition-all group ${ticket.isResolved
+                        className={`bg-white/[0.02] border rounded-2xl p-6 md:p-8 mb-6 transition-all group ${ticket.isResolved
                             ? 'border-white/[0.03] opacity-60'
                             : 'border-amber-500/20 shadow-[0_4px_25px_rgba(245,158,11,0.05)] bg-amber-500/[0.01]'}`}
                     >
-                        <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
+                        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-6 mb-6 md:mb-8">
                             <div className="space-y-3">
                                 <div className="flex items-center gap-4">
                                     <h3 className="text-xl font-black text-white tracking-tight italic uppercase transition-colors">{ticket.name}</h3>
