@@ -6,6 +6,7 @@ import AdminNavbar from "./AdminNavbar";
 export default function AdminLayout() {
     const navigate = useNavigate();
     const [adminUser, setAdminUser] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         // 1. Verify Authentication
@@ -35,7 +36,7 @@ export default function AdminLayout() {
             <AdminSidebar activeUser={adminUser} />
 
             {/* Main Content Area */}
-            <div className="flex-1 flex flex-col ml-64 min-w-0">
+            <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
 
                 {/* Top Navbar */}
                 <AdminNavbar
