@@ -16,7 +16,7 @@ export default function Layout({ children, appConfig }) {
   }, [pathname]);
 
   return (
-    <div className="relative min-h-screen flex text-white overflow-hidden bg-zinc-950 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
+    <div className="relative min-h-screen flex overflow-hidden app-bg transition-colors duration-300">
 
       {/* Glow Orbs */}
       <div className="orb orb-1 opacity-100" />
@@ -26,7 +26,7 @@ export default function Layout({ children, appConfig }) {
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          className="fixed inset-0 bg-[#02040b]/70 z-40 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
@@ -42,8 +42,8 @@ export default function Layout({ children, appConfig }) {
       <div className="relative z-10 flex-1 flex flex-col h-screen overflow-hidden">
 
         {/* Navbar Section - Persistent */}
-        <div className="z-40">
-          <div className="p-4 lg:p-0 lg:pt-6 lg:pr-10">
+        <div className="z-40 px-3 pt-3 lg:px-6 lg:pt-6">
+          <div className="panel px-2 md:px-4 py-2">
             <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function Layout({ children, appConfig }) {
           className="flex-1 overflow-y-auto w-full scroll-smooth"
         >
           {/* Page Content */}
-          <div className="px-5 pb-20 lg:p-10 lg:pt-0 max-w-7xl mx-auto w-full">
+          <div className="px-4 pb-20 pt-6 lg:px-8 lg:pt-8 max-w-7xl mx-auto w-full">
             {children}
           </div>
         </div>

@@ -9,7 +9,7 @@ import {
 } from "react-icons/md";
 import { FaLaptopCode } from "react-icons/fa";
 
-export default function AdminSidebar({ isOpen, onClose }) {
+export default function AdminSidebar() {
     const location = useLocation();
 
     const navItems = [
@@ -22,27 +22,13 @@ export default function AdminSidebar({ isOpen, onClose }) {
     ];
 
     return (
-        <aside className={`fixed lg:static left-0 top-0 h-screen w-64 bg-zinc-900/50 backdrop-blur-xl text-zinc-400 border-r border-white/[0.05] flex flex-col z-50 transition-all duration-300 
-            ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
-            
+        <aside className="fixed left-0 top-0 h-screen w-64 bg-[#07162e]/95 backdrop-blur-xl text-sky-100/75 border-r border-sky-100/15 flex flex-col z-50 transition-all duration-300">
             {/* Brand Header */}
-            <div className="h-16 flex items-center justify-between px-6 border-b border-white/[0.05] bg-zinc-950/20">
-                <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] mr-3">
-                        <FaLaptopCode className="text-white text-lg" />
-                    </div>
-                    <span className="text-white font-black text-xl tracking-tight">Hub<span className="text-indigo-500">CMS</span></span>
+            <div className="h-16 flex items-center px-6 border-b border-sky-100/15 bg-[#0b1d39]/30">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-emerald-300 to-cyan-300 flex items-center justify-center shadow-[0_0_15px_rgba(47,185,169,0.4)] mr-3">
+                    <FaLaptopCode className="text-[#09233e] text-lg" />
                 </div>
-                
-                {/* Close button for mobile */}
-                <button 
-                    onClick={onClose}
-                    className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors"
-                >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                <span className="text-slate-100 font-black text-xl tracking-tight">Hub<span className="text-emerald-300">CMS</span></span>
             </div>
 
             {/* Navigation Links */}
@@ -56,13 +42,12 @@ export default function AdminSidebar({ isOpen, onClose }) {
                         <Link
                             key={item.name}
                             to={item.path}
-                            onClick={() => { if (window.innerWidth < 1024) onClose(); }}
                             className={`flex items-center px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${isActive
-                                ? "bg-indigo-600/10 text-indigo-400 shadow-[inset_0_0_10px_rgba(99,102,241,0.1)] border border-indigo-500/20"
-                                : "hover:bg-white/[0.03] hover:text-white border border-transparent"
+                                ? "bg-gradient-to-r from-emerald-300/20 to-cyan-300/10 text-slate-100 shadow-[inset_0_0_10px_rgba(47,185,169,0.15)] border border-emerald-200/20"
+                                : "hover:bg-white/10 hover:text-slate-50 border border-transparent"
                                 }`}
                         >
-                            <span className={`text-xl mr-3 ${isActive ? "text-indigo-400" : "text-zinc-500"}`}>{item.icon}</span>
+                            <span className={`text-xl mr-3 ${isActive ? "text-emerald-200" : "text-sky-100/45"}`}>{item.icon}</span>
                             {item.name}
                         </Link>
                     );
@@ -70,10 +55,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
             </nav>
 
             {/* Return to App Button */}
-            <div className="p-4 border-t border-white/[0.05] bg-zinc-950/20">
+            <div className="p-4 border-t border-sky-100/15 bg-[#0b1d39]/30">
                 <Link
                     to="/dashboard"
-                    className="flex items-center justify-center w-full py-3 px-4 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] text-zinc-300 transition-all text-xs font-black uppercase tracking-widest shadow-sm"
+                    className="flex items-center justify-center w-full py-3 px-4 rounded-xl bg-white/10 border border-sky-100/20 hover:bg-white/15 text-slate-100 transition-all text-xs font-black uppercase tracking-widest shadow-sm"
                 >
                     Exit to App
                 </Link>

@@ -1,11 +1,11 @@
 export default function BentoCard({ className = "", children, onClick, magnetic = false, accentColor = "indigo" }) {
   const colorMap = {
-    indigo: "bg-indigo-500 shadow-[0_0_20px_#6366f1]",
-    emerald: "bg-emerald-500 shadow-[0_0_20px_#10b981]",
-    amber: "bg-amber-500 shadow-[0_0_20px_#f59e0b]",
-    rose: "bg-rose-500 shadow-[0_0_20px_#f43f5e]",
-    cyan: "bg-cyan-500 shadow-[0_0_20px_#06b6d4]",
-    violet: "bg-violet-500 shadow-[0_0_20px_#8b5cf6]",
+    indigo: "bg-[#4f7cff] shadow-[0_0_20px_#4f7cff]",
+    emerald: "bg-[#2fb9a9] shadow-[0_0_20px_#2fb9a9]",
+    amber: "bg-[#f4b400] shadow-[0_0_20px_#f4b400]",
+    rose: "bg-[#ff6e5e] shadow-[0_0_20px_#ff6e5e]",
+    cyan: "bg-[#57d5ff] shadow-[0_0_20px_#57d5ff]",
+    violet: "bg-[#b2a0ff] shadow-[0_0_20px_#b2a0ff]",
     "cyber-lime": "bg-[#ccff00] shadow-[0_0_20px_#ccff00]",
   };
 
@@ -15,10 +15,10 @@ export default function BentoCard({ className = "", children, onClick, magnetic 
     <div
       role={onClick ? "button" : undefined}
       onClick={onClick}
-      className={`relative rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-xl hover:bg-white/[0.05] transition-all group overflow-hidden ${className} hover:scale-[1.01] hover:shadow-2xl active:scale-[0.99] transition-all duration-300`}
+      className={`relative rounded-2xl panel hover:bg-[#193863]/80 transition-all group overflow-hidden ${className} hover:scale-[1.01] hover:shadow-2xl active:scale-[0.99] duration-300`}
     >
       {/* Coloured Surrounding (Top Bar Glow) */}
-      <div className={`absolute top-0 left-0 w-full h-[2px] opacity-40 group-hover:opacity-100 transition-all duration-500 ${style}`}></div>
+      <div className={`absolute top-0 left-0 w-full h-[3px] opacity-40 group-hover:opacity-100 transition-all duration-500 ${style}`}></div>
 
       {children}
     </div>
